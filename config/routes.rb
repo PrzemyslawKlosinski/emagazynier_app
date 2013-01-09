@@ -2,6 +2,15 @@ EmagazynierApp::Application.routes.draw do
   get "static_pages/home"
 
   get "static_pages/help"
+  
+  get "static_pages/how"
+  
+  get "static_pages/pricing"
+  
+  get "static_pages/contact"
+
+  #for test -> rspec spec/requests/*
+  match 'static_pages/index' => 'static_pages#home'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
