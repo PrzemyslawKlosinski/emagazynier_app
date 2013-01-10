@@ -20,7 +20,7 @@ describe "StaticPages" do
 
     it "strony powinna zwierac tytul 'EMagazynier'" do
       visit static_pages_home_path
-      page.should have_selector('title', :text => "#{base_title}")
+      page.should_not have_selector('title', :text => "#{base_title} | Home")
     end
   end
 
