@@ -36,22 +36,6 @@ describe "StaticPages" do
   subject { page }
 
 
-  describe "How page" do
-    before { visit jak_path }
-
-    it { should have_selector('h1', :text => 'Jak to dziala') }
-    it { should have_selector('title', :text => caly_tytul('Jak to dziala')) }    
-  end
-
-
-  describe "Pricing page" do
-    before { visit cennik_path }
-
-    it { should have_selector('h1', :text =>'Cennik') }
-    it { should have_selector('title', :text => caly_tytul('Cennik')) }
-  end
-
-
   describe "Help page" do
     before { visit pomoc_path }
 
@@ -60,11 +44,61 @@ describe "StaticPages" do
   end
 
 
+  #dodajemy shared examples - uwaga inny zapis hash'a
+  shared_examples_for "all static pages" do
+    it { should have_selector('h1', text: naglowek) }
+    it { should have_selector('title', text: caly_tytul(tytul_strony)) }
+  end
+
+
+  describe "How page" do
+    before { visit jak_path }
+    let(:naglowek) { 'Jak to dziala' }
+    let(:tytul_strony) { 'Jak to dziala' }
+
+    it_should_behave_like "all static pages"
+  end
+
+
+  describe "Pricing page" do
+    before { visit cennik_path }
+    let(:naglowek) { 'Cennik' }
+    let(:tytul_strony) { 'Cennik' }
+
+    it_should_behave_like "all static pages"
+  end
+
+
   describe "strone Kontakt" do
     before { visit kontakt_path }
+    let(:naglowek) { 'Kontakt' }
+    let(:tytul_strony) { 'Kontakt' }
 
-    it { should have_selector('h1', :text =>'Kontakt') }
-    it { should have_selector('title', :text => caly_tytul('Kontakt')) }
+    it_should_behave_like "all static pages"
   end  
+
+
+  describe "strone rejestracja <-- signup" do
+    before { visit rejestracja_path }
+    let(:naglowek) { 'Rejestracja' }
+    let(:tytul_strony) { 'Rejestracja' }
+
+    it_should_behave_like "all static pages"
+  end
+
+
+  # testy klikniec w poszczegolne linki
+  it "should have the right links on the layout" do
+    visit root_path
+    click_link "Pomoc"
+      page.should have_selector 'title', text: caly_tytul('Pomoc')
+    click_link "Kontakt"
+      page.should have_selector 'title', text: caly_tytul('Kontakt')
+    click_link 'Jak to dziala'
+      page.should have_selector 'title', text: caly_tytul('Jak to dziala')
+    click_link 'Cennik'
+      page.should have_selector 'title', text: caly_tytul('Cennik')
+  end
+
 
 end
