@@ -1,14 +1,101 @@
+<% provide(:loggedin, false) %>
+
 <!DOCTYPE html>
 <html>
 <head>
   <title><%= caly_tytul(yield(:title)) %></title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag    "application", media: "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
 <body>
 
-<%= yield %>
+<header class="navbar navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container-fluid">
+
+			<!-- Be sure to leave the brand out there if you want it shown -->
+			<!-- id: "logo", - not use -->
+			<%= link_to "EMagazynier:", root_path, id: "logo", class: "brand" %>
+
+			<!-- Everything you want hidden at 940px or less, place within here -->
+			<div class="nav-collapse collapse">
+
+			<!-- .nav, .navbar-search, .navbar-form, etc -->
+            <ul class="nav">
+              <li><%= link_to "Dokumenty",'#' %></li>
+              <li><%= link_to "Artykuły",'#' %></li>
+              <li class="dropdown">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ustawienia <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to "Dane podstawowe",'#' %></li>
+                  <li class="divider"></li>
+                  <li class="nav-header">Ustawienia</li>
+                  <li><%= link_to "Kategorie",'#' %></li>
+                  <li><%= link_to "Jednostki",'#' %></li>
+                </ul>
+              </li>
+              <li class="navbar-form">
+  				<input type="text" class="search-query" placeholder="podaj frazę...">
+  				<!-- <button type="submit" class="btn">Szukaj</button> -->
+  			  </li>
+			</ul>
+
+			<ul class="nav pull-right">
+          		<!-- popracowac nad logowaniem -->
+          		<% unless :loggedin %>
+            		<p class="navbar-text pull-right">
+              			<a href="#" class="navbar-link">Username</a>
+            		</p>
+            	<% end %>
+				<li><%= link_to "Jak to dziala", jak_path %></li>
+				<li><%= link_to "Cennik", cennik_path %></li>
+				<li><%= link_to "Pomoc", pomoc_path %></li>
+				<li><%= link_to "Kontakt", kontakt_path %></li>
+				<li><%= link_to "Zaloguj się", "#" %></li>
+			</ul>
+
+			</div><!--/.nav-collapse -->
+	</div><!--/.fluid-container-->
+	</div><!--/.inner-container-->
+</header>
+
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<%= yield %>
+		</div>
+	</div><!--/.fluid-container-->
+
+	<hr>
+
+	<footer class="container-fluid pull-right">
+		<%= link_to image_tag("rails.png", alt: "Rails", id: "rails_image"), 'http://rubyonrails.org/' %> &copy; Przemyslaw Klosinski 2013
+	</footer>
+
+</div><!--/.fluid-container-->
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <%= javascript_include_tag "jquery" %>
+    <%= javascript_include_tag "bootstrap-dropdown" %>
+    <%= javascript_include_tag "bootstrap-transition" %>
+    <%= javascript_include_tag "bootstrap-alert" %>
+    <%= javascript_include_tag "bootstrap-modal" %>
+    <%= javascript_include_tag "bootstrap-scrollspy" %>
+    <%= javascript_include_tag "bootstrap-tab" %>
+    <%= javascript_include_tag "bootstrap-tooltip" %>
+    <%= javascript_include_tag "bootstrap-popover" %>
+    <%= javascript_include_tag "bootstrap-button" %>
+    <%= javascript_include_tag "bootstrap-collapse" %>
+    <%= javascript_include_tag "bootstrap-carousel" %>
+    <%= javascript_include_tag "bootstrap-typeahead" %>
 
 </body>
 </html>

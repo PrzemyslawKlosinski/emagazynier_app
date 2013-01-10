@@ -1,15 +1,21 @@
 EmagazynierApp::Application.routes.draw do
-  get "static_pages/home"
+  
+  # get "static_pages/home"
+  root to: 'static_pages#home'
 
-  get "static_pages/help"
+  # get "static_pages/help"
+  match '/pomoc', to: 'static_pages#help'
   
-  get "static_pages/how"
+  # get "static_pages/how"
+  match '/jak', to: 'static_pages#how'
   
-  get "static_pages/pricing"
+  # get "static_pages/pricing"
+  match '/cennik', to: 'static_pages#pricing'
   
-  get "static_pages/contact"
+  #get "static_pages/contact"
+  match '/kontakt', to: 'static_pages#contact'
 
-  #for test -> rspec spec/requests/*
+  #for test -> rspec spec/requests/* - generuje nazwana sciezke static_pages_index -> czyli istnieje static_pages_index_path
   match 'static_pages/index' => 'static_pages#home'
 
   # The priority is based upon order of creation:
@@ -61,7 +67,7 @@ EmagazynierApp::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  # root :to => 'static_pages#home'
 
   # See how all your routes lay out with "rake routes"
 
