@@ -13,8 +13,41 @@ describe "UserPages" do
   describe "rejestracja page" do
   	before { visit rejestracja_path }
 
-  	it { should have_selector('h1',text: 'Rejestracja') }
+  	it { should have_selector('h3',text: 'Rejestracja') }
   	it { should have_selector('title', text: caly_tytul('Rejestracja')) }
+  end
+
+  #testy dla strony profilowej
+  describe "profile page" do
+    let(:user) { FactoryGirl.create(:user) }
+    before { visit user_path(user) }
+    it { should have_selector('h4',text: user.name) }
+  end
+
+
+  #testy rejestracji uzytkownika
+  describe "signup" do
+    before { visit rejestracja_path }
+    let(:submit) { "Zarejestruj konto" }
+
+    describe "with invalid information" do
+      it "should not create a user" do
+        expect { click_button submit }.not_to change(User, :count)
+       end
+    end
+
+    describe "with valid information" do
+      before do
+        fill_in "user_name", with: "Example User"
+        fill_in "user_email", with: "test@test.pl"
+        fill_in "user_password", with: "foobar"
+        fill_in "user_password_confirmation", with: "foobar"
+      end
+
+      it "should create a user" do
+        expect { click_button submit }.to change(User, :count).by(1)
+      end
+    end
   end
 
 end

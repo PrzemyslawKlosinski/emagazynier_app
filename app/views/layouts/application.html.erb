@@ -55,7 +55,14 @@
 				<li><%= link_to "Cennik", cennik_path %></li>
 				<li><%= link_to "Pomoc", pomoc_path %></li>
 				<li><%= link_to "Kontakt", kontakt_path %></li>
-				<li><%= link_to "Zaloguj się", "#" %></li>
+
+				<!-- jesli uzytkownik zalogowany  -->
+				<% if @user.nil? || @user.email.blank?  %>
+					<li><%= link_to "Zaloguj się", "#" %></li>	
+				<% else %>
+					<li><%= link_to @user.email, "#" %></li>	
+				<% end %>				
+				
 			</ul>
 
 			</div><!--/.nav-collapse -->
@@ -67,6 +74,12 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span12">
+
+			<!-- #flash messages -->
+			<% flash.each do |key, value| %>
+				<div class="alert alert-<%= key %>"><%= value %></div>
+			<% end %>
+
 			<%= yield %>
 		</div>
 	</div><!--/.fluid-container-->
@@ -76,6 +89,9 @@
 	<footer class="container-fluid pull-right">
 		<%= link_to image_tag("rails.png", alt: "Rails", id: "rails_image"), 'http://rubyonrails.org/' %> &copy; Przemyslaw Klosinski 2013
 	</footer>
+
+	<!-- informacje do debugujace -->
+	<%= debug(params) if Rails.env.development? %>
 
 </div><!--/.fluid-container-->
 

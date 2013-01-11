@@ -1,6 +1,8 @@
 EmagazynierApp::Application.routes.draw do
   
-  get "users/new"
+  #tworzymy resources, wszystkie siezki REST dla user
+  # get "users/new"
+  resources :users
 
   # get "static_pages/home"
   root to: 'static_pages#home'

@@ -1,4 +1,25 @@
 <% provide(:title, 'Rejestracja') %>
 
-<h1>Rejestracja</h1>
-<p>Find me in app/views/users/new.html.erb</p>
+<div class="hero-unit">
+	<div class="row-fluid">
+		<div class="span5 offset4">
+			
+			<h3>Rejestracja nowego użytkownika</h3>
+
+			<!-- dodajemy renderowanie bledow z partial -->
+			<%= render 'shared/error_messages' %>
+				<%= form_for(@user) do |f| %>
+				<%= f.label :name, "Wprowadź nazwę (np. nazwa firmy)" %>
+				<%= f.text_field :name %>
+				<%= f.label :email, "Wprowadź adres email" %>
+				<%= f.text_field :email %>
+				<%= f.label :password, "Wprowadź hasło" %>
+				<%= f.password_field :password %>
+				<%= f.label :password_confirmation, "Potwierdź hasło" %>
+				<%= f.password_field :password_confirmation %><br />
+				<%= f.submit "Zarejestruj konto", class: "btn btn-large btn-primary" %>
+				<% end %>
+
+		</div>
+	</div>
+</div>
