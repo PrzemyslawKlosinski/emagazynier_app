@@ -56,11 +56,11 @@ describe User do
   	it { should_not be_valid }
   end
 
-  #test jesli nil?, walidacja nie powinna przejsc - zalatwia gem
-  describe "when password confirmation is nil" do
-  	before { @user.password_confirmation = nil }
-  	it { should_not be_valid }
-  end
+  # #test jesli nil?, walidacja nie powinna przejsc - usunelismy walidacje password :presence
+  # describe "when password confirmation is nil" do
+  # 	before { @user.password_confirmation = nil }
+  # 	it { should_not be_valid }
+  # end
 
   #test na walidacje czy wartosc nie jest pusta .blank?
   describe "when email is not present" do
