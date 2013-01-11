@@ -49,6 +49,8 @@ class User < ActiveRecord::Base
   before_save { |user| 
   	user.email = email.downcase 
   }
+  #inna metoda zapisania wartosci w before_save
+  # before_save { self.email.downcase! }
 
 
   #walidacja pol
