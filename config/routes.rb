@@ -1,7 +1,14 @@
 EmagazynierApp::Application.routes.draw do
   
+  get "users/new"
+
   # get "static_pages/home"
   root to: 'static_pages#home'
+
+
+  #rejestracja nowego uzytkownika
+  match 'rejestracja', to: 'users#new'
+
 
   # get "static_pages/help"
   match '/pomoc', to: 'static_pages#help'
@@ -17,6 +24,7 @@ EmagazynierApp::Application.routes.draw do
 
   #for test -> rspec spec/requests/* - generuje nazwana sciezke static_pages_index -> czyli istnieje static_pages_index_path
   match 'static_pages/index' => 'static_pages#home'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

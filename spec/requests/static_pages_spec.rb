@@ -75,19 +75,10 @@ describe "StaticPages" do
     let(:tytul_strony) { 'Kontakt' }
 
     it_should_behave_like "all static pages"
-  end  
-
-
-  describe "strone rejestracja <-- signup" do
-    before { visit rejestracja_path }
-    let(:naglowek) { 'Rejestracja' }
-    let(:tytul_strony) { 'Rejestracja' }
-
-    it_should_behave_like "all static pages"
   end
 
 
-  # testy klikniec w poszczegolne linki
+  # dodajemy testy klikniec w poszczegolne linki
   it "should have the right links on the layout" do
     visit root_path
     click_link "Pomoc"
