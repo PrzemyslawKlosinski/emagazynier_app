@@ -18,8 +18,8 @@ describe "StaticPages" do
   describe "Home page" do
     before { visit root_path }
 
-  	it "should have the content 'EMagazynier App'" do
-  		page.should have_content('EMagazynier App')
+  	it "should have the content 'EMagazynier'" do
+  		page.should have_content('EMagazynier')
   	end
 
     it "strona powinna zwierac tytul 'EMagazynier'" do
