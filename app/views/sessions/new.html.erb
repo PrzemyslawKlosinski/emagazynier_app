@@ -1,0 +1,23 @@
+<% provide(:title, 'Logowanie') %>
+
+<div class="hero-unit">
+	<div class="row-fluid">
+		<div class="span6 offset3">
+			
+			<h3>Logowanie</h3>
+
+			<!-- mozna tez zrobic przy pomocy form_tag -->
+			<%= form_for(:session, url: sessions_path) do |f| %>
+			<%= f.label "Email" %>
+			<%= f.text_field :email %>
+			<%= f.label "Haslo" %>
+			<%= f.password_field :password %>
+			<%= f.submit "Logowanie", class: "btn btn-large btn-primary" %>
+			<% end %>
+
+			<p>Nowy użytkownik? <%= link_to "Zarejestruj konto!", rejestracja_path %></p>
+
+
+		</div>
+	</div>
+</div>

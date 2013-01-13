@@ -46,11 +46,19 @@ class User < ActiveRecord::Base
 
 
   #metoda wywolywana przed zapisaniem obiektu do bazy
+  #For more details on the kind of callbacks supported by Active Record, see the discussion of callbacks at the Rails Guides. (ex before_save)
+  #inna metoda zapisania wartosci w before_save
+  # before_save { self.email.downcase! }
   before_save { |user| 
   	user.email = email.downcase 
   }
-  #inna metoda zapisania wartosci w before_save
-  # before_save { self.email.downcase! }
+  #inny sposob to zapisywanie cookies w czasie otwartej przeglądarki
+  before_save :create_remember_token
+  #metoda zapisujaca token
+  private
+  def create_remember_token
+    self.remember_token = SecureRandom.urlsafe_base64
+  end
 
 
   #walidacja pol

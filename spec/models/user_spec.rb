@@ -152,4 +152,11 @@ describe User do
   	it { should_not be_valid }
   end
 
+  #test na zapisanie tokena w obiekcie modelu user
+  describe "remember token" do
+      before { @user.save }
+      # it { @user.remember_token.should_not be_blank }
+      its(:remember_token) { should_not be_blank }
+   end
+
 end

@@ -7,7 +7,8 @@ class UsersController < ApplicationController
   def create
   	@user = User.new(params[:user])
     if(@user.save)
-  	  #jesli sie udalo przejdz do strony show / domyslanie pokaz komunikat o wyslanym mailu
+  	  #jesli sie udalo zapisz cookies, przejdz do strony show / domyslanie pokaz komunikat o wyslanym mailu
+      sign_in @user
       flash[:success] = 'Witaj w aplikacji EMagazynier! Odbierz email i dokoncz rejestracje.'
   	  redirect_to @user
     else

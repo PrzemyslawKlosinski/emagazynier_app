@@ -1,4 +1,4 @@
-<% provide(:loggedin, false) %>
+
 
 <!DOCTYPE html>
 <html>
@@ -24,43 +24,45 @@
 			<!-- Everything you want hidden at 940px or less, place within here -->
 			<div class="nav-collapse collapse">
 
+			<% if signed_in? %>
 			<!-- .nav, .navbar-search, .navbar-form, etc -->
             <ul class="nav">
               <li><%= link_to "Dokumenty",'#' %></li>
               <li><%= link_to "Artykuły",'#' %></li>
-              <li class="dropdown">
-             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ustawienia <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><%= link_to "Dane podstawowe",'#' %></li>
-                  <li class="divider"></li>
-                  <li class="nav-header">Ustawienia</li>
-                  <li><%= link_to "Kategorie",'#' %></li>
-                  <li><%= link_to "Jednostki",'#' %></li>
-                </ul>
-              </li>
               <li class="navbar-form">
   				<input type="text" class="search-query" placeholder="podaj frazę...">
   				<!-- <button type="submit" class="btn">Szukaj</button> -->
   			  </li>
 			</ul>
+			<% end %>
 
 			<ul class="nav pull-right">
-          		<!-- popracowac nad logowaniem -->
-          		<% unless :loggedin %>
-            		<p class="navbar-text pull-right">
-              			<a href="#" class="navbar-link">Username</a>
-            		</p>
-            	<% end %>
 				<li><%= link_to "Jak to dziala", jak_path %></li>
 				<li><%= link_to "Cennik", cennik_path %></li>
 				<li><%= link_to "Pomoc", pomoc_path %></li>
 				<li><%= link_to "Kontakt", kontakt_path %></li>
 
 				<!-- jesli uzytkownik zalogowany  -->
-				<% if @user.nil? || @user.email.blank?  %>
-					<li><%= link_to "Zaloguj się", "#" %></li>	
+				<% if signed_in? %>
+					<li id="fat-menu" class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<%=@current_user.name %><b class="caret"></b>
+					</a>
+					<ul class="dropdown-menu">
+						<li><%= link_to "Stan magazynowy", current_user %></li>
+						<li class="divider"></li>
+                  		<li class="nav-header">Ustawienia</li>
+                  			<li><%= link_to "Dane podstawowe",'#' %></li>
+                  			<li><%= link_to "Kategorie",'#' %></li>
+                  			<li><%= link_to "Jednostki",'#' %></li>
+						<li class="divider"></li>
+						<li>
+							<%= link_to "Wylogowanie", wyloguj_path, method: "delete" %>
+						</li>
+					</ul>
+					</li>
 				<% else %>
-					<li><%= link_to @user.email, "#" %></li>	
+					<li><%= link_to "Logowanie", zaloguj_path %></li>	
 				<% end %>				
 				
 			</ul>

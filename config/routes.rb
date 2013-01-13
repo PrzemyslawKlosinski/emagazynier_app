@@ -1,16 +1,22 @@
 EmagazynierApp::Application.routes.draw do
   
+
   #tworzymy resources, wszystkie siezki REST dla user
   # get "users/new"
   resources :users
 
+
+  #logowanie
+  resources :sessions, only: [:new, :create, :destroy]
+  match '/zaloguj', to: 'sessions#new'
+  match '/wyloguj', to: 'sessions#destroy', via: :delete
+  #rejestracja nowego uzytkownika
+  match '/rejestracja', to: 'users#new'
+
+
   # get "static_pages/home"
   root to: 'static_pages#home'
-
-
-  #rejestracja nowego uzytkownika
-  match 'rejestracja', to: 'users#new'
-
+ 
 
   # get "static_pages/help"
   match '/pomoc', to: 'static_pages#help'
