@@ -26,8 +26,9 @@ module SessionsHelper
 
 	def signed_in?
 		#symulacja uzytkownik zalogowany
-		# @current_user = User.find_by_name("EMAGAZYNIER2")
-		!current_user.nil?
+		# @current_user = User.find_by_name("EMAGAZYNIER2") lub
+		# self.current_user = User.find_by_name("EMAGAZYNIER2") (wykorzysta metoda a nie utworzy lokalna zmienna)
+		!current_user.nil?	#metoda ktora zwraca @current_user a nastepnie jest pytanie czy jest nil?
 	end
 
 
@@ -35,7 +36,7 @@ module SessionsHelper
 	#Typically, this means assigning to variables that are initially nil, but note that false values will also be overwritten by the ||= operator.
 	def current_user=(user)
 		@current_user = user
-		end
+	end
 	def current_user
 		@current_user ||= User.find_by_remember_token(cookies[:remember_token])
 		#jesli to sie nie udalo sprobuj pobrac z sesji
