@@ -1,0 +1,30 @@
+<% provide(:title, 'Edycja profilu') %>
+
+<div class="hero-unit">
+	<div class="row-fluid">
+		<div class="span6 offset3">
+			
+			<h3>Edycja danych podstawowych użytkownika</h3>
+
+			<!-- dodajemy renderowanie bledow z partial -->
+			<%= render 'shared/error_messages' %>
+				<%= form_for(@user) do |f| %>
+				<%= f.label :name, "Wprowadź nazwę (np. nazwa firmy)" %>
+				<%= f.text_field :name %>
+				<%= f.label :email, "Wprowadź adres email" %>
+				<%= f.text_field :email %>
+				<%= f.label :password, "Wprowadź hasło" %>
+				<%= f.password_field :password %>
+				<%= f.label :password_confirmation, "Potwierdź hasło" %>
+				<%= f.password_field :password_confirmation %><br />
+
+
+				<%= gravatar_for @user %>
+				<a href="http://gravatar.com/emails"><br />zmień logo</a><br /><br />
+
+				<%= f.submit "Zapisz zmiany", class: "btn btn-large btn-primary" %>
+				<% end %>
+
+		</div>
+	</div>
+</div>

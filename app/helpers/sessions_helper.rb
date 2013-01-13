@@ -30,6 +30,19 @@ module SessionsHelper
 		# self.current_user = User.find_by_name("EMAGAZYNIER2") (wykorzysta metoda a nie utworzy lokalna zmienna)
 		!current_user.nil?	#metoda ktora zwraca @current_user a nastepnie jest pytanie czy jest nil?
 	end
+	###Authorization
+	def current_user?(user)
+		user == current_user
+	end
+
+	#Redirect path saver - zapamietujemy sciezke i ja odczytujemy z sesji, aby do niej wrocic, po redirect
+	def redirect_back_or(default)
+		redirect_to(session[:return_to] || default)
+		session.delete(:return_to)
+	end
+	def store_location
+		session[:return_to] = request.fullpath
+	end
 
 
 	#Its effect is to set the @current_user instance variable to the user corresponding to the remember token, but only if @current_user is undefined.

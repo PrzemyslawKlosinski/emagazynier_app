@@ -9,7 +9,8 @@ class SessionsController < ApplicationController
 		if user && user.authenticate(params[:session][:password])
 			sign_in user
 			#zmienna z sign_in
-			redirect_to current_user
+			# redirect_to current_user - zamiast przekierowac do strony users/:id akcji show, odtwarzamy zapamietana sciezke
+			redirect_back_or user
 		else
 			flash.now[:error] = 'Nie udane logowanie. Sprawdz email oraz haslo'
 			render 'new'

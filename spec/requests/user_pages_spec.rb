@@ -64,4 +64,35 @@ describe "UserPages" do
     end
   end
 
+  #testy strony edycji
+  describe "edit" do
+    let(:user) { FactoryGirl.create(:user) }
+    before do
+      
+      ###Authorization
+      visit zaloguj_path(user)
+      valid_signin(user)
+
+      visit edit_user_path(user)
+    end
+
+    describe "with valid information" do
+      let(:new_name) { "New Name" }
+      let(:new_email) { "new@example.com" }
+      before do
+        fill_in "user_name", with: new_name
+        fill_in "user_email", with: new_email
+        fill_in "user_password", with: user.password
+        fill_in "user_password_confirmation", with: user.password
+        click_button "Zapisz zmiany"
+      end
+
+      it { should have_selector('title', text: new_name) }
+      it { should have_selector('div.alert.alert-success') }
+      it { should have_link('Wylogowanie', href: wyloguj_path) }
+      specify { user.reload.name.should == new_name }
+      specify { user.reload.email.should == new_email }
+    end
+  end
+
 end
