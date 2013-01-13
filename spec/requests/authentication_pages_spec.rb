@@ -23,7 +23,9 @@ describe "strona logowania" do
 		before { click_button "Logowanie" }
 
 		it { should have_selector('title', text: 'Logowanie') }
-		it { should have_selector('div.alert.alert-error', text: 'Nie udane') }
+		# it { should have_selector('div.alert.alert-error', text: 'Nie udane') }
+		# WYKORZYSTUJEMY metode zdefiniowana w spec/support/utilities.rb
+		it { should have_error_message('Nie udane') }
 
 		describe "after visiting another page" do
 			before { click_link "Pomoc" }
@@ -36,11 +38,13 @@ describe "strona logowania" do
 		#uzywamy factory Girl dla modelu user
 		let(:user) { FactoryGirl.create(:user) }
 
-		before do
-			fill_in "session_email", with: user.email
-			fill_in "session_password", with: user.password
-			click_button "Logowanie"
-		end
+		# before do
+		# 	fill_in "session_email", with: user.email
+		# 	fill_in "session_password", with: user.password
+		# 	click_button "Logowanie"
+		# end
+		# WYKORZYSTUJEMY metode zdefiniowana w spec/support/utilities.rb
+		before { valid_signin(user) }
 
 		it { should have_selector('title', text: user.name) }
 		it { should have_link('Stan magazynowy', href: user_path(user)) }
