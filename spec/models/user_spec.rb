@@ -70,8 +70,20 @@ describe User do
 
 
 
-  #test czy metoda authenticate zwraca wartosc, czy dziala
+  #test czy obiekt User reaguje na metode authenticate, User.authenticate?
   it { should respond_to(:authenticate) }
+
+  #test czy obiekt User zwraca odpowiedz na metode User.admin? (? oznacza zwroc wartosc boolean)
+  it { should respond_to(:admin) }
+
+  # toggle! method to flip the admin attribute from false to true.
+  # should be_admin implies that the user should have an admin? boolean method. (the RSpec boolean convention) 
+  it { should be_valid }
+  it { should_not be_admin }
+  describe "with admin attribute set to 'true'" do
+    before { @user.toggle!(:admin) }
+    it { should be_admin }
+  end
 
   #test na dlugosc hasla, nie moze byc mniejsze niz 6
   describe "with a password that's too short" do

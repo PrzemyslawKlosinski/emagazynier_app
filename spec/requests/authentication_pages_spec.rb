@@ -48,6 +48,9 @@ describe "Authentykacja - strona logowania" do
 		before { valid_signin(user) }
 
 		it { should have_selector('title', text: user.name) }
+		# tylko administratorzy
+		it { should have_link('Uzytkownicy', href: users_path) }
+		# /tylko administratorzy
 		it { should have_link('Stan magazynowy', href: user_path(user)) }
 		it { should have_link('Dane podstawowe', href: edit_user_path(user)) }
 		it { should have_link('Wylogowanie', href: wyloguj_path) }
@@ -84,5 +87,33 @@ describe "as wrong user" do
 		specify { response.should redirect_to(user) }
 	end
 end
+
+#sprawdzamy czy uzytkownicy niezalogowani sa przekierowywani na strone logowania
+describe "authorization" do
+
+	describe "for non-signed-in users" do
+		describe "in the Users controller" do
+			describe "visiting the user index" do
+			before { visit users_path }
+			it { should have_selector('title', text: 'Logowanie') }
+			end
+		end
+	end
+
+	describe "as non-admin user" do
+		let(:user) { FactoryGirl.create(:user) }
+		let(:non_admin) { FactoryGirl.create(:user) }
+
+		before { 
+			visit zaloguj_path(non_admin)
+      		valid_signin(non_admin)
+		}
+		describe "submitting a DELETE request to the Users#destroy action" do
+			before { delete user_path(user) }
+			specify { response.should redirect_to(root_path) }
+			end
+		end
+	end
+
 
 end

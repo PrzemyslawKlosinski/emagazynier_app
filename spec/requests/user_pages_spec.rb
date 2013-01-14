@@ -95,4 +95,67 @@ describe "UserPages" do
     end
   end
 
+  describe "index" do
+
+    # testprzed zmiana wszyscy userzy na jednej stronie
+    # before do
+    #   visit zaloguj_path
+    #   valid_signin FactoryGirl.create(:user)
+    #   FactoryGirl.create(:user, name: "Bob", email: "bob@example.com")
+    #   FactoryGirl.create(:user, name: "Ben", email: "ben@example.com")
+    #   visit users_path
+    # end
+
+    #po zmiane Factory file tworzy wielu uzytkownikow
+    let(:user) { FactoryGirl.create(:user) }
+    before(:all)  { 30.times { FactoryGirl.create(:user) } }
+    after(:all)   { User.delete_all } 
+
+    before(:each) do
+      visit zaloguj_path
+      valid_signin user
+      visit users_path
+    end
+
+    it { should have_selector('title', text: 'Wszyscy uzytkownicy') }
+    it { should have_selector('h3',text: 'Wszyscy uzytkownicy') }
+    
+    # test przed zmiana wszyscy userzy na jednej stronie
+    # it "should list each user" do
+    #   User.all.each do |user|
+    #     page.should have_selector('li', text: user.name)
+    #   end
+    # end
+
+    #po zmiane Factory file tworzy wielu uzytkownikow
+    describe "pagination" do
+        it { should have_selector('div.pagination') }
+        it "should list each user" do
+          User.paginate(page: 1).each do |user|
+            page.should have_selector('li', text: user.name)
+          end
+        end
+    end
+
+    describe "delete links" do
+      it { should_not have_link('usun') }
+      describe "as an admin user" do
+        let(:admin) { FactoryGirl.create(:admin) }
+        before do
+          visit zaloguj_path
+          valid_signin admin
+          visit users_path
+        end
+
+        it { should have_link('usun', href: user_path(User.first)) }
+        
+        it "should be able to delete another user" do
+          expect { click_link('usun') }.to change(User, :count).by(-1)
+        end
+        it { should_not have_link('usun', href: user_path(admin)) }
+      end
+    end
+  end
+
+
 end

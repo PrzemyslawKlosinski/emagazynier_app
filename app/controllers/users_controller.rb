@@ -2,8 +2,29 @@ class UsersController < ApplicationController
 
 
   #Authorization
-  before_filter :signed_in_user, only: [:edit, :update]
+  before_filter :signed_in_user, only: [:edit, :update, :index, :destroy]
   before_filter :correct_user, only: [:edit, :update]
+  before_filter :admin_user, only: :destroy
+
+
+
+  #wyswietla liste uzytkownikow
+  def index
+    # @users = User.all
+    #paginate
+    @users = User.paginate(page: params[:page])
+  end
+
+  #wyswietla profil nowego uzytkownika
+  def show
+   @user = User.find(params[:id])
+  end
+
+  def destroy
+    User.find(params[:id]).destroy
+    flash[:success] = "Uzytkownik usuniety."
+    redirect_to users_path
+  end
 
 
   def new
@@ -21,12 +42,6 @@ class UsersController < ApplicationController
       #wyrenderuj partial 
       render 'new'
     end
-  end
-
-
-  #wyswietla profil nowego uzytkownika
-  def show
-	 @user = User.find(params[:id])
   end
 
 
@@ -54,9 +69,14 @@ class UsersController < ApplicationController
     store_location
     redirect_to zaloguj_path, notice: "Prosze sie zalogowac." unless signed_in?
   end
+  #metoda sprawdzajaca przed wywolaniem edit
   def correct_user
     @user = User.find(params[:id])
     redirect_to(@current_user) unless current_user?(@user)
+  end
+  #metoda sprawdzajaca przed wywolaniem destroy
+  def admin_user
+    redirect_to(root_path) unless current_user.admin?
   end
 
 
