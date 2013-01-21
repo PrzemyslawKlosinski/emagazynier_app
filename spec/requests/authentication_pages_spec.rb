@@ -51,8 +51,8 @@ describe "Authentykacja - strona logowania" do
 		# tylko administratorzy
 		it { should have_link('Uzytkownicy', href: users_path) }
 		# /tylko administratorzy
-		it { should have_link('Stan magazynowy', href: user_path(user)) }
-		it { should have_link('Dane podstawowe', href: edit_user_path(user)) }
+		it { should have_link('Sklep', href: user_path(user)) }
+		it { should have_link('Ustawienia', href: edit_user_path(user)) }
 		it { should have_link('Wylogowanie', href: wyloguj_path) }
 		it { should_not have_link('Zaloguj', href: zaloguj_path) }
 
