@@ -8,7 +8,7 @@
 #  name                       :string(255)
 #  about                      :text
 #  www                        :string(255)
-#  isActive                   :boolean
+#  isActive                   :boolean          default(FALSE), not null
 #  agreementElectronicInvoice :boolean
 #  agreementProcessing        :boolean
 #  headerPicture              :binary
@@ -18,6 +18,8 @@
 #  partialInventory           :boolean
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
+#  remember_token             :string(255)
+#  admin                      :boolean          default(FALSE)
 #
 
 class User < ActiveRecord::Base

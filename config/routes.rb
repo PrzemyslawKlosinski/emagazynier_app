@@ -1,6 +1,12 @@
 EmagazynierApp::Application.routes.draw do
   
 
+  resources :products
+
+  resources :units
+
+  resources :categories
+
   #tworzymy resources, wszystkie siezki REST dla user
   # get "users/new"
   resources :users
