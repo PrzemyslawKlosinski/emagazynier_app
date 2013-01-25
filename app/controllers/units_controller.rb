@@ -12,7 +12,7 @@ class UnitsController < ApplicationController
     @unit = current_user.units.build if signed_in?
 
     # dla tabeli index
-    @units = Unit.find(:all, :conditions => ["isDefault = ? or user_id = ?", "true", current_user.id])
+    @units = Unit.find(:all, :conditions => ["\"isDefault\" = ? or user_id = ?", "true", current_user.id])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -49,7 +49,7 @@ class UnitsController < ApplicationController
     @unit = Unit.find(params[:id])
 
     # dla tabeli index
-    @units = Unit.find(:all, :conditions => ["isDefault = ? or user_id = ?", "true", current_user.id])
+    @units = Unit.find(:all, :conditions => ["\"isDefault\" = ? or user_id = ?", "true", current_user.id])
 
     render 'index'
 

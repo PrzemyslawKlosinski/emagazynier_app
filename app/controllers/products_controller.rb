@@ -9,8 +9,8 @@ class ProductsController < ApplicationController
     
     # dla formularza new
     @product = current_user.products.build if signed_in?
-    @categories = Category.find(:all, :conditions => ["isDefault = ? or user_id = ?", "true", current_user.id])
-    @units = Unit.find(:all, :conditions => ["isDefault = ? or user_id = ?", "true", current_user.id])
+    @categories = Category.find(:all, :conditions => ["\"isDefault\" = ? or user_id = ?", "true", current_user.id])
+    @units = Unit.find(:all, :conditions => ["\"isDefault\" = ? or user_id = ?", "true", current_user.id])
 
     # dla tabeli index
     # @products = Product.all
@@ -56,8 +56,8 @@ class ProductsController < ApplicationController
 
     # dla formularza edit
     @product = Product.find(params[:id])
-    @categories = Category.find(:all, :conditions => ["isDefault = ? or user_id = ?", "true", current_user.id])
-    @units = Unit.find(:all, :conditions => ["isDefault = ? or user_id = ?", "true", current_user.id])
+    @categories = Category.find(:all, :conditions => ["\"isDefault\" = ? or user_id = ?", "true", current_user.id])
+    @units = Unit.find(:all, :conditions => ["\"isDefault\" = ? or user_id = ?", "true", current_user.id])
 
 
     # dla tabeli index
@@ -76,8 +76,8 @@ class ProductsController < ApplicationController
   def create
     
     # dla formularza new, dla metody create
-    @categories = Category.find(:all, :conditions => ["isDefault = ? or user_id = ?", "true", current_user.id])
-    @units = Unit.find(:all, :conditions => ["isDefault = ? or user_id = ?", "true", current_user.id])
+    @categories = Category.find(:all, :conditions => ["\"isDefault\" = ? or user_id = ?", "true", current_user.id])
+    @units = Unit.find(:all, :conditions => ["\"isDefault\" = ? or user_id = ?", "true", current_user.id])
 
     #@product = Product.new(params[:product])
     @product = current_user.products.build(params[:product])

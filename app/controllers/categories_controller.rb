@@ -14,7 +14,7 @@ class CategoriesController < ApplicationController
 
     # dla tabeli index
     # @categories = Category.all
-    @categories = Category.find(:all, :conditions => ["isDefault = ? or user_id = ?", "true", current_user.id])
+    @categories = Category.find(:all, :conditions => ["\"isDefault\" = ? or user_id = ?", "true", current_user.id])
 
 
     respond_to do |format|
@@ -54,7 +54,7 @@ class CategoriesController < ApplicationController
     @category = Category.find(params[:id])
 
     # dla tabeli index
-    @categories = Category.find(:all, :conditions => ["isDefault = ? or user_id = ?", "true", current_user.id])
+    @categories = Category.find(:all, :conditions => ["\"isDefault\" = ? or user_id = ?", "true", current_user.id])
 
     render 'index'
 
