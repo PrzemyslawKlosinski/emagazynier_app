@@ -4,5 +4,5 @@ ActionMailer::Base.smtp_settings = {
     :user_name => 'emagazynierapp@gmail.com',
     :password => '!emag2013',
     :authentication => :plain,
-    :enable_starttls_auto => true
+    # :enable_starttls_auto => true
   }

@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
 
     # dla lewego menu
-    @categories = Category.find(:all, :conditions => ["\"isDefault\" = ? or user_id = ?", "true", @user.id])
+    @categories = Category.find(:all, :conditions => ["\"isDefault\" = ? or user_id = ?", true, @user.id])
 
     #dodajemy producty na stronie uzytkownika
     #Notice here how clever paginate is—it even works through the microposts association,
