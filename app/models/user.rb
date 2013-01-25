@@ -24,6 +24,12 @@
 
 class User < ActiveRecord::Base
   belongs_to :location
+
+  #usunie jego produkty gdy usuniemy uzytkownika
+  has_many :products, dependent: :destroy
+  has_many :categories, dependent: :destroy
+  has_many :units, dependent: :destroy
+
   attr_accessible :about, :agreementElectronicInvoice, :agreementProcessing, :email, :footerText, :headerPicture, :headerText, :isActive, :name, :partialInventory, :password_digest, :www, :password, :password_confirmation
 
 

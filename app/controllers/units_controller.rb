@@ -1,8 +1,18 @@
 class UnitsController < ApplicationController
+
+  #Autentykacja
+  before_filter :signed_in_user #trzeba byc zalogowanym, tylko swoje przez edycja akcji
+
   # GET /units
   # GET /units.json
   def index
-    @units = Unit.all
+    # @units = Unit.all
+
+    # dla formularza new
+    @unit = current_user.units.build if signed_in?
+
+    # dla tabeli index
+    @units = Unit.find(:all, :conditions => ["isDefault = ? or user_id = ?", "true", current_user.id])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -34,20 +44,31 @@ class UnitsController < ApplicationController
 
   # GET /units/1/edit
   def edit
+
+    # dla formularza edit
     @unit = Unit.find(params[:id])
+
+    # dla tabeli index
+    @units = Unit.find(:all, :conditions => ["isDefault = ? or user_id = ?", "true", current_user.id])
+
+    render 'index'
+
   end
 
   # POST /units
   # POST /units.json
   def create
-    @unit = Unit.new(params[:unit])
+    # @unit = Unit.new(params[:unit])
+    @unit = current_user.units.build(params[:unit])
 
     respond_to do |format|
       if @unit.save
-        format.html { redirect_to @unit, notice: 'Unit was successfully created.' }
+        # format.html { redirect_to @unit, notice: 'Unit was successfully created.' }
+        format.html { redirect_to units_path, notice: 'Pomyslnie utworzono jednostke.' }
         format.json { render json: @unit, status: :created, location: @unit }
       else
-        format.html { render action: "new" }
+        # format.html { render action: "new" }
+        format.html { redirect_to units_path, :flash => { :error => 'Nie udalo sie utworzyc jednostki' } }
         format.json { render json: @unit.errors, status: :unprocessable_entity }
       end
     end
@@ -60,10 +81,12 @@ class UnitsController < ApplicationController
 
     respond_to do |format|
       if @unit.update_attributes(params[:unit])
-        format.html { redirect_to @unit, notice: 'Unit was successfully updated.' }
+        # format.html { redirect_to @unit, notice: 'Unit was successfully updated.' }
+        format.html { redirect_to units_path, notice: 'Pomyslnie zaktualizowano jednostke.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        # format.html { render action: "edit" }
+        format.html { redirect_to units_path, :flash => { :error => 'Nie udalo sie zaktualizowac jednostki' } }
         format.json { render json: @unit.errors, status: :unprocessable_entity }
       end
     end

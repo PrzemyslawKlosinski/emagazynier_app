@@ -6,14 +6,77 @@
 		<h1>
 			<%= gravatar_for @user %>
 			<h4><%= @user.name %>!</h4>
-			Twój magazyn obecnie posiada:      artykuły.
+			
+			<% if @user.products.any? %>
+				<h3>Magazyn obecnie posiada artykułów: <%= @user.products.count %>.</h3>
+			<% else %>
+				<h3>Magazyn obecnie posiada artykułów: 0.</h3>
+			<% end %>
+			
 		</h1>
 	</section>
 </aside>
 <hr>
 
-<div class="hero-unit">
+<div class="container-fluid">
+	<div class="row-fluid">
 
-	...w trakcie budowy...
 
+		<div class="span2">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Kategoria</li>
+              <!--               
+              <li class="active"><a href="#">Wszystkie</a></li>
+              <li><a href="#">Blat</a></li>
+              <li><a href="#">Zawias</a></li>
+              <li><a href="#">Front</a></li> 
+          	  -->
+              <% @categories.each do |category| %>
+              	<li><a href="#"><%= category.name %></a></li>
+              <% end %>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+
+
+        <div class="span10">
+        	<!-- <div class="hero-unit"> -->
+	        <div class="well sidebar-nav">
+
+	          	<% if @user.products.any? %>
+	          	<!-- <legend>Lista artykułów</legend> -->
+	          	<table class="table table-striped" class="table table-condensed">
+	          		<thead>
+	          			<tr>
+	          				<th class="span1">Pozycja</th>
+	          				<th class="span2">Nazwa artykułu</th>
+	          				<th class="span2">Opis</th>
+	          				<th class="span1">Aktualizacja</th>
+	          				<th class="span1">Ilość</th>
+	          				<th class="span1">Cena</th>
+	          				<th class="span2"></th>
+	          			</tr>
+	          		</thead>
+
+	          		<tbody>
+	          			<% if params[:page].nil? %>
+	          				<% @licznik = 0 %>
+	          			<% else %>
+	          				<% @licznik = (params[:page].to_i * 30) - 30 %>
+	          			<% end %>
+
+	          			<%= render @products %>
+
+	          			<div class="pull-right">
+	          				<%= will_paginate @products %>
+	          			</div>
+	          		</tbody>
+	          	</table>
+	          	<% end %>
+
+	        </div>
+	     </div>
+
+  </div>
 </div>

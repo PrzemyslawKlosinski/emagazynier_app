@@ -1,29 +1,58 @@
-<h1>Listing units</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Shortname</th>
-    <th>Isdefault</th>
-    <th>User</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+    <br />
 
-<% @units.each do |unit| %>
-  <tr>
-    <td><%= unit.name %></td>
-    <td><%= unit.shortName %></td>
-    <td><%= unit.isDefault %></td>
-    <td><%= unit.user %></td>
-    <td><%= link_to 'Show', unit %></td>
-    <td><%= link_to 'Edit', edit_unit_path(unit) %></td>
-    <td><%= link_to 'Destroy', unit, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
+  <div class="row-fluid">
+      <div class="span6 offset3">
 
-<br />
+        <legend>Jednostki</legend>
+        <div class="well sidebar-nav">
+          <div class="field center">
 
-<%= link_to 'New Unit', new_unit_path %>
+              <%= render 'form' %> 
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- <div class="container-fluid"> -->
+  <div class="row-fluid">
+    <div class="span6 offset3">
+
+
+      <table class="table table-striped">
+
+        <thead>
+          <tr>
+            <th>Nazwa</th>
+            <th>Nazwa krótka</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @units.each do |unit| %>
+          <tr>
+            <td>
+              <%= link_to unit.name, :controller => "units", :action => "show", :id => unit %> 
+              <!-- <%= link_to unit %> -->
+            </td> 
+            <td>
+            <%= unit.shortName %>
+            </td> 
+            <td>
+              <span class="pull-right">
+                <% if !unit.isDefault %>
+                <%= link_to 'Edytuj', edit_unit_path(unit) %> | 
+                <%= link_to 'Usuń', unit, confirm: 'Czy napewno usunąć?', method: :delete %>
+                <% end %>
+              </span>
+            </td>
+          </tr>
+             <% end %>
+          </tbody>
+
+        </table>
+
+<!-- </div> -->
+</div>
+</div>

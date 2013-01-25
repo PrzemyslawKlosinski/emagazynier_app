@@ -30,6 +30,18 @@ module SessionsHelper
 		# self.current_user = User.find_by_name("EMAGAZYNIER2") (wykorzysta metoda a nie utworzy lokalna zmienna)
 		!current_user.nil?	#metoda ktora zwraca @current_user a nastepnie jest pytanie czy jest nil?
 	end
+
+
+   	###Authorization - przekieruj do strony zaloguj jesli uzytkownik niezalogowany
+   	#przeniesione z  users_helper.rb
+  	def signed_in_user
+  		#zapisuje adres z jakiego przyszlismy
+  		unless signed_in?
+  			store_location
+  			redirect_to zaloguj_path, notice: "Prosze sie zalogowac."
+  		end
+  	end
+
 	###Authorization
 	def current_user?(user)
 		user == current_user

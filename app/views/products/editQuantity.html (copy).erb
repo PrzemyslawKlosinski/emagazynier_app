@@ -1,0 +1,77 @@
+  <div class="row-fluid">
+        <div class="span10 offset1">
+
+        <legend>Stan magazynowy artykułu</legend>
+        <div class="well sidebar-nav">
+          <div class="field">
+
+<%= form_for(@product) do |f| %>
+
+  <% if @product.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+      <ul>
+      <% @product.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<br />
+<div class="row-fluid">
+  <div class="span5 offset1">
+    <strong>Zmiana bieżącego stanu magazynowego artykułu</strong><br />
+  </div>
+  <div class="span6">
+    <strong>Informacje oraz ograniczenia stanu magazynowego artykułu</strong><br />
+  </div>
+</div>
+<div class="row-fluid">
+    <div class="span2 offset1">Stan zakupu</div>
+  <div class="span2">
+    <!-- < f.text_field :summaryQuantityPurchase, :onchange => "update()" %> -->
+    <input onChange="update()" id="product_summaryQuantityPurchase" name="product[summaryQuantityPurchase]" type="number" min="0" step="1" value ="<%= @product.summaryQuantityPurchase %>"/>
+  </div>
+    <div class="span2 offset1">Stan aktualny</div>
+    <div class="span3">
+    <!-- < f.text_field :quantity%>-->
+      <input id="product_quantity" name="product[quantity]" size="30" type="text" value="<%= @product.quantity %>" readonly="readonly" />
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span2 offset1">Stan sprzedaży</div>
+  <!-- < f.text_field :summaryQuantitySales, :onchange => "update()" %></div> -->
+  <div class="span2">
+    <input onChange="update()" id="product_summaryQuantitySales" name="product[summaryQuantitySales]" type="number" min="0" step="1" value ="<%= @product.summaryQuantitySales %>"/>
+  </div>
+    <div class="span2 offset1"> Stan minimalny</div>
+    <div class="span3"><%= f.text_field :quantityMinimum %></div>
+ </div>
+<div class="row-fluid">
+    <div class="span2 offset1">Stan w rezerwacji</div>
+  <div class="span2">
+    <!-- < f.text_field :reservedQuantity, :onchange => "update()" %> -->
+    <input onChange="update()" id="product_reservedQuantity" name="product[reservedQuantity]" type="number" min="0" step="1" value ="<%= @product.reservedQuantity %>"/>
+  </div>
+    <div class="span2 offset1">Stan maksymalny</div>
+    <div class="span3"><%= f.text_field :quantityMaximum %></div>
+ </div>
+
+  <span class="pull-right">
+    <!-- < link_to 'Powrót', current_user, class:"btn btn-info" %> -->
+    <%= link_to 'Powrót', products_path, class:"btn btn-info" %>
+    <%= f.submit "Zapisz", class:"btn btn-info" %>
+  </span>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <br />
+
+
+<% end %>

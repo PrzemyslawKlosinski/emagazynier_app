@@ -71,6 +71,8 @@ describe User do
   end
 
 
+  #powinien odpowiadac na liste productow, miec ustawiony has_many
+  it { should respond_to(:products) }
 
   #test czy obiekt User reaguje na metode authenticate, User.authenticate?
   it { should respond_to(:authenticate) }
@@ -172,5 +174,43 @@ describe User do
       # it { @user.remember_token.should_not be_blank }
       its(:remember_token) { should_not be_blank }
    end
+
+
+      #test czy artykuly sa w dobrej kolejnosc, od ostatnich
+   describe "products associations" do
+    before { @user.save }
+
+    # let! wymusza natychmiastowe dodanie do bazy
+    # This uses the let! (read ‘‘let bang’’) method in place of let; the reason is that let variables are lazy, meaning that they only spring into existence when referenced
+    let!(:older_product) do
+      FactoryGirl.create(:product, name: 'stary', user: @user, created_at: 1.day.ago)
+    end
+
+    let!(:newer_product) do
+      FactoryGirl.create(:product, name: 'nowy', user: @user, created_at: 1.hour.ago)
+    end
+    it "should have the right products in the right order" do 
+      @user.products.should == [newer_product, older_product]
+    end
+
+    #test czy po usunieciu uzytkownika wszystkie jego producty zostana usuniete
+    it "should destroy associated products" do
+      products = @user.products
+      @user.destroy
+      products.each do |product|
+        Product.find_by_id(product.id).should be_nil
+        
+        # Here we have used Micropost.find_by_id, which returns nil if the record is not
+        #found, whereas Micropost.find raises an exception on failure, which is a bit harderto test for.
+        #does the trick in this case
+
+        # lambda do
+        #   Micropost.find(micropost.id)
+        # end.should raise error(ActiveRecord::RecordNotFound)
+
+       end
+     end
+  end
+
 
 end

@@ -16,3 +16,16 @@
 //= require bootstrap
 
 //= require_tree .
+
+$('.submit_me').click(function() {
+  $('form').submit();
+  return false;
+});
+
+function update(){
+	var product_summaryQuantityPurchase=document.getElementById("product_summaryQuantityPurchase").value;
+	var product_summaryQuantitySales=document.getElementById("product_summaryQuantitySales").value;
+	var product_reservedQuantity=document.getElementById("product_reservedQuantity").value;
+	var quantity=document.getElementById("product_quantity");
+	quantity.value=product_summaryQuantityPurchase - product_summaryQuantitySales - product_reservedQuantity;
+}

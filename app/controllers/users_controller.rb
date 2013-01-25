@@ -1,12 +1,10 @@
 class UsersController < ApplicationController
 
-
-  #Authorization
-  before_filter :signed_in_user, only: [:edit, :update, :index, :destroy]
+  #Autentykacja
+  before_filter :signed_in_user, only: [:edit, :update, :index, :destroy] #show pokazuje sklep
+  #Autoryzacja
   before_filter :correct_user, only: [:edit, :update]
   before_filter :admin_user, only: :destroy
-
-
 
   #wyswietla liste uzytkownikow
   def index
@@ -18,6 +16,15 @@ class UsersController < ApplicationController
   #wyswietla profil nowego uzytkownika
   def show
    @user = User.find(params[:id])
+
+    # dla lewego menu
+    @categories = Category.find(:all, :conditions => ["isDefault = ? or user_id = ?", "true", current_user.id])
+
+    #dodajemy producty na stronie uzytkownika
+    #Notice here how clever paginate is—it even works through the microposts association,
+    #reaching into the microposts table and pulling out the desired page of microposts.
+    @products = @user.products.paginate(page: params[:page])
+
   end
 
   def destroy
@@ -64,12 +71,12 @@ class UsersController < ApplicationController
 
   ###Authorization
   private
-  def signed_in_user
-    #zapisuje adres z jakiego przyszlismy
-    store_location
-    redirect_to zaloguj_path, notice: "Prosze sie zalogowac." unless signed_in?
-  end
-  #metoda sprawdzajaca przed wywolaniem edit
+  # def signed_in_user
+  #   #zapisuje adres z jakiego przyszlismy
+  #   store_location
+  #   redirect_to zaloguj_path, notice: "Prosze sie zalogowac." unless signed_in?
+  # end
+  #metoda sprawdzajaca przed wywolaniem edit  #metoda sprawdzajaca przed wywolaniem edit
   def correct_user
     @user = User.find(params[:id])
     redirect_to(@current_user) unless current_user?(@user)

@@ -13,5 +13,13 @@
 
 class Unit < ActiveRecord::Base
   belongs_to :user
+  has_many :products
+
+  validates :user_id, presence: true
+  validates :name, presence: true
+  validates :name, :uniqueness => true
+  validates :shortName, presence: true
+  validates :shortName, :uniqueness => true
+
   attr_accessible :isDefault, :name, :shortName
 end

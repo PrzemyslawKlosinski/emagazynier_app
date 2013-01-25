@@ -1,6 +1,8 @@
 EmagazynierApp::Application.routes.draw do
-  
 
+  
+  # match 'products/editPrice' => 'products#editPrice'
+  match 'products/editQuantity' => 'products#editQuantity'
   resources :products
 
   resources :units

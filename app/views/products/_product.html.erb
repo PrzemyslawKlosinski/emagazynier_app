@@ -1,0 +1,25 @@
+  <tr>
+  	 <td><%= @licznik=@licznik+1 %> </td>
+    
+     <!-- <span class="content"> -->
+     <td><%= product.name %></td>
+ 	   <td><%= product.description %></td>
+     <!-- </span> -->
+
+     <td><span class="timestamp"><%= time_ago_in_words(product.created_at) %></span></td>
+ 	   <td><%= product.quantity %></td>
+ 	   <td></td>
+    <td>
+    <% if signed_in? %>
+
+      <%= link_to 'Opis', edit_product_path(product)  %> |
+      <%= link_to "Stan", :controller=>"products", :action=>"editQuantity", :id => product %> |
+      <%= link_to "Cena", :controller => "products", :action => "show", :id => product %> |
+      <%= link_to 'Usuń', product, method: :delete, data: { confirm: 'Czy napewno usunąć?' } %>
+    <% else %>
+      <%= link_to "Kup teraz !", :controller => "products", :action => "show", :id => product %>
+    <% end %>
+    </td>
+  </tr>
+
+  

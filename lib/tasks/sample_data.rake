@@ -2,6 +2,7 @@
 #address replicating our previous one, and then makes 99 more.
 #tworzy 99 userow
 namespace :db do
+	
 	desc "Fill database with sample data"
 	task populate: :environment do
 
@@ -15,5 +16,17 @@ namespace :db do
 			password = "password"
 			User.create!(name: name, email: email, password: password, password_confirmation: password)
 		end
+
+		#tworzymy 50 produktow dla 6 uzytkownikow i dajemy im opis
+		users = User.all(limit: 6)
+		50.times do
+			description = Faker::Lorem.sentence(5)
+			users.each { |user| 
+				name = Faker::Name.name
+				user.products.create!(name: name, description: description) 
+			}
+		end
+
+
 	end
 end

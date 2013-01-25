@@ -1,27 +1,46 @@
-<h1>Listing categories</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Isdefault</th>
-    <th>User</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+    <br />
+      
+  <div class="row-fluid">
+      <div class="span6 offset3">
 
-<% @categories.each do |category| %>
-  <tr>
-    <td><%= category.name %></td>
-    <td><%= category.isDefault %></td>
-    <td><%= category.user %></td>
-    <td><%= link_to 'Show', category %></td>
-    <td><%= link_to 'Edit', edit_category_path(category) %></td>
-    <td><%= link_to 'Destroy', category, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
+      <legend>Kategorie</legend>
+        <div class="well sidebar-nav">
+          <div class="field center">
+              <%= render 'form' %> 
+          </div>
+        </div>
+      </div>
+    </div>
 
-<br />
+<!-- <div class="container-fluid"> -->
+  <div class="row-fluid">
+    <div class="span6 offset3">
 
-<%= link_to 'New Category', new_category_path %>
+      <table class="table table-striped">
+
+        <tbody>
+          <% @categories.each do |category| %>
+          <tr>
+            <td>
+              <%= category.name %>
+              <!-- <%= link_to category.name, :controller => "categories", :action => "index", :id => category %>  -->
+              <!-- <%= category.name %>-->
+            </td> 
+            <td>
+              <span class="pull-right">
+                <% if !category.isDefault %>
+                <%= link_to 'Edytuj', edit_category_path(category) %> | 
+                <%= link_to 'Usuń', category, method: :delete, data: { confirm: 'Czy napewno usunąć?' } %>
+                <% end %>
+              </span>
+            </td>
+          </tr>
+             <% end %>
+          </tbody>
+
+        </table>
+
+<!-- </div> -->
+</div>
+</div>

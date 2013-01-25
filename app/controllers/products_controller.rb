@@ -1,8 +1,22 @@
 class ProductsController < ApplicationController
+  
+  #Autentykacja
+  before_filter :signed_in_user #trzeba byc zalogowanym, tylko swoje przez edycja akcji
+
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
+    
+    # dla formularza new
+    @product = current_user.products.build if signed_in?
+    @categories = Category.find(:all, :conditions => ["isDefault = ? or user_id = ?", "true", current_user.id])
+    @units = Unit.find(:all, :conditions => ["isDefault = ? or user_id = ?", "true", current_user.id])
+
+    # dla tabeli index
+    # @products = Product.all
+    # @products = Product.find(:all, :conditions => ["user_id = ?", current_user.id])
+    # @products = Product.find_all_by_user_id(current_user.id);
+    @products = @current_user.products.paginate(page: params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -24,7 +38,11 @@ class ProductsController < ApplicationController
   # GET /products/new
   # GET /products/new.json
   def new
-    @product = Product.new
+
+    #@product = Product.new
+    @product = current_user.products.build if signed_in?
+
+
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,20 +52,44 @@ class ProductsController < ApplicationController
 
   # GET /products/1/edit
   def edit
+    # @product = Product.find(params[:id])
+
+    # dla formularza edit
+    @product = Product.find(params[:id])
+    @categories = Category.find(:all, :conditions => ["isDefault = ? or user_id = ?", "true", current_user.id])
+    @units = Unit.find(:all, :conditions => ["isDefault = ? or user_id = ?", "true", current_user.id])
+
+
+    # dla tabeli index
+    @products = current_user.products.paginate(page: params[:page])
+
+    render 'index'
+
+  end
+
+  def editQuantity
     @product = Product.find(params[:id])
   end
 
   # POST /products
   # POST /products.json
   def create
-    @product = Product.new(params[:product])
+    
+    # dla formularza new, dla metody create
+    @categories = Category.find(:all, :conditions => ["isDefault = ? or user_id = ?", "true", current_user.id])
+    @units = Unit.find(:all, :conditions => ["isDefault = ? or user_id = ?", "true", current_user.id])
+
+    #@product = Product.new(params[:product])
+    @product = current_user.products.build(params[:product])
 
     respond_to do |format|
       if @product.save
-        format.html { redirect_to @product, notice: 'Product was successfully created.' }
+        # format.html { redirect_to @product, notice: 'Product was successfully created.' }
+        format.html { redirect_to products_path, notice: 'Pomyslnie utworzono produkt.' }
         format.json { render json: @product, status: :created, location: @product }
       else
-        format.html { render action: "new" }
+        # format.html { render action: "new" }
+        format.html { redirect_to products_path, :flash => { :error => 'Nie udalo sie utworzyc produktu' }}
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end

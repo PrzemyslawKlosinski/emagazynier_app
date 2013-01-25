@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130121215128) do
+ActiveRecord::Schema.define(:version => 20130125063811) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -24,14 +24,14 @@ ActiveRecord::Schema.define(:version => 20130121215128) do
   add_index "categories", ["user_id"], :name => "index_categories_on_user_id"
 
   create_table "products", :force => true do |t|
-    t.decimal  "summaryQuantityPurchase"
-    t.decimal  "summaryQuantitySales"
+    t.decimal  "summaryQuantityPurchase", :default => 0.0
+    t.decimal  "summaryQuantitySales",    :default => 0.0
     t.string   "nameOryginal"
     t.string   "name"
-    t.decimal  "quantity"
-    t.decimal  "reservedQuantity"
-    t.decimal  "quantityMinimum"
-    t.decimal  "quantityMaximum"
+    t.decimal  "quantity",                :default => 0.0
+    t.decimal  "reservedQuantity",        :default => 0.0
+    t.decimal  "quantityMinimum",         :default => 0.0
+    t.decimal  "quantityMaximum",         :default => 0.0
     t.text     "warningNote"
     t.boolean  "isWarningShow"
     t.text     "description"
@@ -40,9 +40,9 @@ ActiveRecord::Schema.define(:version => 20130121215128) do
     t.integer  "user_id"
     t.integer  "category_id"
     t.integer  "productPrice_id"
-    t.decimal  "defaultIncrease"
-    t.decimal  "defaultDecrease"
-    t.decimal  "defaultVat"
+    t.decimal  "defaultIncrease",         :default => 0.0
+    t.decimal  "defaultDecrease",         :default => 0.0
+    t.decimal  "defaultVat",              :default => 23.0
     t.boolean  "actualPriceOnPurchase"
     t.string   "manufacturer"
     t.string   "color"
@@ -50,10 +50,9 @@ ActiveRecord::Schema.define(:version => 20130121215128) do
     t.string   "location"
     t.string   "size"
     t.string   "shape"
-    t.text     "descriptions"
     t.integer  "unit_id"
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
   end
 
   add_index "products", ["category_id"], :name => "index_products_on_category_id"

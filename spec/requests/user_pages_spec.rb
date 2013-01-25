@@ -20,7 +20,11 @@ describe "UserPages" do
   #testy dla strony profilowej
   describe "profile page" do
     let(:user) { FactoryGirl.create(:user) }
-    before { visit user_path(user) }
+    before { 
+      visit zaloguj_path(user)
+      valid_signin(user)
+      visit user_path(user) 
+    }
     it { should have_selector('h4',text: user.name) }
   end
 
@@ -38,7 +42,7 @@ describe "UserPages" do
        describe "after submission" do
         before { click_button submit }
         it { should have_selector('title', text: 'Rejestracja') }
-        it { should have_content('znaleziono') }
+        it { should have_content('Znaleziono') }
        end
 
     end

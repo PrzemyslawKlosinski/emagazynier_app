@@ -12,6 +12,13 @@ FactoryGirl.define do
 		factory :admin do
 			admin true
 		end
-
 	end
+
+	factory :product do
+		description "Lorem ipsum"
+		#Factory Girl is: Not only can we assign the user using mass assignment (since factories bypass attr_accessible), we can also set created_at manually, which Active Record won’t allow us to do.
+		#FactoryGirl.create(:micropost, user: @user, created at: 1.hour.ago)
+		user
+	end
+
 end

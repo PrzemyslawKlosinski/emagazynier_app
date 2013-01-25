@@ -1,7 +1,8 @@
+
 <% if @user.errors.any? %>
   <div id="error_explanation">
   <div class="alert alert-error">
-    W formularzu znaleziono błędów <%= pluralize(@user.errors.count, "") %>.
+    Znaleziono błędów <%= pluralize(@user.errors.count, "") %>.
   </div>
    <ul>
      <% @user.errors.full_messages.each do |msg| %>
@@ -10,3 +11,4 @@
    </ul>
    </div>
 <% end %>
+

@@ -1,8 +1,10 @@
 <%= form_for(@unit) do |f| %>
+
   <% if @unit.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@unit.errors.count, "error") %> prohibited this unit from being saved:</h2>
-
+        <div class="alert alert-error">
+          Znaleziono <%= pluralize(@unit.errors.count, "error") %>.
+        </div>
       <ul>
       <% @unit.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -11,23 +13,23 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :shortName %><br />
+  <div class="row">
+    <div class="span5 offset1">
+      Nazwa
+      <%= f.text_field :name %>
+    </div>
+  <div class="span5">
+    Nazwa krótka
     <%= f.text_field :shortName %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :isDefault %><br />
-    <%= f.check_box :isDefault %>
-  </div>
-  <div class="field">
-    <%= f.label :user %><br />
-    <%= f.text_field :user %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
+<div class="row">
+  <span class="pull-right">
+    <%= link_to 'Powrót', current_user, class:"btn btn-info" %>
+    <%= f.submit "Zapisz", class:"btn btn-info" %>
+  </span>
+  <br />
+</div>
+
 <% end %>
