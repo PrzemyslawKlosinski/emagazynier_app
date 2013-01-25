@@ -1,10 +1,19 @@
 <% provide(:title, 'Logowanie') %>
 
-<div class="hero-unit">
-	<div class="row-fluid">
-		<div class="span8 offset4">
-			
-			<h3>Logowanie</h3>
+
+    <br />
+      
+  <div class="row-fluid">
+      <div class="span6 offset3">
+
+      <legend>Logowanie</legend>
+        <div class="well sidebar-nav">
+          <div class="field">
+
+          	  <div class="row-fluid">
+      <div class="span5 offset4">
+
+<br />
 
 			<!-- mozna tez zrobic przy pomocy form_tag -->
 			<%= form_for(:session, url: sessions_path) do |f| %>
@@ -17,7 +26,10 @@
 
 			<p>Nowy użytkownik? <%= link_to "Zarejestruj konto!", rejestracja_path %></p>
 
+            
 
-		</div>
-	</div>
-</div>
+          </div>
+        </div>
+      </div>
+    </div>
+

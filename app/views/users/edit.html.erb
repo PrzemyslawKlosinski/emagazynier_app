@@ -1,18 +1,39 @@
 <% provide(:title, 'Edycja profilu') %>
 
-<div class="hero-unit">
-	<div class="row-fluid">
-		<div class="span6 offset3">
-			
-			<h3>Edycja danych podstawowych użytkownika</h3>
 
-			<!-- dodajemy renderowanie bledow z partial -->
+
+    <br />
+      
+  <div class="row-fluid">
+      <div class="span6 offset3">
+
+      				<!-- dodajemy renderowanie bledow z partial -->
 			<%= render 'shared/error_messages' %>
+
+      <legend>Ustawienia <%= @user.name %></legend>
+        <div class="well sidebar-nav">
+          <div class="field ">
+
+
+
+  <div class="row">
+    <div class="span5 offset4">
+
+<!-- </div></div> -->
+
+
+<!-- <div class="hero-unit"> -->
+	<!-- <div class="row-fluid"> -->
+		<!-- <div class="span6 offset3"> -->
+
+
+				<br />
+
 				<%= form_for(@user) do |f| %>
 				<%= f.label :name, "Wprowadź nazwę (np. nazwa firmy)" %>
 				<%= f.text_field :name %>
 				<%= f.label :email, "Wprowadź adres email" %>
-				<%= f.text_field :email %>
+				<%= f.text_field :email, :readonly => true %>
 				<%= f.label :password, "Wprowadź hasło" %>
 				<%= f.password_field :password %>
 				<%= f.label :password_confirmation, "Potwierdź hasło" %>
@@ -20,11 +41,16 @@
 
 
 				<%= gravatar_for @user %>
-				<a href="http://gravatar.com/emails"><br />zmień logo</a><br /><br />
+				<a href="http://gravatar.com/emails"><br />zmień logo</a><br /><br /><br />
 
 				<%= f.submit "Zapisz zmiany", class: "btn btn-large btn-primary" %>
 				<% end %>
 
-		</div>
+		<!-- </div> -->
 	</div>
+</div>
+
+</div>
+</div>
+</div>
 </div>

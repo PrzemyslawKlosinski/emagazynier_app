@@ -4,7 +4,7 @@
   <% if @category.errors.any? %>
     <div id="error_explanation">
         <div class="alert alert-error">
-          Znaleziono <%= pluralize(@category.errors.count, "error") %>.
+          Znaleziono bledow <%= pluralize(@category.errors.count, ".") %>
         </div>
       <ul>
       <% @category.errors.full_messages.each do |msg| %>
@@ -13,6 +13,7 @@
       </ul>
     </div>
   <% end %>
+  
 
   <div class="row">
     <div class="span7 offset3">

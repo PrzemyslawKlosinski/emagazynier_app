@@ -88,4 +88,11 @@ class User < ActiveRecord::Base
   	end
   end
 
+
+  #druga opcja na wyslanie maila np po utworzeniu usera (ale przed zapisaniem)
+  # after_create :deliver_welcome_email
+  # def deliver_welcome_email
+  #   UserMailer.welcome_email(self).deliver
+  # end
+
 end

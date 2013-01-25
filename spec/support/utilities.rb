@@ -1,3 +1,5 @@
+include ApplicationHelper
+
 	#metoda pomocnicza do podstawiania tytulu (jak w helperze) 
 	def caly_tytul(page_title)
 		poczatek_tytulu = "EMagazynier"

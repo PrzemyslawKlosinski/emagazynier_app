@@ -1,25 +1,38 @@
 <% provide(:title, 'Rejestracja') %>
 
-<div class="hero-unit">
-	<div class="row-fluid">
-		<div class="span8 offset4">
-			
-			<h3>Rejestracja nowego użytkownika</h3>
+    <br />
+      
+  <div class="row-fluid">
+      <div class="span6 offset3">
 
+      <legend>Rejestracja nowego użytkownika</legend>
+        <div class="well sidebar-nav">
+          <div class="field">
+
+          	  <div class="row-fluid">
+      <div class="span5 offset4">
+
+<br />
 			<!-- dodajemy renderowanie bledow z partial -->
 			<%= render 'shared/error_messages' %>
 				<%= form_for(@user) do |f| %>
-				<%= f.label :name, "Wprowadź nazwę (np. nazwa firmy)" %>
-				<%= f.text_field :name %>
+				<!--
+				< f.label :name, "Wprowadź nazwę (np. nazwa firmy)" %>
+				< f.text_field :name %>
+				-->
 				<%= f.label :email, "Wprowadź adres email" %>
 				<%= f.text_field :email %>
-				<%= f.label :password, "Wprowadź hasło" %>
-				<%= f.password_field :password %>
-				<%= f.label :password_confirmation, "Potwierdź hasło" %>
-				<%= f.password_field :password_confirmation %><br />
+				<!--
+				< f.label :password, "Wprowadź hasło" %>
+				< f.password_field :password %>
+				< f.label :password_confirmation, "Potwierdź hasło" %>
+				< f.password_field :password_confirmation %>
+				-->
+				<br />
 				<%= f.submit "Zarejestruj konto", class: "btn btn-large btn-primary" %>
 				<% end %>
 
+</div>
 		</div>
 	</div>
 </div>

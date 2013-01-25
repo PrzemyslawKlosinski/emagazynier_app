@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe "StaticPages" do
 
- #test wygenerowany automatycznie przez RSpec
+  #test wygenerowany automatycznie przez RSpec
   describe "GET /static_pages" do
     it "works! (now write some real specs)" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-      get static_pages_index_path
+      get index_path
       response.status.should be(200)
     end
   end
@@ -39,14 +39,14 @@ describe "StaticPages" do
   describe "Help page" do
     before { visit pomoc_path }
 
-    it { should have_selector('h1', :text =>'Pomoc') }
+    it { should have_selector('h4', :text =>'Pomoc') }
     it { should have_selector('title', :text => caly_tytul('Pomoc')) }
   end
 
 
   #dodajemy shared examples - uwaga inny zapis hash'a
   shared_examples_for "all static pages" do
-    it { should have_selector('h1', text: naglowek) }
+    it { should have_selector('h4', text: naglowek) }
     it { should have_selector('title', text: caly_tytul(tytul_strony)) }
   end
 

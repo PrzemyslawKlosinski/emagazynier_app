@@ -1,5 +1,11 @@
 module SessionsHelper
 
+	 #decode url
+	 def base64_url_decode(str)
+	 	str += '=' * (4 - str.length.modulo(4))
+	 	Base64.decode64(str.tr('-_','+/'))
+	 end
+
 	def sign_in(user)
 		# Przy pomocy sesji (tymczasowych cookies)
   		# One technique for maintaining the user signin status is to use a traditional Rails session (via the special session function) to store a #remember token equal to the user’s id: This session object makes the user id available from page to page by storing it in acookie that #expires upon browser close. On each page, the application could simply call
@@ -31,14 +37,19 @@ module SessionsHelper
 		!current_user.nil?	#metoda ktora zwraca @current_user a nastepnie jest pytanie czy jest nil?
 	end
 
-
    	###Authorization - przekieruj do strony zaloguj jesli uzytkownik niezalogowany
    	#przeniesione z  users_helper.rb
   	def signed_in_user
-  		#zapisuje adres z jakiego przyszlismy
+
+  		#jesli uzytkownik zalogowany i nie aktywny isActive == false, przekieruj do zmiany hasla
+  		if signed_in? and !current_user.isActive
+  			redirect_to edit_user_path(current_user), notice: "Prosze ustawic haslo."
+  		end
+
   		unless signed_in?
+  			 #zapisuje adres z jakiego przyszlismy
   			store_location
-  			redirect_to zaloguj_path, notice: "Prosze sie zalogowac."
+			redirect_to zaloguj_path, notice: "Prosze sie zalogowac."  			
   		end
   	end
 

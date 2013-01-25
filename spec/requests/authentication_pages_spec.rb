@@ -104,7 +104,7 @@ describe "authorization" do
 		}
 		describe "submitting a DELETE request to the Users#destroy action" do
 			before { delete user_path(user) }
-			specify { response.should redirect_to(root_path) }
+			specify { response.should redirect_to(non_admin) }
 			end
 		end
 	end

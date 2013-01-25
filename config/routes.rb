@@ -1,5 +1,7 @@
 EmagazynierApp::Application.routes.draw do
 
+  # get "static_pages/home"
+  root to: 'static_pages#home'
   
   # match 'products/editPrice' => 'products#editPrice'
   match 'products/editQuantity' => 'products#editQuantity'
@@ -13,17 +15,16 @@ EmagazynierApp::Application.routes.draw do
   # get "users/new"
   resources :users
 
-
   #logowanie
   resources :sessions, only: [:new, :create, :destroy]
   match '/zaloguj', to: 'sessions#new'
   match '/wyloguj', to: 'sessions#destroy', via: :delete
   #rejestracja nowego uzytkownika
   match '/rejestracja', to: 'users#new'
+  #aktywacja konta
+  match '/aktywacja/(:id)', to: 'sessions#active'
 
 
-  # get "static_pages/home"
-  root to: 'static_pages#home'
  
 
   # get "static_pages/help"
@@ -39,8 +40,11 @@ EmagazynierApp::Application.routes.draw do
   match '/kontakt', to: 'static_pages#contact'
 
   #for test -> rspec spec/requests/* - generuje nazwana sciezke static_pages_index -> czyli istnieje static_pages_index_path
-  match 'static_pages/index' => 'static_pages#home'
+  # match 'static_pages/index' => 'static_pages#home'
+  match '/index' => 'static_pages#home'
 
+  #dla takiego linku:  match '/static_pages/index'
+  #bedziemy mieli taka sciezke static_pages_index_path
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -8,6 +8,8 @@ FactoryGirl.define do
 		sequence(:email) { |n| "person_#{n}@example.com"}
 		password "foobar"
 		password_confirmation "foobar"
+		#ustawiamy isActive
+		isActive true
 		#dzieki czemu bedziemy mogli tworzyc adminow za pomoca parametru
 		factory :admin do
 			admin true
