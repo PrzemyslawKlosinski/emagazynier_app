@@ -29,6 +29,7 @@ class User < ActiveRecord::Base
   has_many :products, dependent: :destroy
   has_many :categories, dependent: :destroy
   has_many :units, dependent: :destroy
+  has_many :firms, dependent: :destroy
 
   attr_accessible :about, :agreementElectronicInvoice, :agreementProcessing, :email, :footerText, :headerPicture, :headerText, :isActive, :name, :partialInventory, :password_digest, :www, :password, :password_confirmation
 

@@ -1,0 +1,43 @@
+    <br />
+
+<!-- 1. plik partial w location/firm -->
+<!-- < render :partial => 'firm' %> -->
+<!-- is identical to -->
+<!-- < render :partial => 'firm', :locals => {:firm => @firm } -->
+<!-- 2. plik partial w firms/firm --> 
+<!-- < render @firm %> -->
+<!-- is identical to -->
+<!-- < render :partial => 'firms/firm' %> -->
+
+User <br />
+
+    <br />
+
+  <div class="row-fluid">
+      <div class="span6 offset3">
+
+        <legend>Firma</legend>
+        <div class="well sidebar-nav">
+          <div class="field center">
+
+<%= render @firm %>
+
+</div>
+</div>
+</div>
+</div>
+
+
+  <div class="row-fluid">
+      <div class="span6 offset3">
+
+        <legend>Adres</legend>
+        <div class="well sidebar-nav">
+          <div class="field center">
+
+              <%= render 'form' %> 
+
+          </div>
+        </div>
+      </div>
+    </div>

@@ -1,5 +1,9 @@
 EmagazynierApp::Application.routes.draw do
 
+  resources :firms
+
+  resources :locations
+
   # get "static_pages/home"
   root to: 'static_pages#home'
   
