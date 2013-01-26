@@ -36,7 +36,11 @@
 <% @firms.each do |firm| %>
   <tr>
     <td><%= firm.name %></td>
-    <td><%= firm.current_address %></td>
+    <td>
+      <% if !firm.current_address.nil? %>
+        <%= firm.current_address.address %>  
+      <% end %>
+    </td>
     <td><%= firm.www %></td>
     <td><%= firm.email %></td>
     <td>

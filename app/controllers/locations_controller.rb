@@ -1,8 +1,15 @@
 class LocationsController < ApplicationController
+
+  before_filter :signed_in_user
+
   # GET /locations
   # GET /locations.json
   def index
-    @locations = Location.all
+    # @locations = Location.all
+
+    #po dodaniu has_many @locations, :through => @firms
+    @locations = current_user.locations if signed_in?
+
 
     respond_to do |format|
       format.html # index.html.erb
@@ -40,8 +47,6 @@ class LocationsController < ApplicationController
       else
         #jesli uzytkonik ma w sesji ciastko firm ale jest niezalogowany przekieruj do logowanie
         @location = @firm.locations.build() if signed_in?
-        # session[:location] = @location
-
 
     respond_to do |format|
       format.html # new.html.erb
@@ -70,20 +75,32 @@ class LocationsController < ApplicationController
         #jesli uzytkonik ma w sesji ciastko firm ale jest niezalogowany przekieruj do logowanie
         # @location = @firm.locations.build(params[:location]) if signed_in?
 
+    #potestowac gdy ktos podmienia sobie cookie i robi put request to update
+    @firm = session[:firm]
+    # @location = Location.new(params[:location]) if signed_in?
+    @location = @firm.locations.build(params[:location]) if signed_in?
+
+    #jesli ktos podmieni cookies musimy wybierac tylko z firm zalogowanego usera
+    # @location = @firm.locations.build(params[:location]) if signed_in?
+    # @location = @firm.locations.build(params[:location]) if signed_in?
+
+    respond_to do |format|
+      if @location.save
+
+        #przypisanie adresu do firmy i usuniecie ciastka
+        @location.firm.current_address = @location
+        @location.firm.save!
+        session.delete(:firm)
 
 
-    # @location = Location.new(params[:location])
-    @location = current_user.location.build(params[:location]) if signed_in?
-
-    # respond_to do |format|
-    #   if @location.save
-    #     format.html { redirect_to @location, notice: 'Location was successfully created.' }
-    #     format.json { render json: @location, status: :created, location: @location }
-    #   else
-    #     format.html { render action: "new" }
-    #     format.json { render json: @location.errors, status: :unprocessable_entity }
-    #   end
-    # end
+        # format.html { redirect_to @location, notice: 'Location was successfully created.' }
+        format.html { redirect_to firms_path, notice: 'Adres pomyslnie utworzony.' }
+        format.json { render json: @location, status: :created, location: @location }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @location.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # PUT /locations/1
@@ -93,7 +110,7 @@ class LocationsController < ApplicationController
 
     respond_to do |format|
       if @location.update_attributes(params[:location])
-        format.html { redirect_to @location, notice: 'Location was successfully updated.' }
+        format.html { redirect_to locations_path, notice: 'Adres pomyslnie zaktualizowany.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

@@ -1,21 +1,21 @@
 class FirmsController < ApplicationController
+
+  before_filter :signed_in_user #, only: [:index, :edit,:update, :destroy]
+
   # GET /firms
   # GET /firms.json
   def index
-    # @firms = Firm.all
 
-# def home
-# @micropost = current user.microposts.build if signed in?
-# @feed items = current user.feed.paginate(page: params[:page])
-# end
+    #jesli ustawiona
+    # session.delete(:firm)
 
     # dla formularza new
     @firm = current_user.firms.build if signed_in?
-    @locations = Location.find(:all, :conditions => ["firm_id = ?", @firm.id]) 
+    @locations = @firm.locations
 
+    # @firms = Firm.all
     # dla tabeli index
     @firms = Firm.find(:all, :conditions => ["user_id = ?", current_user.id])
-
 
     respond_to do |format|
       format.html # index.html.erb
@@ -37,12 +37,10 @@ class FirmsController < ApplicationController
   # GET /firms/new
   # GET /firms/new.json
   def new
-    # @firm = Firm.new
-    store_location
-    
+
+    # @firm = Firm.new  
     # dla formularza new
     @firm = current_user.firms.build if signed_in?
-    @locations = Location.find(:all, :conditions => ["firm_id = ?", @firm.id]) 
 
     respond_to do |format|
       format.html # new.html.erb
@@ -52,7 +50,17 @@ class FirmsController < ApplicationController
 
   # GET /firms/1/edit
   def edit
-    @firm = Firm.find(params[:id])
+    
+    # dla formularza edit
+    @firm = current_user.firms.find(params[:id]) if signed_in?
+    @locations = @firm.locations
+
+    # dla tabeli index
+    @firms = Firm.find(:all, :conditions => ["user_id = ?", current_user.id])
+
+    #zamiast edit.html.erb wyrenderuj index.html.erb
+    render 'index'
+
   end
 
   # POST /firms
@@ -94,28 +102,33 @@ class FirmsController < ApplicationController
       # session[:firm]=nil
       # session[:firm] = @firm
 
-    @firm = current_user.firms.build(params[:firm]) if signed_in?
+    # dla formularza new - podstawiamy location_id z selecta (uwaga na mass-assign)
+    @firm = current_user.firms.build(name: params[:firm][:name], www: params[:firm][:www], email: params[:firm][:email]) if signed_in?
 
-    if params[:firm][:current_address].blank?       
+
+respond_to do |format|
+    if @firm.save
       # debugowanie -> logger.debug (sprawdzac w logach)  
       session[:firm] = @firm      
-      redirect_to new_location_path() 
-
-    else 
-
-    respond_to do |format|
-      if @firm.save
-        format.html { redirect_to @firm, notice: 'Firm was successfully created.' }
-        format.json { render json: @firm, status: :created, location: @firm }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @firm.errors, status: :unprocessable_entity }
-      end
-
+      format.html { redirect_to new_location_path() }
+    else
+        # format.html { render action: "new" }
+        format.html { render action: 'index' }
+        format.json { render json: @firm.errors, status: :unprocessable_entity }  
     end
+end
+    
 
 
-    end
+    # respond_to do |format|
+    #   if @firm.save
+    #     format.html { redirect_to @firm, notice: 'Firm was successfully created.' }
+    #     format.json { render json: @firm, status: :created, location: @firm }
+    #   else
+    #     format.html { render action: "new" }
+    #     format.json { render json: @firm.errors, status: :unprocessable_entity }
+    #   end
+    # end
 
 
   end
@@ -123,11 +136,18 @@ class FirmsController < ApplicationController
   # PUT /firms/1
   # PUT /firms/1.json
   def update
-    @firm = Firm.find(params[:id])
+    # @firm = Firm.find(params[:id])
+    @firm = current_user.firms.find(params[:id]) if signed_in?
 
-    respond_to do |format|
+    respond_to do |format|      
       if @firm.update_attributes(params[:firm])
-        format.html { redirect_to @firm, notice: 'Firm was successfully updated.' }
+
+        if params[:firm][:current_address_id].blank?
+          session[:firm] = @firm      
+          format.html { redirect_to new_location_path() }
+        end
+
+        format.html { redirect_to firms_path, notice: 'Firma pomyslnie zaktualizowana.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

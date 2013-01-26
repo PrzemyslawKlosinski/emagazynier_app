@@ -1,31 +1,52 @@
-<h1>Listing locations</h1>
 
-<table>
-  <tr>
-    <th>Zip code</th>
-    <th>City</th>
-    <th>Address</th>
-    <th>Phone</th>
-    <th>Firm</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+    <br />
 
+    
+  <div class="row-fluid">
+    <div class="span6 offset3">
+
+                <legend>Adresy</legend>
+
+      <table class="table table-striped">
+
+        <thead>
+          <tr>
+            <th>Firma</th>
+            <th>Adres</th>
+            <th>WWW</th>
+            <th>Email</th>
+            <th>Telefon</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+<% if !@locations.nil? %>
 <% @locations.each do |location| %>
   <tr>
+    <td>
+        <% if !location.firm.nil? %>
+        <%= location.firm.name %>
+        <% end %>
+    </td>
     <td><%= location.zip_code %></td>
     <td><%= location.city %></td>
     <td><%= location.address %></td>
     <td><%= location.phone %></td>
-    <td><%= location.firm %></td>
-    <td><%= link_to 'Show', location %></td>
-    <td><%= link_to 'Edit', edit_location_path(location) %></td>
-    <td><%= link_to 'Destroy', location, confirm: 'Are you sure?', method: :delete %></td>
+    <td>
+              <span class="pull-right">
+                <%= link_to 'Edytuj', edit_location_path(location) %> | 
+                <%= link_to 'Usuń', location, confirm: 'Czy napewno usunąć?', method: :delete %>
+              </span>
+    </td>
   </tr>
 <% end %>
-</table>
+<% end %>
 
-<br />
+          </tbody>
 
-<%= link_to 'New Location', new_location_path %>
+        </table>
+
+</div>
+</div>

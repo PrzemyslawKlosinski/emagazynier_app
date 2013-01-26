@@ -9,14 +9,11 @@
 <!-- is identical to -->
 <!-- < render :partial => 'firms/firm' %> -->
 
-User <br />
-
-    <br />
 
   <div class="row-fluid">
       <div class="span6 offset3">
 
-        <legend>Firma</legend>
+        <legend>Firma <%= @firm.name %> User <%= @firm.user.name %></legend>
         <div class="well sidebar-nav">
           <div class="field center">
 

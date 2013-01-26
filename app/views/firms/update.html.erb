@@ -1,0 +1,11 @@
+<% @firm.errors.each do |attr, msg| %>
+  <%= "#{attr} #{msg}" if @firm.errors[attr].first == msg %> 
+<% end %>
+
+<%= @firm.name %>
+<%= @firm.user %>
+<%= @firm.current_address %>
+<%= @firm.current_address.address %>
+
+<%= @firm.valid? %>
+<%= @firm.errors %>

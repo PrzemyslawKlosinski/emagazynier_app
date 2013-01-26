@@ -31,6 +31,8 @@ class User < ActiveRecord::Base
   has_many :units, dependent: :destroy
   has_many :firms, dependent: :destroy
 
+  has_many :locations, :through => :firms
+
   attr_accessible :about, :agreementElectronicInvoice, :agreementProcessing, :email, :footerText, :headerPicture, :headerText, :isActive, :name, :partialInventory, :password_digest, :www, :password, :password_confirmation
 
 

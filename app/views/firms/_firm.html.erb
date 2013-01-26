@@ -6,7 +6,9 @@
     </div>
   <div class="span5">
       Adres
-      <%= firm.current_address %>  
+      <% if !firm.current_address.nil? %>
+        <%= firm.current_address.address %>  
+      <% end %>
     <!-- < f.text_field :current_address %> -->
     </div>
   </div>
@@ -22,4 +24,3 @@
     </div>
   </div>
 
-User <%= firm.user %>

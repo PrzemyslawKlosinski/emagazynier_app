@@ -21,7 +21,7 @@
   <div class="span5">
       Adres
     <!-- < f.text_field :current_address %> -->
-       <%= collection_select(:product, :current_address, @locations, :id, :address, {:prompt => 'nowy' }) %>
+       <%= collection_select(:firm, :current_address_id, @locations, :id, :address, {:include_blank => 'utworz nowy adres firmy' }) %>
     </div>
   </div>
 
@@ -38,7 +38,7 @@
 
 <div class="row">
   <span class="pull-right">
-    <%= link_to 'Powrót', products_path, class:"btn btn-info" %>
+    <%= link_to 'Powrót', firms_path, class:"btn btn-info" %>
     <%= f.submit "Zapisz", class:"btn btn-info" %>
   </span>
   <br />
