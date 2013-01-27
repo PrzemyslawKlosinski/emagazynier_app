@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130126125806) do
+ActiveRecord::Schema.define(:version => 20130127063152) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -22,6 +22,34 @@ ActiveRecord::Schema.define(:version => 20130126125806) do
   end
 
   add_index "categories", ["user_id"], :name => "index_categories_on_user_id"
+
+  create_table "documents", :force => true do |t|
+    t.boolean  "is_income"
+    t.boolean  "is_outcome"
+    t.boolean  "is_correct"
+    t.integer  "status"
+    t.string   "name"
+    t.string   "title"
+    t.datetime "document_date"
+    t.decimal  "brutto_value"
+    t.decimal  "netto_value"
+    t.decimal  "brutto_netto"
+    t.text     "description"
+    t.string   "receipt"
+    t.datetime "receipt_date"
+    t.boolean  "blocked"
+    t.integer  "document_correct_id"
+    t.integer  "last_correct_id"
+    t.integer  "user_id"
+    t.integer  "firm_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "documents", ["document_correct_id"], :name => "index_documents_on_document_correct_id"
+  add_index "documents", ["firm_id"], :name => "index_documents_on_firm_id"
+  add_index "documents", ["last_correct_id"], :name => "index_documents_on_last_correct_id"
+  add_index "documents", ["user_id"], :name => "index_documents_on_user_id"
 
   create_table "firms", :force => true do |t|
     t.string   "name"
@@ -85,6 +113,19 @@ ActiveRecord::Schema.define(:version => 20130126125806) do
   add_index "products", ["unit_id"], :name => "index_products_on_unit_id"
   add_index "products", ["user_id", "created_at"], :name => "index_products_on_user_id_and_created_at"
   add_index "products", ["user_id"], :name => "index_products_on_user_id"
+
+  create_table "quantities", :force => true do |t|
+    t.decimal  "amount"
+    t.decimal  "netto_price"
+    t.decimal  "brutto_price"
+    t.integer  "product_id"
+    t.integer  "document_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "quantities", ["document_id"], :name => "index_quantities_on_document_id"
+  add_index "quantities", ["product_id"], :name => "index_quantities_on_product_id"
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false

@@ -1,0 +1,95 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Is income:</b>
+  <%= @document.is_income %>
+</p>
+
+<p>
+  <b>Is outcome:</b>
+  <%= @document.is_outcome %>
+</p>
+
+<p>
+  <b>Is correct:</b>
+  <%= @document.is_correct %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @document.status %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @document.name %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%= @document.title %>
+</p>
+
+<p>
+  <b>Document date:</b>
+  <%= @document.document_date %>
+</p>
+
+<p>
+  <b>Brutto value:</b>
+  <%= @document.brutto_value %>
+</p>
+
+<p>
+  <b>Netto value:</b>
+  <%= @document.netto_value %>
+</p>
+
+<p>
+  <b>Brutto netto:</b>
+  <%= @document.brutto_netto %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @document.description %>
+</p>
+
+<p>
+  <b>Receipt:</b>
+  <%= @document.receipt %>
+</p>
+
+<p>
+  <b>Receipt date:</b>
+  <%= @document.receipt_date %>
+</p>
+
+<p>
+  <b>Blocked:</b>
+  <%= @document.blocked %>
+</p>
+
+<p>
+  <b>Document correct:</b>
+  <%= @document.document_correct %>
+</p>
+
+<p>
+  <b>Last correct:</b>
+  <%= @document.last_correct %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @document.user %>
+</p>
+
+<p>
+  <b>Firm:</b>
+  <%= @document.firm %>
+</p>
+
+
+<%= link_to 'Edit', edit_document_path(@document) %> |
+<%= link_to 'Back', documents_path %>

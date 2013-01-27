@@ -7,7 +7,10 @@ gem 'faker', '1.0.1'
 #pagination
 gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
-
+# Cocoon provides drop-in JavaScript functionality to easily add and remove multiple entries
+gem "cocoon"
+# Simple form
+# gem 'simple_form'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 

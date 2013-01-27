@@ -1,0 +1,31 @@
+<h1>Listing quantities</h1>
+
+<table>
+  <tr>
+    <th>Amount</th>
+    <th>Netto price</th>
+    <th>Brutto price</th>
+    <th>Product</th>
+    <th>Document</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @quantities.each do |quantity| %>
+  <tr>
+    <td><%= quantity.amount %></td>
+    <td><%= quantity.netto_price %></td>
+    <td><%= quantity.brutto_price %></td>
+    <td><%= quantity.product %></td>
+    <td><%= quantity.document %></td>
+    <td><%= link_to 'Show', quantity %></td>
+    <td><%= link_to 'Edit', edit_quantity_path(quantity) %></td>
+    <td><%= link_to 'Destroy', quantity, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Quantity', new_quantity_path %>

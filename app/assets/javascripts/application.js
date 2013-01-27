@@ -15,7 +15,12 @@
 
 //= require bootstrap
 
+// This will allow all of Cocoon’s jQuery magic to do its thing.
+//= require cocoon
+
 //= require_tree .
+
+
 
 $('.submit_me').click(function() {
   $('form').submit();

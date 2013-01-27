@@ -1,0 +1,45 @@
+<%= form_for @document, html: {class: "form-horizontal"} do |f| %>
+  
+  <% if @document.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@document.errors.count, "error") %> prohibited this document from being saved:</h2>
+
+      <ul>
+      <% @document.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <fieldset id="document-meta">
+    <!-- <ol> -->
+      <div class="control-group">
+        <%= f.label :name, "Numer dokumentu", class: "control-label" %>
+        <div class="controls"><%= f.text_field :name %></div>
+      </div>
+      <div class="control-group">
+        <%= f.label :title, "Nazwa dokumentu", class: "control-label" %>
+        <div class="controls"><%= f.text_field :title %></div>
+      </div>
+      <div class="control-group">
+        <%= f.label :description, "Opis dokumentu", class: "control-label" %>
+        <div class="controls"><%= f.text_area :description, :cols => 1, :rows => 5 %></div>
+      </div>
+    <!-- </ol> -->
+  </fieldset>
+ 
+  <fieldset id="document-products">
+    <ol>
+      <!-- The nested form partial - _quantity_fields.html.erb -->
+      <%= f.fields_for :quantities do |quantity| %>
+        <%= render 'quantity_fields', f: quantity %>
+      <% end %>
+    </ol>
+    <!-- wrap_object - Basically, without it you can’t add new products, just a Quantity amount associated with no product. -->
+    <%= link_to_add_association 'dodaj produkt', f, :quantities, 'data-association-insertion-node' => "#document-products ol", 'data-association-insertion-method' => "append", :wrap_object => Proc.new {|quantity| quantity.build_product; quantity } %>
+    
+  </fieldset>
+
+  <%= f.submit %>
+<% end %>

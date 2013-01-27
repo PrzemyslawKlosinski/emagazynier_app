@@ -1,5 +1,9 @@
 EmagazynierApp::Application.routes.draw do
 
+  resources :documents
+
+  resources :quantities
+
   resources :firms
 
   resources :locations

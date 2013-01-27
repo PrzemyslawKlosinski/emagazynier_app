@@ -1,0 +1,57 @@
+<h1>Listing documents</h1>
+
+<table>
+  <tr>
+    <th>Is income</th>
+    <th>Is outcome</th>
+    <th>Is correct</th>
+    <th>Status</th>
+    <th>Name</th>
+    <th>Title</th>
+    <th>Document date</th>
+    <th>Brutto value</th>
+    <th>Netto value</th>
+    <th>Brutto netto</th>
+    <th>Description</th>
+    <th>Receipt</th>
+    <th>Receipt date</th>
+    <th>Blocked</th>
+    <th>Document correct</th>
+    <th>Last correct</th>
+    <th>User</th>
+    <th>Firm</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @documents.each do |document| %>
+  <tr>
+    <td><%= document.is_income %></td>
+    <td><%= document.is_outcome %></td>
+    <td><%= document.is_correct %></td>
+    <td><%= document.status %></td>
+    <td><%= document.name %></td>
+    <td><%= document.title %></td>
+    <td><%= document.document_date %></td>
+    <td><%= document.brutto_value %></td>
+    <td><%= document.netto_value %></td>
+    <td><%= document.brutto_netto %></td>
+    <td><%= document.description %></td>
+    <td><%= document.receipt %></td>
+    <td><%= document.receipt_date %></td>
+    <td><%= document.blocked %></td>
+    <td><%= document.document_correct %></td>
+    <td><%= document.last_correct %></td>
+    <td><%= document.user %></td>
+    <td><%= document.firm %></td>
+    <td><%= link_to 'Show', document %></td>
+    <td><%= link_to 'Edit', edit_document_path(document) %></td>
+    <td><%= link_to 'Destroy', document, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Document', new_document_path %>

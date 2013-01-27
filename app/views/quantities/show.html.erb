@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Amount:</b>
+  <%= @quantity.amount %>
+</p>
+
+<p>
+  <b>Netto price:</b>
+  <%= @quantity.netto_price %>
+</p>
+
+<p>
+  <b>Brutto price:</b>
+  <%= @quantity.brutto_price %>
+</p>
+
+<p>
+  <b>Product:</b>
+  <%= @quantity.product %>
+</p>
+
+<p>
+  <b>Document:</b>
+  <%= @quantity.document %>
+</p>
+
+
+<%= link_to 'Edit', edit_quantity_path(@quantity) %> |
+<%= link_to 'Back', quantities_path %>

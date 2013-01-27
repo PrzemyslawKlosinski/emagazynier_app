@@ -43,6 +43,10 @@ class Product < ActiveRecord::Base
   belongs_to :productPrice
   belongs_to :unit
 
+  #for documents
+  has_many :quantities
+  has_many :documents, through: :quantities
+
    # constants
   MYUNITS = {
     :kilogram => 0,
@@ -53,7 +57,7 @@ class Product < ActiveRecord::Base
   #   define_method("#{meth}?") { type == index }
   # end
 
-  validates :user_id, presence: true
+  # validates :user_id, presence: true
   validates :name, presence: true, length: { maximum: 40 }
 
   #pozwala wyswietlac produkty w odwrotnej kolejnosci
