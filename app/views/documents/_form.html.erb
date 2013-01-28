@@ -1,5 +1,7 @@
-<%= form_for @document, html: {class: "form-horizontal"} do |f| %>
-  
+
+<!-- < simple_form_for @document, html: {class: "form-horizontal"} do |f| %>  -->
+<%= simple_form_for @document do |f| %> 
+
   <% if @document.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@document.errors.count, "error") %> prohibited this document from being saved:</h2>
@@ -12,34 +14,65 @@
     </div>
   <% end %>
 
-  <fieldset id="document-meta">
-    <!-- <ol> -->
-      <div class="control-group">
-        <%= f.label :name, "Numer dokumentu", class: "control-label" %>
-        <div class="controls"><%= f.text_field :name %></div>
-      </div>
-      <div class="control-group">
-        <%= f.label :title, "Nazwa dokumentu", class: "control-label" %>
-        <div class="controls"><%= f.text_field :title %></div>
-      </div>
-      <div class="control-group">
-        <%= f.label :description, "Opis dokumentu", class: "control-label" %>
-        <div class="controls"><%= f.text_area :description, :cols => 1, :rows => 5 %></div>
-      </div>
-    <!-- </ol> -->
-  </fieldset>
- 
+
+
+<br />
+<div class="row-fluid">
+    <div class="span3">Numer dokumentu</div>
+    <div class="span3"><%= f.input :name, :label => false, :readonly => true  %></div>
+    <div class="span3">Korekta</div>
+    <div class="span3"><%= f.input :document_correct_id, :label => false, :readonly => true, :readonly => true   %></div>
+</div>
+<div class="row-fluid">
+    <div class="span3">Tytuł</div>
+    <div class="span3"><%= f.input :title, :label => false %></div>
+    <div class="span3">Kwota netto dokumentu</div>
+    <div class="span3"><%= f.input :netto_value, :label => false, :readonly => true  %></div>
+</div>
+<div class="row-fluid">
+    <div class="span3">Kontrahent</div>
+    <div class="span3"><%= f.association :firm, :collection => @current_user.firms, :prompt => 'Wybierz firmę', :label => false %></div>
+    <div class="span3">Kwota brutto dokumentu</div>
+    <div class="span3"><%= f.input :brutto_value, :label => false, :readonly => true  %></div>
+</div>
+
+
+
+
   <fieldset id="document-products">
     <ol>
       <!-- The nested form partial - _quantity_fields.html.erb -->
-      <%= f.fields_for :quantities do |quantity| %>
+      <!-- < f.simple_fields_for :quantities do |quantity| %> -->
+      <%= f.simple_fields_for :quantities do |quantity| %>
         <%= render 'quantity_fields', f: quantity %>
       <% end %>
     </ol>
-    <!-- wrap_object - Basically, without it you can’t add new products, just a Quantity amount associated with no product. -->
-    <%= link_to_add_association 'dodaj produkt', f, :quantities, 'data-association-insertion-node' => "#document-products ol", 'data-association-insertion-method' => "append", :wrap_object => Proc.new {|quantity| quantity.build_product; quantity } %>
+    <!-- 
+    , 'data-association-insertion-node' => "#document-products ol", 'data-association-insertion-method' => "append" 
+    :wrap_object => Proc.new {|quantity| quantity.build_product; quantity }
+    Basically, without it you can’t add new products, just a Quantity amount associated with no product. -->
     
   </fieldset>
 
-  <%= f.submit %>
+
+  <div class="row-fluid">
+  <div class="span3">
+<%= link_to_add_association 'dodaj produkt', f, :quantities, class:"btn btn-info" %>
+    </div>
+
+    <div class="span3 offset5">
+     <div class="pull-right">
+        <%= f.submit "Zapisz", class:"btn btn-info" %>
+     </div>      
+    </div>
+
+</div>
+
+            <div class="span3"><%= f.hidden_field :is_income  %></div>
+            <div class="span3"><%= f.hidden_field :is_outcome  %></div>
+            <div class="span3"><%= f.hidden_field :is_correct  %></div>
+
+
+
 <% end %>
+

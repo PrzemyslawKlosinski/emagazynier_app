@@ -1,12 +1,12 @@
 <!-- < provide(:current_user_name, "test") %> -->
 
-
 <!DOCTYPE html>
 <html>
 <head>
   <title><%= caly_tytul(yield(:title)) %></title>
   <%= stylesheet_link_tag    "application", media: "all" %>
   <%= javascript_include_tag "application" %>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <%= csrf_meta_tags %>
 </head>
 <!--[if lt IE 9]>
@@ -20,7 +20,12 @@
 
 			<!-- Be sure to leave the brand out there if you want it shown -->
 			<!-- id: "logo", - not use -->
-			<%= link_to "EMagazynier:", root_path, id: "logo", class: "brand" %>
+			<% if signed_in? %>
+				<%= link_to "EMagazynier:", '', id: "logo", class: "brand" %>
+			<% else %>
+				<%= link_to "EMagazynier:", root_path, id: "logo", class: "brand" %>
+			<% end %>
+			
 
 			<!-- Everything you want hidden at 940px or less, place within here -->
 			<div class="nav-collapse collapse">
@@ -44,9 +49,22 @@
 
 
 
+
               <li class="navbar-form">
-  				<input type="text" class="search-query" placeholder="podaj frazę...">
+  				<!-- <input type="text" class="search-query" placeholder="podaj frazę..."> -->
   				<!-- <button type="submit" class="btn">Szukaj</button> -->
+  				<% if params[:controller] == 'products' %>
+  					<%= form_tag products_path, :method => 'get' do %>
+    					<%= text_field_tag :search, params[:search], class: "search-query" %>
+					<% end %>
+				<% end %>
+
+				 <% if params[:controller] == 'documents' %>
+  					<%= form_tag documents_path, :method => 'get' do %>
+    					<%= text_field_tag :search, params[:search], class: "search-query" %>
+					<% end %>
+				<% end %>
+
   			  </li>
 			</ul>
 			<% end %>
@@ -68,10 +86,12 @@
 					<ul class="dropdown-menu">
 						<li><%= link_to "Ustawienia", edit_user_path(current_user) %></li>
 						<li><%= link_to "Sklep", current_user %></li>
+						<% if current_user.admin %>
 						<li class="divider"></li>
                   		<li class="nav-header">Administrator</li>
                   			<!-- tylko administratorzy -->
                   			<li><%= link_to "Uzytkownicy", users_path %></li>
+                  		<% end %>
 						<li class="divider"></li>
 						<li>
 							<%= link_to "Wylogowanie", wyloguj_path, method: "delete" %>
@@ -96,7 +116,7 @@
 
 			<!-- #flash messages -->
 			<% flash.each do |key, value| %>
-				<%= content_tag(:div, value, class: "alert alert-#{key}") %>
+				<%=h content_tag(:div, value, class: "alert alert-#{key}") %>
 			<% end %>
 
 			<%= yield %>

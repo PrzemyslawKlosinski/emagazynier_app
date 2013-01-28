@@ -16,7 +16,10 @@ class ProductsController < ApplicationController
     # @products = Product.all
     # @products = Product.find(:all, :conditions => ["user_id = ?", current_user.id])
     # @products = Product.find_all_by_user_id(current_user.id);
-    @products = @current_user.products.paginate(page: params[:page])
+    # @products = @current_user.products.paginate(page: params[:page])
+
+    #jesli wprowadzono dane do button search, jesli tekst pusty i tak zwroc mape products
+    @products = Product.search(params[:search], current_user.id, params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

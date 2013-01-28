@@ -1,16 +1,20 @@
-<li class="control-group nested-fields">
-  <div class="controls">
-    <%= f.label :amount, "Ilosc:" %>
-    <%= f.text_field :amount %>
- 
-    <%= f.fields_for :product do |quantity_product| %>
-      <%= quantity_product.text_field :name %> 
-       <!-- < quantity_product.text_field :name, :as => :select %> -->
-      <!-- < collection_select(:quantity, :product_id, @products, :id, :name, {:include_blank => false}) %> -->
 
-      <!-- document[quantities_attributes][new_quantities][amount]& -->
-    <% end %>
- 
-    <%= link_to_remove_association "remove", f %>
-  </div>
-</li>
+<div class="row-fluid">
+<div class="nested-fields">
+
+    <div class="row-fluid">
+    <div class="span3"><%= f.association :product, :collection => @current_user.products, :prompt => 'Wybierz produkt' %></div>
+    <div class="span3"><%= f.input :amount, :label => 'Ilosc' %></div>
+    <div class="span3"><%= f.input :netto_price, :label => 'Kwota netto artykułu', :input_html => {:onchange => "onNettoChange(this)"} %></div>
+    <div class="span3"><%= f.input :brutto_price, :label => 'Kwota brutto artykułu', :readonly => true %></div>
+    </div>
+
+     <div class="row-fluid">
+      <div class="span3"></div>
+      <div class="span3"></div>
+      <div class="span3"></div>
+      <div class="span3"><%= link_to_remove_association "Usun", f, confirm: 'Czy napewno usunąć?', class:"btn btn-info"  %></div>
+      </div>
+  
+</div>
+</div>

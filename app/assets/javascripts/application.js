@@ -34,3 +34,13 @@ function update(){
 	var quantity=document.getElementById("product_quantity");
 	quantity.value=product_summaryQuantityPurchase - product_summaryQuantitySales - product_reservedQuantity;
 }
+
+//wyliczenie brutto na formularzu
+function onNettoChange(netto_value){
+	var brutto=(netto_value.value * 1.23);
+
+	id_netto = netto_value.id;
+	id_brutto = id_netto.replace(/(netto)/ig, 'brutto');
+	var brutto_value=document.getElementById(id_brutto);
+	brutto_value.value=brutto;
+}

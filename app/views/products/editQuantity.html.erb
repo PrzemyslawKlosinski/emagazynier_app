@@ -33,7 +33,7 @@
     <div class="span2 offset1">Stan zakupu</div>
   <div class="span2">
     <!-- < f.text_field :summaryQuantityPurchase, :onchange => "update()" %> -->
-    <input onChange="update()" id="product_summaryQuantityPurchase" name="product[summaryQuantityPurchase]" type="number" min="0" step="1" value ="<%= @product.summaryQuantityPurchase %>"/>
+    <input onChange="update()" id="product_summaryQuantityPurchase" name="product[summaryQuantityPurchase]" type="number" min="0" step="1" readonly="true" value ="<%= @product.summaryQuantityPurchase %>"/>
   </div>
     <div class="span2 offset1">Stan aktualny</div>
     <div class="span3">
@@ -45,7 +45,7 @@
     <div class="span2 offset1">Stan sprzedaży</div>
   <!-- < f.text_field :summaryQuantitySales, :onchange => "update()" %></div> -->
   <div class="span2">
-    <input onChange="update()" id="product_summaryQuantitySales" name="product[summaryQuantitySales]" type="number" min="0" step="1" value ="<%= @product.summaryQuantitySales %>"/>
+    <input onChange="update()" id="product_summaryQuantitySales" name="product[summaryQuantitySales]" type="number" min="0" step="1"  readonly="true" value ="<%= @product.summaryQuantitySales%>"/>
   </div>
     <div class="span2 offset1"> Stan minimalny</div>
     <div class="span3"><%= f.text_field :quantityMinimum %></div>
@@ -54,7 +54,7 @@
     <div class="span2 offset1">Stan w rezerwacji</div>
   <div class="span2">
     <!-- < f.text_field :reservedQuantity, :onchange => "update()" %> -->
-    <input onChange="update()" id="product_reservedQuantity" name="product[reservedQuantity]" type="number" min="0" step="1" value ="<%= @product.reservedQuantity %>"/>
+    <input onChange="update()" id="product_reservedQuantity" name="product[reservedQuantity]" type="number" min="0" step="1" readonly="true" value ="<%= @product.reservedQuantity %>"/>
   </div>
     <div class="span2 offset1">Stan maksymalny</div>
     <div class="span3"><%= f.text_field :quantityMaximum %></div>

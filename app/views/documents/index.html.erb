@@ -1,57 +1,160 @@
-<h1>Listing documents</h1>
+<% provide(:title, 'dokumenty') %>
 
-<table>
-  <tr>
-    <th>Is income</th>
-    <th>Is outcome</th>
-    <th>Is correct</th>
-    <th>Status</th>
-    <th>Name</th>
-    <th>Title</th>
-    <th>Document date</th>
-    <th>Brutto value</th>
-    <th>Netto value</th>
-    <th>Brutto netto</th>
-    <th>Description</th>
-    <th>Receipt</th>
-    <th>Receipt date</th>
-    <th>Blocked</th>
-    <th>Document correct</th>
-    <th>Last correct</th>
-    <th>User</th>
-    <th>Firm</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @documents.each do |document| %>
-  <tr>
-    <td><%= document.is_income %></td>
-    <td><%= document.is_outcome %></td>
-    <td><%= document.is_correct %></td>
-    <td><%= document.status %></td>
-    <td><%= document.name %></td>
-    <td><%= document.title %></td>
-    <td><%= document.document_date %></td>
-    <td><%= document.brutto_value %></td>
-    <td><%= document.netto_value %></td>
-    <td><%= document.brutto_netto %></td>
-    <td><%= document.description %></td>
-    <td><%= document.receipt %></td>
-    <td><%= document.receipt_date %></td>
-    <td><%= document.blocked %></td>
-    <td><%= document.document_correct %></td>
-    <td><%= document.last_correct %></td>
-    <td><%= document.user %></td>
-    <td><%= document.firm %></td>
-    <td><%= link_to 'Show', document %></td>
-    <td><%= link_to 'Edit', edit_document_path(document) %></td>
-    <td><%= link_to 'Destroy', document, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
 
 <br />
 
-<%= link_to 'New Document', new_document_path %>
+<div class="container-fluid">
+    <div class="row-fluid">
+
+
+        <div class="span2">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+          <!--           <li class="nav-header">Dokumenty</li>
+                <li class="divider"></li>
+           -->
+                    <!-- <li>< link_to "Stwórz nowy", new_document_path %></li> -->
+                        <div class="btn-group">
+    <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" href="#">
+    Stwórz nowy
+    <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+        <!-- #ustawienie rodzaju dokumentu -->
+        <li><%= link_to "Przychód", new_document_path(is_income: true, is_outcome: false, is_correct: false) %></li>
+        <li><%= link_to "Rozchód", new_document_path(is_income: false, is_outcome: true, is_correct: false) %></li>
+        <li><%= link_to "Przychód korekta", new_document_path(is_income: true, is_outcome: false, is_correct: true) %></li>
+        <li><%= link_to "Rozchód korekta", new_document_path(is_income: false, is_outcome: true, is_correct: true) %></li>
+    </ul>
+    </div>
+                <li class="divider"></li>
+
+                <ul class="nav nav-list">
+                    <li class="nav-header">Przychód</li>
+                    <li><%= link_to 'PZ zewnętrzny', documents_path(:income => true, :outcome => false, :correct => false) %></li>
+                    <li><%= link_to 'PW wewnętrzny', documents_path(:income => true, :outcome => false, :correct => false) %></li>
+                    <li><%= link_to 'PZk korekta', documents_path(:income => true, :outcome => false, :correct => true) %></li>
+                </ul>
+
+               <ul class="nav nav-list">
+                    <li class="nav-header">Rozchód</li>
+                    <li><%= link_to 'WZ zewnętrzny', documents_path(:income => false, :outcome => true, :correct => false) %></li>
+                    <li><%= link_to 'RW wewnętrzny', documents_path(:income => false, :outcome => true, :correct => false) %></li>
+                    <li><%= link_to 'WZk korekta', documents_path(:income => false, :outcome => true, :correct => true) %></li>
+                </ul>
+
+
+              <!--               
+              <li class="active"><a href="#">Wszystkie</a></li>
+              <li><a href="#">Blat</a></li>_
+              <li><a href="#">Zawias</a></li>
+              <li><a href="#">Front</a></li> 
+              < @categories.each do |category| %>
+                <li><a href="#">< category.name %></a></li>
+              < end %>
+              -->
+
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+
+
+        <div class="span10">
+            <!-- <div class="hero-unit"> -->
+            <div class="well sidebar-nav">
+
+
+                <!-- <legend>Lista artykułów</legend> -->
+                <table class="table table-striped" class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="span1">Pozycja</th>
+                            <th class="span1">Nazwa dokumentu</th>
+                            <th class="span1">Rodzaj</th>
+                            <th class="span2">Tytuł</th>
+                            <th class="span2">Firma</th>
+                            <th class="span1">Kwota dokumentu</th>
+                            <!-- <th class="span2">Opis</th> -->
+                            <th class="span1">Utworzony</th>
+                            <th class="span1"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <% if params[:page].nil? %>
+                            <% @licznik = 0 %>
+                        <% else %>
+                            <% @licznik = (params[:page].to_i * 30) - 30 %>
+                        <% end %>
+
+
+
+<% @documents.each do |document| %>
+  <tr>
+     <td><%= @licznik=@licznik+1 %> </td>
+    <td><%= link_to document.name, document %> </td>
+    <td>
+      <% if document.is_income %>
+        Przychód
+      <% end %>
+      <% if document.is_outcome %>
+        Rozchód
+      <% end %>
+      <% if document.is_correct %>
+        Korekta
+      <% end %>
+
+    </td>
+    <td><%= document.title %></td>
+    <td>
+        <% if !document.firm.nil? %>
+            <%= document.firm.name %>
+        <% end %>
+    </td>
+    <td><%= document.brutto_value %></td>
+    <!-- <td><%= document.description %></td> -->
+    <td><%= document.document_date %></td>
+    <td>
+        <!-- :controller=>"documents", :action=>"editQuantity", :id => document -->
+      <!-- nie mozna edytowac dokumentow magazynowych tylko przez korekte
+      < link_to 'Edytuj', edit_document_path(document)  %> | 
+      -->
+      <%= link_to 'Usuń', document, method: :delete, data: { confirm: 'Czy napewno usunąć?' } %>
+    </td>
+</tr>
+<% end %>
+
+
+
+                        <div class="pull-right">
+                            <%= will_paginate @documents %>
+                        </div>
+                    </tbody>
+                </table>
+                
+
+            </div>
+         </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+<!--     <td>< document.is_income %></td>
+    <td>< document.is_outcome %></td>
+    <td>< document.is_correct %></td>
+    <td>< document.status %></td>
+    <td>< document.netto_value %></td>
+    <td>< document.brutto_netto %></td>
+    <td>< document.receipt %></td>
+    <td>< document.receipt_date %></td>
+    <td>< document.blocked %></td>
+    <td>< document.document_correct %></td>
+    <td>< document.last_correct %></td>
+    <td>< document.user %></td>
+    <td>< document.firm %></td>
+ -->

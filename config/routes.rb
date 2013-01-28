@@ -1,5 +1,8 @@
 EmagazynierApp::Application.routes.draw do
 
+  # rozne akcje index dla wyszukiwania roznych dokumentow
+  match '/documents/pz', to: 'documents#index_pz'
+  # domyslny routing CRUD
   resources :documents
 
   resources :quantities

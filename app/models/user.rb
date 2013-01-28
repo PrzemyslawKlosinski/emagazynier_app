@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
   has_many :categories, dependent: :destroy
   has_many :units, dependent: :destroy
   has_many :firms, dependent: :destroy
+  has_many :documents, dependent: :destroy
 
   has_many :locations, :through => :firms
 
