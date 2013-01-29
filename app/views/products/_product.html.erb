@@ -14,7 +14,7 @@
     <td>
     <% if signed_in? %>
 
-      <%= link_to 'Opis', edit_product_path(product)  %> |
+      <%= link_to 'Edycja', edit_product_path(product)  %> |
       <%= link_to "Stan", :controller=>"products", :action=>"editQuantity", :id => product %> |
       <!-- < link_to "Cena", :controller => "products", :action => "show", :id => product %> | -->
       <%= link_to 'Usuń', product, method: :delete, data: { confirm: 'Czy napewno usunąć?' } %>
