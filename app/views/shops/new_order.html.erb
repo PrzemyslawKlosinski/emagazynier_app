@@ -1,0 +1,52 @@
+  <div class="row-fluid">
+        <div class="span10 offset1">
+
+
+<%= form_for @message, :url => "/sklepy/produkt/#{@product.id}" do |form| %>
+  
+
+<legend><%= @product.name %></legend>
+<div class="row-fluid"> 
+  <div class="span4 offset1">Imie Nazwisko / Nazwa firmy<%= form.text_field :name %></div>
+    <div class="span4 offset1">Adres email<%= form.text_field :email %></div>
+</div>
+
+<div class="row-fluid"> 
+  <div class="span4 offset1">
+      Ilość: <%= form.text_field :subject %>
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span4 offset1">Treść<br/> <%= form.text_area :body, :rows=>5, :cols=>100 %></div>
+    <div class="span4 offset1"><br/>
+      <strong>Sklep: </strong> <%= @product.user.name %><br />
+      <strong>Nazwa: </strong> <%= @product.name %><br />
+      
+      <!-- Zdjęcie: <%= @product.picture %><br /> -->
+      <!-- <strong>Kategoria:</strong> <%= @product.category %><br /> -->
+      <strong>Cena: </strong><%= @product.defaultIncrease %><br />
+
+      <strong>Opis: </strong><%= @product.description %><br />
+
+    </div>
+    
+</div>
+
+
+<!--     <div class="field">
+      < form.label :subject %>
+      < form.text_field :subject %>
+    </div>
+ -->    
+  <div class="row-fluid">
+<div class="span10 offset1">
+  <fieldset class="actions pull-right">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Powrót</button>
+    <%= form.submit "Zamów", class: "btn btn-primary" %>
+  </fieldset>
+</div>
+</div>
+<% end %>
+
+</div></div>

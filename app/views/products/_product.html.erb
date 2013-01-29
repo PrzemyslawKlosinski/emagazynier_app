@@ -18,10 +18,11 @@
       <%= link_to "Stan", :controller=>"products", :action=>"editQuantity", :id => product %> |
       <!-- < link_to "Cena", :controller => "products", :action => "show", :id => product %> | -->
       <%= link_to 'Usuń', product, method: :delete, data: { confirm: 'Czy napewno usunąć?' } %>
-    <% else %>
-      <%= link_to "Kup teraz !", :controller => "products", :action => "show", :id => product %>
+
     <% end %>
     </td>
   </tr>
 
+
+      
   

@@ -18,6 +18,7 @@
   <div class="row-fluid">
     <div class="span6 offset3">
 
+<% if @firms.any? %>
       <table class="table table-striped">
 
         <thead>
@@ -56,6 +57,13 @@
           </tbody>
 
         </table>
+                <% else %>
+                <div class="center">
+                  <br />
+                  Brak firm.
+                  <br />
+                </div>
+              <% end %>
 
 <!-- </div> -->
 </div>

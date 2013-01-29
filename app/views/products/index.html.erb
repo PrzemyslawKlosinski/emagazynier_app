@@ -19,7 +19,7 @@
   <div class="row-fluid">
         <div class="span10 offset1">
 
-
+              <% if @products.any? %>
       <table class="table table-striped">
 
                     <thead>
@@ -53,6 +53,13 @@
                     </tbody>
 
         </table>
+        <% else %>
+                <div class="center">
+                  <br />
+                  Brak artykułów.
+                  <br />
+                </div>
+              <% end %>
 
 </div>
 </div>

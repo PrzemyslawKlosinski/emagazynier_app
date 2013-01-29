@@ -72,7 +72,7 @@ class Document < ActiveRecord::Base
   after_initialize :default_values
   private
   def default_values
-    self.name ||= "ART/" + (Document.maximum("id").to_i + 1).to_s
+    self.name ||= "DOC/" + (Document.maximum("id").to_i + 1).to_s
     #parametry sa walidowane w modelu
     self.netto_value ||= 0.0
     self.brutto_value ||= 0.0

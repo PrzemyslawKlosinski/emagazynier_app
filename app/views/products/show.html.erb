@@ -14,7 +14,11 @@
     <div class="span3">Nazwa artykułu</div>
     <div class="span3"><%= @product.name %></div>
     <div class="span3">Kategoria artykułu</div>
-    <div class="span3"><%= @product.category.name %></div>
+    <div class="span3">
+    <% if !@product.category.nil? %>
+    <%= @product.category.name %>
+    <% end %>
+    </div>
 </div>
 
 <div class="row-fluid">
@@ -22,8 +26,9 @@
     <div class="span3"><%= @product.nameOryginal %></div>
     <div class="span3">Jednostka magazynowania</div>
     <div class="span3">
-      <!-- < @product.unit.name if !@product.unit.nil?%> -->
+    <% if !@product.unit.nil? %>
       <%= @product.unit.name %>
+    <% end %>
     </div>
 </div>
 

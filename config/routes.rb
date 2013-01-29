@@ -1,7 +1,12 @@
 EmagazynierApp::Application.routes.draw do
 
-  # rozne akcje index dla wyszukiwania roznych dokumentow
-  match '/documents/pz', to: 'documents#index_pz'
+  # sklep
+  match 'sklepy', to: 'shops#index'
+  match 'sklepy/(:name)', to: 'shops#firmemail'
+  match 'sklepy/firma/(:name)', to: 'shops#firm'
+  match 'sklepy/produkt/(:name)' => 'shops#new_order', :via => :get
+  match 'sklepy/produkt/(:name)' => 'shops#create_order', :via => :post
+
   # domyslny routing CRUD
   resources :documents
 

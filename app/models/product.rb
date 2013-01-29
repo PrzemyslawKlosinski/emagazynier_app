@@ -52,6 +52,13 @@ class Product < ActiveRecord::Base
   #pozwala wyswietlac produkty w odwrotnej kolejnosci
   default_scope order: 'products.created_at DESC'
 
+    #po wywolaniu konstruktora inicjuje zmienna
+  after_initialize :default_values
+  private
+  def default_values
+    self.name ||= "ART/" + (Product.maximum("id").to_i + 1).to_s
+  end
+
   #indywidualna metoda search dla paginate
   def self.search(search, search_user, page)
     if !search.blank?

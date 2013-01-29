@@ -15,7 +15,7 @@
            -->
                     <!-- <li>< link_to "Stwórz nowy", new_document_path %></li> -->
                         <div class="btn-group">
-    <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" href="#">
+    <a class="btn btn-link dropdown-toggle" data-toggle="dropdown" id="stworz" href="#">
     Stwórz nowy
     <span class="caret"></span>
     </a>
@@ -64,6 +64,7 @@
             <div class="well sidebar-nav">
 
 
+              <% if @documents.any? %>
                 <!-- <legend>Lista artykułów</legend> -->
                 <table class="table table-striped" class="table table-condensed">
                     <thead>
@@ -131,6 +132,14 @@
                         </div>
                     </tbody>
                 </table>
+
+<% else %>
+                <div class="center">
+                  <br /><br /><br /><br /><br /><br /><br /><br /><br />
+                  Brak dokumentów.
+                  <br /><br /><br /><br /><br /><br /><br /><br /><br />
+                </div>
+              <% end %>
                 
 
             </div>

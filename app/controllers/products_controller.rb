@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   
   #Autentykacja
+  # before_filter :correct_user
   before_filter :signed_in_user #trzeba byc zalogowanym, tylko swoje przez edycja akcji
 
   # GET /products
@@ -25,6 +26,17 @@ class ProductsController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @products }
     end
+  end
+
+  def shop
+
+    @product = Product.find(params[:id])
+    @firm = product.firm
+    @user = User.find(:first, :conditions => ["email like ?", "%#{params[:name]}@%"])
+    @categories = Category.find(:all, :conditions => ["\"isDefault\" = ? or user_id = ?", true, @user.id])
+    @products = @user.products.paginate(page: params[:page])
+
+    @shop = @user.email[/[^@]+/]
   end
 
   # GET /products/1
@@ -125,4 +137,11 @@ class ProductsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  # def correct_user
+  #   @product = Product.find(params[:id])
+  #   redirect_to(root_path) unless current_user?(@product.user)
+  # end
 end
+
+    

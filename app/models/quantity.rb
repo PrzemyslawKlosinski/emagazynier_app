@@ -18,6 +18,7 @@ class Quantity < ActiveRecord::Base
   belongs_to :document
   belongs_to :product
 
+  validates :amount, :numericality => {:greater_than_or_equal_to => 0.01}
   validates :product_id, presence: true
   validates :netto_price, :numericality => {:greater_than_or_equal_to => 0.01}
   validates :brutto_price, :numericality => {:greater_than_or_equal_to => 0.01}

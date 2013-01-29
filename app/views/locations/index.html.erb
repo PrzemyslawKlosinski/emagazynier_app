@@ -7,6 +7,7 @@
 
                 <legend>Adresy</legend>
 
+<% if @locations.any? %>
       <table class="table table-striped">
 
         <thead>
@@ -47,6 +48,13 @@
           </tbody>
 
         </table>
+                        <% else %>
+                <div class="center">
+                  <br />
+                  Brak adresów firm.
+                  <br />
+                </div>
+              <% end %>
 
 </div>
 </div>

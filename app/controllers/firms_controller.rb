@@ -110,6 +110,7 @@ respond_to do |format|
     if @firm.save
       # debugowanie -> logger.debug (sprawdzac w logach)  
       session[:firm] = @firm      
+
       format.html { redirect_to new_location_path() }
     else
         # format.html { render action: "new" }

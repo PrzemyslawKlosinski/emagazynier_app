@@ -14,6 +14,14 @@ class UsersController < ApplicationController
     @users = User.paginate(page: params[:page])
   end
 
+  #wyswietla sklep uzytkowika
+  def shop
+    #nalezy podac poczatek adresu email aby wyszukac sklep
+    @user = User.find(:first, :conditions => ["email like ?", "%#{params[:name]}@%"])
+    @categories = Category.find(:all, :conditions => ["\"isDefault\" = ? or user_id = ?", true, @user.id])
+    @products = @user.products.paginate(page: params[:page])
+  end
+
   #wyswietla profil nowego uzytkownika
   def show
     @user = User.find(params[:id])

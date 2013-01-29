@@ -20,7 +20,6 @@
 #  updated_at                 :datetime         not null
 #  remember_token             :string(255)
 #  admin                      :boolean          default(FALSE)
-#
 
 class User < ActiveRecord::Base
   belongs_to :location
@@ -92,6 +91,13 @@ class User < ActiveRecord::Base
   	end
   end
 
+
+  #dla controllera shops
+  def self.search(page)
+  paginate :per_page => 30, :page => page,
+           # :conditions => ['name like ?', "%#{search}%"],
+           :order => 'name'
+    end
 
   #druga opcja na wyslanie maila np po utworzeniu usera (ale przed zapisaniem)
   # after_create :deliver_welcome_email

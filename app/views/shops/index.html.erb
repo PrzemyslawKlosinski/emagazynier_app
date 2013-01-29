@@ -1,0 +1,39 @@
+<% provide(:title, 'Wszyscy uzytkownicy') %>
+
+<div class="hero-unit">
+	<div class="row-fluid">
+		<div class="span12 offset0">
+			
+			<h3>Najbardziej aktywne sklepy</h3>
+
+
+<%= will_paginate %>
+
+
+    				
+    				<% i = 1 %>	
+				 <% @shops.each do |shop| %>
+				     
+				 	<% if i%4 == 0 %>
+				 		<div class="row-fluid">
+				 	<% end %>
+
+					<div class="span3">
+						<%= gravatar_for shop, size: 52 %>
+						<%= link_to shop.name, "/sklepy/firma/#{shop.id}" %>
+					</div>
+
+					<% if i%4 == 0 %>
+				 		</div><br />
+				 	<% end %>
+
+				 	<% i = i + 1 %>	
+
+				<% end %>
+
+
+
+
+		</div>
+	</div>
+</div>
