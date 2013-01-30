@@ -1,0 +1,165 @@
+<% provide(:title, 'raporty') %>
+
+<br />
+
+
+<!-- 
+< if !@start_date.nil? and !@end_date.nil? %>
+< @start_date %>
+< @end_date %>
+< end %>
+ -->
+
+
+
+
+        <div class="span10 offset1">
+
+      <legend>Raporty</legend>
+        <div class="well sidebar-nav">
+          <div class="field center">
+
+
+
+    <%= form_for(:dates, url: '/raporty') do |f| %>
+
+
+  <div class="row">
+    <div class="span5 offset1">
+
+            <%= f.label :start_date, "Wprowadź datę od" %>
+<!-- bootstrap-datapicker.js, datapicker css in application.css, less folder datapicker.less -->
+<div id="due_date">
+        <input name='start_date' type="text" value='<%= @start_date %>' data-date-format="yyyy-mm-dd" id="datepicker1" >
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){ $("#datepicker").datepicker()});
+</script>
+</div>
+
+  <div class="span5">
+<%= f.label :end_date, "Wprowadź datę do" %>
+<!-- bootstrap-datapicker.js, datapicker css in application.css, less folder datapicker.less -->
+<div id="due_date">
+        <input name='end_date' type="text" value='<%= @end_date %>' data-date-format="yyyy-mm-dd" id="datepicker2" >
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){ $("#datepicker1").datepicker()});
+</script>
+<script type="text/javascript">
+  $(document).ready(function(){ $("#datepicker2").datepicker()});
+</script>
+
+
+</div>
+
+
+<%= f.submit "Szukaj", class: "btn btn-large btn-primary" %>
+
+<% end %>
+          
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  
+
+
+
+
+
+
+
+
+        <div class="span10 offset1">
+            <!-- <div class="hero-unit"> -->
+            <div class="well sidebar-nav">
+
+
+<% if !@documents.nil? && @documents.any? %>
+                <!-- <legend>Lista artykułów</legend> -->
+                <table class="table table-striped" class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="span1">Pozycja</th>
+                            <th class="span1">Nazwa dokumentu</th>
+                            <th class="span1">Rodzaj</th>
+                            <th class="span2">Tytuł</th>
+                            <th class="span2">Firma</th>
+                            <th class="span1">Kwota dokumentu</th>
+                            <!-- <th class="span2">Opis</th> -->
+                            <th class="span1">Utworzony</th>
+                            <th class="span1"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <% if params[:page].nil? %>
+                            <% @licznik = 0 %>
+                        <% else %>
+                            <% @licznik = (params[:page].to_i * 30) - 30 %>
+                        <% end %>
+
+
+
+<% @documents.each do |document| %>
+  <tr>
+     <td><%= @licznik=@licznik+1 %> </td>
+    <td><%= link_to document.name, document %> </td>
+    <td>
+      <% if document.is_income %>
+        Przychód
+      <% end %>
+      <% if document.is_outcome %>
+        Rozchód
+      <% end %>
+      <% if document.is_correct %>
+        Korekta
+      <% end %>
+
+    </td>
+    <td><%= document.title %></td>
+    <td>
+        <% if !document.firm.nil? %>
+            <%= document.firm.name %>
+        <% end %>
+    </td>
+    <td><%= number_to_currency document.brutto_value %></td>
+    <!-- <td><%= document.description %></td> -->
+    <td><%= document.document_date %></td>
+    <td>
+        <!-- :controller=>"documents", :action=>"editQuantity", :id => document -->
+      <!-- nie mozna edytowac dokumentow magazynowych tylko przez korekte
+      < link_to 'Edytuj', edit_document_path(document)  %> | 
+      -->
+      <!-- < link_to 'Usuń', document, method: :delete, data: { confirm: 'Czy napewno usunąć?' } %> -->
+      <%= link_to "wydruk", document_path(document, :format => 'pdf') %>
+    </td>
+</tr>
+<% end %>
+
+
+
+                        <div class="pull-right">
+                            <!-- < will_paginate @documents %> -->
+                        </div>
+                    </tbody>
+                </table>
+
+<% else %>
+                <div class="center">
+                  <br /><br /><br /><br /><br /><br /><br /><br /><br />
+                  Brak dokumentów.
+                  <br /><br /><br /><br /><br /><br /><br /><br /><br />
+                </div>
+               
+<% end %>
+                
+           </div>
+         </div>
+
+
