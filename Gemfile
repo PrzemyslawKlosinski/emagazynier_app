@@ -13,6 +13,8 @@ gem "cocoon"
 gem 'simple_form'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
+# add prawn
+gem 'prawn'
 
 group :development do
  gem 'annotate',		'2.5.0'

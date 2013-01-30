@@ -1,3 +1,8 @@
+<script type="text/javascript">
+  $('#document_quantities_attributes_new_quantities_netto_price').tooltip(options)
+  $('#document_quantities_attributes_new_quantities_brutto_price').tooltip(options)
+</script>
+
 
 <div class="row-fluid">
 <div class="nested-fields">
@@ -5,8 +10,9 @@
     <div class="row-fluid">
     <div class="span3"><%= f.association :product, :collection => @current_user.products, :prompt => 'Wybierz produkt' %></div>
     <div class="span3"><%= f.input :amount, :label => 'Ilosc' %></div>
-    <div class="span3"><%= f.input :netto_price, :label => 'Kwota netto artykułu', :input_html => {:onchange => "onNettoChange(this)"} %></div>
-    <div class="span3"><%= f.input :brutto_price, :label => 'Kwota brutto artykułu', :readonly => true %></div>
+    <div class="span3"><%= f.input :netto_price, :label => 'Kwota netto artykułu', :input_html => {:onchange => "onNettoChange(this)", title:"podaj cenę netto w PLN (separator . )"}  %></div>
+    <div class="span3"><%= f.input :brutto_price, :label => 'Kwota brutto artykułu', :input_html => {:onchange => "onBruttoChange(this)", title:"podaj cenę brutto w PLN (separator . )"} %></div>
+    <!-- :readonly => true  -->
     </div>
 
      <div class="row-fluid">

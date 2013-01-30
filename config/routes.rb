@@ -7,6 +7,10 @@ EmagazynierApp::Application.routes.draw do
   match 'sklepy/produkt/(:name)' => 'shops#new_order', :via => :get
   match 'sklepy/produkt/(:name)' => 'shops#create_order', :via => :post
 
+  #raporty
+  match 'raporty' => 'documents#new_report', :via => :get
+  match 'raporty' => 'documents#create_report', :via => :post
+
   # domyslny routing CRUD
   resources :documents
 

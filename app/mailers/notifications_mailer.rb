@@ -14,4 +14,12 @@ class NotificationsMailer < ActionMailer::Base
     mail(:to => email_with_name, :subject => "Zamowienie ze sklepu #{product.user.name}.")
   end
 
+# Found a solution to send a prawn generated pdf as an email attachment. Inside your mailer:
+# def new_subscription(user, invoice)
+# @invoice = invoice
+# pdf = SubscriptionPdf.new(@invoice)
+# attachments["invoice.pdf"] = { :mime_type => 'application/pdf', :content => pdf.render }
+# mail(:to => user.email, :subject => 'Subscription Receipt', :from => "example@example.com")
+# end
+
 end

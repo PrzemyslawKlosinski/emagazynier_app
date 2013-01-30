@@ -53,10 +53,24 @@ before_filter :signed_in_user
   # GET /documents/1.json
   def show
     @document = Document.find(params[:id])
+    @quantities = @document.quantities
+    @products = @document.products
+
 
     respond_to do |format|
+      
       format.html # show.html.erb
+      
       format.json { render json: @document }
+
+      format.pdf do
+        pdf = DocumentPdf.new(@document, view_context)
+        send_data pdf.render, filename: 
+        "document_#{@document.name}_#{@document.created_at.strftime("%d/%m/%Y")}.pdf",
+        type: "application/pdf", disposition: "inline"
+        # , disposition: "inline - otworz w przegladarce zamiast pobierac
+      end
+
     end
   end
 
@@ -104,11 +118,14 @@ before_filter :signed_in_user
   def edit
     @document = Document.find(params[:id])
 
+    @documents = Document.search(params[:search], current_user.id, params[:page])
+
     #for quantity_fields
     # @products = @current_user.products if signed_in?
 
     #for _form
     # @firms = @current_user.firms
+    render 'new'
 
   end
 
@@ -179,6 +196,10 @@ before_filter :signed_in_user
   # PUT /documents/1.json
   def update
     @document = Document.find(params[:id])
+
+    #ewentualnie dodac mozliwosc edycji dokumentu, wytedy 
+    # - dopisac ze jesli zmniejszamy stan to zmniejszyc stan magazynowy
+    # - dopisac ze jesli zwiekszamy stan to zwiekszamy stan magazynowy
 
     # #ustawienie rodzaju dokumentu
     # if params[:document][:doctype] == 0 or params[:document][:doctype] == 1 or params[:document][:doctype] == 2
@@ -267,4 +288,44 @@ before_filter :signed_in_user
       format.json { head :no_content }
     end
   end
+
+  #formularz wyszukujacy raporty z okresu
+  def new_report
+    @start_date = DateTime.now.strftime('%Y-%m-%d')
+    @end_date = DateTime.now.strftime('%Y-%m-%d')
+    # @start_date_test = Date.today
+    # @documents = Document.find(:all, :conditions => ["document_date >= ? AND document_date <= ?", @start_date, @end_date])
+    # @start_date = Date::strptime('01-01-2011', "%d-%m-%Y")
+    # @end_date = Date::strptime('30-01-2013', "%d-%m-%Y")
+    # # @end_date = DateTime.new(2013,01,30,00,00);
+    # # @documents = Document.find(:all)
+    # # @documents = Document.where(:created_at => @start_date..@end_date)
+    # @documents = Document.find(:all, :conditions => ["document_date >= ? AND document_date <= ?", @start_date, @end_date])
+  end
+
+  def create_report
+    # @start_date = Date::strptime(params[:start_date], "%d-%m-%Y")
+    # @end_date = params[:end_date]
+
+    # @start_date = DateTime.now.strftime('%Y-%m-%d')
+    # @end_date = DateTime.now.strftime('%Y-%m-%d')
+    @start_date = Date::strptime(params[:start_date], "%Y-%m-%d")
+    @end_date = Date::strptime(params[:end_date], "%Y-%m-%d")
+
+    # @end_date = DateTime.new(2013,01,30,00,00);
+    # @documents = Document.find(:all)
+    # @documents = Document.where(:created_at => @start_date..@end_date)
+    @documents = Document.find(:all, :conditions => ["document_date >= ? and document_date <= ?", @start_date.strftime('%Y-%m-%d 00:00:00'), @end_date.strftime('%Y-%m-%d 24:00:00') ])
+
+    render 'new_report'
+    # #dorobic generowanie z automatu dla zakresu dat
+    # pdf = Prawn::Document.new 
+    # #przerobic aby konstruktor otrzymal @documents, nie @document
+    # view = "testowy napis"
+    # pdf = Prawn:DocumentPdf.new(@documents, view)
+    # # niepotrzebne - pdf.text @documents
+    # send_data pdf.render
+
+  end
+
 end

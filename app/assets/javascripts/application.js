@@ -18,6 +18,9 @@
 // This will allow all of Cocoon’s jQuery magic to do its thing.
 //= require cocoon
 
+// for DataPicker
+//= require bootstrap-datepicker
+
 //= require_tree .
 
 
@@ -38,9 +41,25 @@ function update(){
 //wyliczenie brutto na formularzu
 function onNettoChange(netto_value){
 	var brutto=(netto_value.value * 1.23);
+	if(isNaN(brutto)){
+		brutto = 0;
+	}
 
 	id_netto = netto_value.id;
 	id_brutto = id_netto.replace(/(netto)/ig, 'brutto');
 	var brutto_value=document.getElementById(id_brutto);
-	brutto_value.value=brutto;
+	brutto_value.value=(brutto).toFixed(2); //zaokraglenie w gore
+}
+
+//wyliczenie brutto na formularzu
+function onBruttoChange(brutto_value){
+	var netto=(brutto_value.value / 1.23);
+	if(isNaN(netto)){
+		netto = 0;
+	}
+
+	id_brutto = brutto_value.id;
+	id_netto = id_brutto.replace(/(brutto)/ig, 'netto');
+	var netto_value=document.getElementById(id_netto);
+	netto_value.value=netto.toFixed(2); //zaokraglenie w gore
 }

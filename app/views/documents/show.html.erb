@@ -1,3 +1,56 @@
+
+<% provide(:title, "Raport") %>
+
+  <div class="row-fluid">
+        <div class="span5 offset4">
+
+        <legend>Dokument '<%= @document.name %>' data <%= @document.document_date %></legend>
+        <!-- < title "Dokument ##{@document.name} data #{@document.document_date}" %> -->
+
+          <!-- <div class="well sidebar-nav"> -->
+          <div class="field center">
+
+
+
+<table id="line_items">
+  <tr>
+    <th>Produkt</th>
+    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ilość&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+    <th class="price">&nbsp;&nbsp;&nbsp;Cena jednostkowa (brutto)&nbsp;&nbsp;&nbsp;</th>
+    <th class="price">&nbsp;&nbsp;&nbsp;Cena sumaryczna (brutto)&nbsp;&nbsp;&nbsp;</th>
+  </tr>
+  <% for quantity in @quantities %>
+    <tr >
+      <!-- class="< cycle :odd, :even %>" -->
+      <td><%=h quantity.product.name %></td>
+      <td class="qty"><%= quantity.amount %></td>
+      <td class="price"><%= number_to_currency(quantity.brutto_price) %></td>
+      <td class="price"><%= number_to_currency(quantity.brutto_price * quantity.amount) %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td class="total price" colspan="4">
+      Podsumowanie: <%= number_to_currency @document.brutto_value %>
+    </td>
+  </tr>
+</table>
+              <span class="pull-right">
+
+<%= link_to 'Powrót', documents_path, class:"btn btn-info" %>
+</span>
+
+</div>
+<!-- </div> -->
+</div>
+</div>
+
+
+
+
+
+
+<!-- 
+
 <%= @document.doctype_id %>
 <%= @document.doctype %>
 
@@ -93,6 +146,7 @@
   <%= @document.firm %>
 </p>
 
+ -->
+<!-- tymczasowo nie dopuszcamy edycji dokumentu, edycja tylko przez korekte -->
+<!-- < link_to 'Edit', edit_document_path(@document) %> | -->
 
-<%= link_to 'Edit', edit_document_path(@document) %> |
-<%= link_to 'Back', documents_path %>
