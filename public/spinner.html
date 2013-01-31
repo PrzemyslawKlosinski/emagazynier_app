@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>spinner demo</title>
+<!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css"> -->
+<script src="assets/jquery-1.9.0.js"></script>
+<script src="assets/jquery-ui.js"></script>
+</head>
+<body>
+
+
+
+
+
+
+     <!-- <input type="text" id="spinner" value="0" maxlength=10 style='width: 130px'/> -->
+     <!-- <input type="text" id="#s1" /> -->
+     <!-- <div class="ui-spinner"> -->
+<!--         <input class="ui-spinner-box" type="spinner" id="spinner" value="10" style='width: 130px' />
+        <button class="ui-spinner-up" type="button">▲</button>
+         <button class="ui-spinner-down" type="button">▼</button>
+          <input type="button" id="GetValue" value="Get Value" />
+ -->
+
+<!-- <input id="spinner"> -->
+<!--         <input class="ui-spinner-box" type="spinner" id="spinner" value="10" style='width: 130px' />
+        <button class="ui-spinner-up" type="button" onclick="myFunction()">▲</button>
+         <button class="ui-spinner-down" type="button" onclick="myFunction()">▼</button>
+ -->
+
+
+
+
+
+<script type="text/javascript">
+
+$('#spinner').spinner({ min: -100, max: 100 });
+$('#GetValue').click(function() { alert($('#spinner').spinner('value')); });        
+</script>
+
+
+</body>
+</html>
