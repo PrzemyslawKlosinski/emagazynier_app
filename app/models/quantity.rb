@@ -29,6 +29,6 @@ class Quantity < ActiveRecord::Base
   accepts_nested_attributes_for :product, :reject_if => :all_blank
 
   # Adding the join model attributes to the …join model attribute white-list
-  attr_accessible :amount, :product_id, :product_attributes, :brutto_price, :netto_price
+  attr_accessible :amount, :product_id, :product_attributes, :brutto_price, :netto_price, :discount
 
 end

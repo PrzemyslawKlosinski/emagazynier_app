@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130127063152) do
+ActiveRecord::Schema.define(:version => 20130131120443) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -120,8 +120,9 @@ ActiveRecord::Schema.define(:version => 20130127063152) do
     t.decimal  "brutto_price"
     t.integer  "product_id"
     t.integer  "document_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+    t.integer  "discount",     :default => 0
   end
 
   add_index "quantities", ["document_id"], :name => "index_quantities_on_document_id"

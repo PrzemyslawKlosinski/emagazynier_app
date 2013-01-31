@@ -15,6 +15,8 @@ gem 'simple_form'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 # add prawn
 gem 'prawn'
+# add jquery-ui
+gem 'jquery-ui-rails'
 
 group :development do
  gem 'annotate',		'2.5.0'
