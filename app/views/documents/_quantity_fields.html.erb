@@ -4,23 +4,72 @@
 </script>
 
 
-<div class="row-fluid">
 <div class="nested-fields">
 
     <div class="row-fluid">
-    <div class="span3"><%= f.association :product, :collection => @current_user.products, :prompt => 'Wybierz produkt' %></div>
-    <div class="span3"><%= f.input :amount, :label => 'Ilosc' %></div>
-    <div class="span3"><%= f.input :netto_price, :label => 'Kwota netto artykułu', :input_html => {:onchange => "onNettoChange(this)", title:"podaj cenę netto w PLN (separator . )"}  %></div>
-    <div class="span3"><%= f.input :brutto_price, :label => 'Kwota brutto artykułu', :input_html => {:onchange => "onBruttoChange(this)", title:"podaj cenę brutto w PLN (separator . )"} %></div>
+    <div class="span2"><%= f.association :product, :label => false , :collection => @current_user.products, :prompt => 'Wybierz produkt', :input_html => {:maxlength =>10,:style=> 'width: 140px' } %></div>
+    
+    <div class="span2">
+      <%= f.input :amount, :label => false, :input_html => {:maxlength =>10,:style=> 'width: 130px' } %>
+      </div>
+    <div class="span2">
+
+
+
+    </div>
+    
+    <div class="span2">
+      <%= f.input :netto_price, :label => false, :input_html => {:onchange => "onNettoChange(this)", title:"podaj cenę netto w PLN (separator . )", :maxlength =>10 ,:style=> 'width: 130px' }  %>
+    </div>
+    <div class="span2">
+      <%= f.input :brutto_price, :label => false, :input_html => {:onchange => "onBruttoChange(this)", title:"podaj cenę brutto w PLN (separator . )", :maxlength =>10,:style=> 'width: 130px' } %>
+    </div>
     <!-- :readonly => true  -->
+    
+
+    <div class="span2"><%= link_to_remove_association "Usun", f, confirm: 'Czy napewno usunąć?', class:"btn btn-info"  %></div>
     </div>
 
-     <div class="row-fluid">
-      <div class="span3"></div>
-      <div class="span3"></div>
-      <div class="span3"></div>
-      <div class="span3"><%= link_to_remove_association "Usun", f, confirm: 'Czy napewno usunąć?', class:"btn btn-info"  %></div>
-      </div>
+
+            <!-- Spinner -->
+
+<input type="text" id="spinner" value="0" />
+
+<script>
+$('#spinner').spinner({ min: -100, max: 100 });
+</script>
+            <!--end Spinner-->
+
+
+
+<!-- var spinner = $( "#spinner" ).spinner();
+
+$( "#disable" ).click(function() {
+    if ( spinner.spinner( "option", "disabled" ) ) {
+        spinner.spinner( "enable" );
+    } else {
+        spinner.spinner( "disable" );
+    }
+});
+$( "#destroy" ).click(function() {
+    if ( spinner.data( "ui-spinner" ) ) {
+        spinner.spinner( "destroy" );
+    } else {
+        spinner.spinner();
+    }
+});
+$( "#getvalue" ).click(function() {
+    alert( spinner.spinner( "value" ) );
+});
+$( "#setvalue" ).click(function() {
+    spinner.spinner( "value", 5 );
+});
+ -->
+
+
+
+
+
+      
   
-</div>
 </div>
