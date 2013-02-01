@@ -1,3 +1,4 @@
+# encoding: utf-8
 class QuantitiesController < ApplicationController
   # GET /quantities
   # GET /quantities.json
@@ -44,7 +45,7 @@ class QuantitiesController < ApplicationController
 
     respond_to do |format|
       if @quantity.save
-        format.html { redirect_to @quantity, notice: 'Quantity was successfully created.' }
+        format.html { redirect_to @quantity, notice: 'Ilość pomyślnie utworzona.' }
         format.json { render json: @quantity, status: :created, location: @quantity }
       else
         format.html { render action: "new" }
@@ -60,7 +61,7 @@ class QuantitiesController < ApplicationController
 
     respond_to do |format|
       if @quantity.update_attributes(params[:quantity])
-        format.html { redirect_to @quantity, notice: 'Quantity was successfully updated.' }
+        format.html { redirect_to @quantity, notice: 'Ilość pomyślnie utworzona.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

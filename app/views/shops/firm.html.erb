@@ -1,18 +1,17 @@
-<% provide(:title, @user.name) %>
+<% provide(:title, 'Sklep użytkownika ' + @user.name) %>
+<br />
 
-<hr>
 <aside>
 	<section>
 		<h1>
 			<%= gravatar_for @user %>
-			<h1>Witaj w sklepie firmy <%= @user.name %></h1>
+			<h1>Witaj w sklepie <%= @user.name %></h1>
 			
 			<% if @user.products.any? %>
 				<h4>posiadamy artykułów <%= @user.products.count %>, zapraszamy do zakupów</h4>
 			<% else %>
 				<h4>nie posiadamy jeszcze artykułów, zapraszamy wkrótce</h4>
 			<% end %>
-			
 		</h1>
 	</section>
 </aside>
@@ -66,6 +65,11 @@
 	          				<% @licznik = (params[:page].to_i * 30) - 30 %>
 	          			<% end %>
 
+<div class="pull-right">
+	<%= will_paginate_with_i18n @products %>
+</div>
+
+
 
 <% @products.each do |product| %>
 	          			  <tr>
@@ -111,9 +115,6 @@
 
 <% end %>
 
-	          			<div class="pull-right">
-	          				<%= will_paginate @products %>
-	          			</div>
 	          		</tbody>
 	          	</table>
 	          	<% else %>

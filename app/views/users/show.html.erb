@@ -1,6 +1,6 @@
-<% provide(:title, @user.name) %>
+<% provide(:title, 'Użytkownik serwisu eMagazynier: ' + @user.name) %>
+<br />
 
-<hr>
 <aside>
 	<section>
 		<h1>
@@ -66,11 +66,13 @@
 	          				<% @licznik = (params[:page].to_i * 30) - 30 %>
 	          			<% end %>
 
+	          			<div class="pull-right">
+	          				<%= will_paginate_with_i18n @products %>
+	          			</div>
+	          			
 	          			<%= render @products %>
 
-	          			<div class="pull-right">
-	          				<%= will_paginate @products %>
-	          			</div>
+
 	          		</tbody>
 	          	</table>
 	          	<% else %>

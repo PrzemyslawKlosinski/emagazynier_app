@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ProductsController < ApplicationController
   
   #Autentykacja
@@ -100,11 +101,11 @@ class ProductsController < ApplicationController
     respond_to do |format|
       if @product.save
         # format.html { redirect_to @product, notice: 'Product was successfully created.' }
-        format.html { redirect_to products_path, notice: 'Pomyslnie utworzono produkt.' }
+        format.html { redirect_to products_path, notice: 'Pomyślnie utworzono produkt.' }
         format.json { render json: @product, status: :created, location: @product }
       else
         # format.html { render action: "new" }
-        format.html { redirect_to products_path, :flash => { :error => 'Nie udalo sie utworzyc produktu' }}
+        format.html { redirect_to products_path, :flash => { :error => 'Nie udało sie utworzyć produktu' }}
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
@@ -113,14 +114,22 @@ class ProductsController < ApplicationController
   # PUT /products/1
   # PUT /products/1.json
   def update
+
+    # dla formularza new, dla metody create
+    @categories = Category.find(:all, :conditions => ["\"isDefault\" = ? or user_id = ?", true, current_user.id])
+    @units = Unit.find(:all, :conditions => ["\"isDefault\" = ? or user_id = ?", true, current_user.id])
+
     @product = Product.find(params[:id])
+
+        # dla tabeli index
+    @products = current_user.products.paginate(page: params[:page])
 
     respond_to do |format|
       if @product.update_attributes(params[:product])
-        format.html { redirect_to @product, notice: 'Produkt pomyslnie zaktualizowano.' }
+        format.html { redirect_to @product, notice: 'Produkt pomyślnie zaktualizowano.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: "index" }
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end

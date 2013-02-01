@@ -1,11 +1,14 @@
-<% provide(:title, 'Rejestracja') %>
-
-    <br />
+<% provide(:title, 'Rejestracja w serwisie eMagazynier') %>
+<br />
       
   <div class="row-fluid">
       <div class="span6 offset3">
 
-      <legend>Rejestracja nowego użytkownika</legend>
+      <h1>Rejestracja w serwisie eMagazynier</h1>
+      <hr />
+      <!-- dodajemy renderowanie bledow z partial -->
+	  <%= render 'shared/error_messages' %>
+
         <div class="well sidebar-nav">
           <div class="field">
 
@@ -13,8 +16,8 @@
       <div class="span5 offset4">
 
 <br />
-			<!-- dodajemy renderowanie bledow z partial -->
-			<%= render 'shared/error_messages' %>
+
+				
 				<%= form_for(@user) do |f| %>
 				<!--
 				< f.label :name, "Wprowadź nazwę (np. nazwa firmy)" %>

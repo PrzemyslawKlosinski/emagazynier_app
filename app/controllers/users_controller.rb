@@ -1,3 +1,4 @@
+# encoding: utf-8
 class UsersController < ApplicationController
 
   before_filter :active_user, only: [:edit,:update]
@@ -38,7 +39,7 @@ class UsersController < ApplicationController
 
   def destroy
     User.find(params[:id]).destroy
-    flash[:success] = "Uzytkownik usuniety."
+    flash[:success] = "Użytkownik został usunięty."
     redirect_to users_path
   end
 
@@ -57,7 +58,7 @@ class UsersController < ApplicationController
     if(@user.save)
   	  
       #jesli sie udalo zapisz cookies, przejdz do strony show / domyslanie pokaz komunikat o wyslanym mailu
-      flash[:success] = 'Witaj, pomyslnie zarejestrowales sie w aplikacji eMagazynier! Odbierz email i dokoncz rejestracje.'
+      flash[:success] = 'Witaj, pomyślnie zarejestrowałeś się w aplikacji eMagazynier! Odbierz wiadomość email i dokończ rejestrację.'
       
       #zaloguj ciasteczko
       # sign_in @user
@@ -84,7 +85,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
 
     if @user.update_attributes(params[:user])
-      flash[:success] = "Dane podstawowe zaktualizowano."
+      flash[:success] = "Profil został zaktualizowany."
       #jesli uzytkonik nieaktywny i zmienil haslo, aktywuj
       if !@user.isActive
         @user.toggle!(:isActive)
@@ -117,7 +118,7 @@ class UsersController < ApplicationController
       unless signed_in?
         #zapisuje adres z jakiego przyszlismy
         store_location
-        redirect_to zaloguj_path, notice: "Prosze sie zalogowac."       
+        redirect_to zaloguj_path, notice: "Proszę się zalogować."       
       end
   end
 

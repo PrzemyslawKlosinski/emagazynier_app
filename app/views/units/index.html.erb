@@ -1,10 +1,12 @@
-
-    <br />
+<% provide(:title, 'Ustawienia jednostek:' + @current_user.name) %>
+<br />
 
   <div class="row-fluid">
       <div class="span6 offset3">
 
-        <legend>Jednostki</legend>
+      <h1>Ustawienia jednostek</h1>
+      <hr />
+
         <div class="well sidebar-nav">
           <div class="field center">
 
@@ -43,7 +45,7 @@
               <span class="pull-right">
                 <% if !unit.isDefault %>
                 <%= link_to 'Edytuj', edit_unit_path(unit) %> | 
-                <%= link_to 'Usuń', unit, confirm: 'Czy napewno usunąć?', method: :delete %>
+                <%= link_to 'Usuń', unit, confirm: 'Czy napewno usunąć jednostkę?', method: :delete %>
                 <% end %>
               </span>
             </td>

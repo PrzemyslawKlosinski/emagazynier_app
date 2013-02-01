@@ -1,5 +1,4 @@
-<% provide(:title, 'raporty') %>
-
+<% provide(:title, 'Raporty dokumentów magazynowych') %>
 <br />
 
 
@@ -15,7 +14,9 @@
 
         <div class="span10 offset1">
 
-      <legend>Raporty</legend>
+      <h1>Raporty dokumentów magazynowych</h1>
+      <hr />
+
         <div class="well sidebar-nav">
           <div class="field center">
 
@@ -25,7 +26,7 @@
 
 
   <div class="row">
-    <div class="span5 offset1">
+    <div class="span3 offset1">
 
             <%= f.label :start_date, "Wprowadź datę od" %>
 <!-- bootstrap-datapicker.js, datapicker css in application.css, less folder datapicker.less -->
@@ -47,7 +48,7 @@
 
 </div>
 
-  <div class="span5">
+  <div class="span3">
 <%= f.label :end_date, "Wprowadź datę do" %>
 <!-- bootstrap-datapicker.js, datapicker css in application.css, less folder datapicker.less -->
 <div id="due_date">
@@ -59,12 +60,25 @@
 <script type="text/javascript">
   $(document).ready(function(){ $("#datepicker2").datepicker()});
 </script>
-
-
 </div>
+
+ <div class="span2"> 
+<%= f.label :print_all, "Czy zestawienie?" %>
+<div id="due_date">
+<%= f.check_box :print_all %>
+</div>
+</div>
+ 
+  <div class="span2"> 
+<!-- 
+< f.check_box :print_all, :class => "css_class" %>
+< f.check_box :remember_me, :style => "width: 50px; height: 50px;" %>
+ -->
 
 
 <%= f.submit "Szukaj", class: "btn btn-large btn-primary" %>
+</div>
+</div>
 
 <% end %>
           
@@ -154,9 +168,7 @@
 
 
 
-                        <div class="pull-right">
-                            <!-- < will_paginate @documents %> -->
-                        </div>
+
                     </tbody>
                 </table>
 

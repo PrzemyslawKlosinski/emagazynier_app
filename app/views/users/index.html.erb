@@ -1,13 +1,16 @@
-<% provide(:title, 'Wszyscy uzytkownicy') %>
+<% provide(:title, 'Użytkownicy serwisu eMagazynier') %>
+<br />
 
 <div class="hero-unit">
 	<div class="row-fluid">
 		<div class="span7 offset2">
 			
-			<h3>Wszyscy uzytkownicy</h3>
+			<h1>Użytkownicy serwisu eMagazynier</h1>
+			<hr />
 
-
-<%= will_paginate %>
+			<div class="pull-right">
+	<%= will_paginate_with_i18n @users %>
+</div><br/><br/>
 
 			<ul class="users">
 				 <% @users.each do |user| %>
@@ -15,14 +18,13 @@
 						< gravatar_for user, size: 52 %>
 						< link_to user.name, user %>
 					</li> -->
-					<!-- dodajemy formularz czesciowy _user.html.erb i podajemy zmienna -->
+					<!-- dodajemy formularz częściowy _user.html.erb i podajemy zmienną -->
 					<!-- Here we call render not on a string with the name of a partial, but rather on a uservariable of class User in this context -->
 					<%= render user %>
-					<!-- drugi sposob to mozna zastapic caly blok skladnia < render @users %> -->
+					<!-- drugi sposób można zastąpić cały blok składnią < render @users %> -->
 				<% end %>
 			</ul>
 
-<%= will_paginate %>
 
 
 		</div>

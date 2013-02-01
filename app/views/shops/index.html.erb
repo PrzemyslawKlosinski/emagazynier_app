@@ -1,16 +1,18 @@
-<% provide(:title, 'Wszyscy uzytkownicy') %>
+<% provide(:title, 'Sklepy w serwisie eMagazynier') %>
+<br />
+
 
 <div class="hero-unit">
 	<div class="row-fluid">
 		<div class="span12 offset0">
 			
-			<h3>Najbardziej aktywne sklepy</h3>
+			<h1>Najbardziej aktywne sklepy</h1>
+			<hr />
 
-
-<%= will_paginate %>
-
-
-    				
+<div class="center">
+	<%= will_paginate_with_i18n @users %>
+</div>
+				
     				<% i = 1 %>	
 				 <% @shops.each do |shop| %>
 				     
@@ -30,7 +32,6 @@
 				 	<% i = i + 1 %>	
 
 				<% end %>
-
 
 
 

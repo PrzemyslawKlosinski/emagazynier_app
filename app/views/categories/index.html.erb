@@ -1,10 +1,12 @@
-
-    <br />
+<% provide(:title, 'Ustawienia kategorii:' + @current_user.name) %>
+<br />
       
   <div class="row-fluid">
       <div class="span6 offset3">
 
-      <legend>Kategorie</legend>
+      <h1>Ustawienia kategorii</h1>
+      <hr />
+
         <div class="well sidebar-nav">
           <div class="field center">
               <%= render 'form' %> 

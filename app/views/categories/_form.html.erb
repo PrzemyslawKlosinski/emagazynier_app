@@ -2,10 +2,8 @@
 <%= form_for(@category) do |f| %>
 
   <% if @category.errors.any? %>
-    <div id="error_explanation">
-        <div class="alert alert-error">
-          Znaleziono bledow <%= pluralize(@category.errors.count, ".") %>
-        </div>
+    <div class="alert alert-error">
+          Znaleziono błędów: <%= @category.errors.count %>
       <ul>
       <% @category.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>

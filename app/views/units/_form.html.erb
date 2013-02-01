@@ -1,10 +1,8 @@
 <%= form_for(@unit) do |f| %>
 
   <% if @unit.errors.any? %>
-    <div id="error_explanation">
         <div class="alert alert-error">
-          Znaleziono <%= pluralize(@unit.errors.count, "error") %>.
-        </div>
+          Znaleziono błędów: <%= @unit.errors.count %>
       <ul>
       <% @unit.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>

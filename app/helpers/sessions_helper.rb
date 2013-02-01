@@ -1,3 +1,4 @@
+# encoding: utf-8
 module SessionsHelper
 
 	 #decode url
@@ -43,13 +44,13 @@ module SessionsHelper
 
   		#jesli uzytkownik zalogowany i nie aktywny isActive == false, przekieruj do zmiany hasla
   		if signed_in? and !current_user.isActive
-  			redirect_to edit_user_path(current_user), notice: "Prosze ustawic haslo."
+  			redirect_to edit_user_path(current_user), notice: "Proszę ustawić hasło."
   		end
 
   		unless signed_in?
   			 #zapisuje adres z jakiego przyszlismy
   			store_location
-			redirect_to zaloguj_path, notice: "Prosze sie zalogowac."  			
+			redirect_to zaloguj_path, notice: "Proszę się zalogować."  			
   		end
   	end
 

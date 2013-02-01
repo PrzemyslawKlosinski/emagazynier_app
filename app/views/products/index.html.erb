@@ -1,11 +1,12 @@
-<% provide(:title, 'produkty') %>
-
-    <br />
+<% provide(:title, 'Ustawienia artykułów:' + @current_user.name) %>
+<br />
 
   <div class="row-fluid">
         <div class="span10 offset1">
 
-        <legend>Artykuły</legend>
+      <h1>Ustawienia artykułów</h1>
+      <hr />
+
         <div class="well sidebar-nav">
           <div class="field center">
 
@@ -19,6 +20,10 @@
   <div class="row-fluid">
         <div class="span10 offset1">
 
+<div class="pull-right">
+    <%= will_paginate_with_i18n @products %>
+</div>
+
               <% if @products.any? %>
       <table class="table table-striped">
 
@@ -29,7 +34,7 @@
                             <th class="span2">Opis</th>
                             <th class="span1">Aktualizacja</th>
                             <th class="span1">Ilość</th>
-                            <th class="span1">Bieżąca cena zakupu</th>
+                            <th class="span1">Zakup</th>
                             <% if signed_in? %>
                                 <th class="span2"></th>
                             <% else %>
@@ -47,12 +52,13 @@
 
                         <%= render @products %>
 
-                        <div class="pull-right">
-                            <%= will_paginate @products %>
-                        </div>
+
                     </tbody>
 
         </table>
+
+
+
         <% else %>
                 <div class="center">
                   <br />

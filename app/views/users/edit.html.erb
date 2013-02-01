@@ -1,16 +1,16 @@
-<% provide(:title, 'Edycja profilu') %>
-
-
-
-    <br />
+<% provide(:title, 'Edycja profilu użytkownika ' + @user.name) %>
+<br />
       
   <div class="row-fluid">
       <div class="span6 offset3">
 
-      				<!-- dodajemy renderowanie bledow z partial -->
-			<%= render 'shared/error_messages' %>
 
-      <legend>Ustawienia <%= @user.name %></legend>
+      <h1>Edycja profilu użytkownika <%= @user.name %></h1>
+      <hr />
+      <!-- dodajemy renderowanie bledow z partial -->
+	  <%= render 'shared/error_messages' %>
+
+
         <div class="well sidebar-nav">
           <div class="field ">
 

@@ -1,3 +1,4 @@
+# encoding: utf-8
 class UnitsController < ApplicationController
 
   #Autentykacja
@@ -64,11 +65,11 @@ class UnitsController < ApplicationController
     respond_to do |format|
       if @unit.save
         # format.html { redirect_to @unit, notice: 'Unit was successfully created.' }
-        format.html { redirect_to units_path, notice: 'Pomyslnie utworzono jednostke.' }
+        format.html { redirect_to units_path, notice: 'Pomyślnie utworzono jednostkę.' }
         format.json { render json: @unit, status: :created, location: @unit }
       else
         # format.html { render action: "new" }
-        format.html { redirect_to units_path, :flash => { :error => 'Nie udalo sie utworzyc jednostki' } }
+        format.html { redirect_to units_path, :flash => { :error => 'Nie udało się utworzyć jednostki' } }
         format.json { render json: @unit.errors, status: :unprocessable_entity }
       end
     end
@@ -82,11 +83,11 @@ class UnitsController < ApplicationController
     respond_to do |format|
       if @unit.update_attributes(params[:unit])
         # format.html { redirect_to @unit, notice: 'Unit was successfully updated.' }
-        format.html { redirect_to units_path, notice: 'Pomyslnie zaktualizowano jednostke.' }
+        format.html { redirect_to units_path, notice: 'Pomyślnie zaktualizowano jednostkę.' }
         format.json { head :no_content }
       else
         # format.html { render action: "edit" }
-        format.html { redirect_to units_path, :flash => { :error => 'Nie udalo sie zaktualizowac jednostki' } }
+        format.html { redirect_to units_path, :flash => { :error => 'Nie udało się zaktualizować jednostki' } }
         format.json { render json: @unit.errors, status: :unprocessable_entity }
       end
     end

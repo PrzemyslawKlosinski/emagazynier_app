@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ShopsController < ApplicationController
 
 	def index
@@ -38,9 +39,9 @@ class ShopsController < ApplicationController
 
 		if @message.valid?
 			NotificationsMailer.new_message(@message, @product).deliver
-			 redirect_to(sklepy_path, :notice => "Zamowienie zostalo wyslane.")
+			 redirect_to(sklepy_path, :notice => "Zamówienie zostało wysłane.")
 		else
-		 flash.now.alert = "Prosze wypelnic wszystkie pola."
+		 flash.now.alert = "Proszę wypełnić wszystkie pola."
 		 render :new_order
 		end
 	end

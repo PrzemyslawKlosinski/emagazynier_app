@@ -1,11 +1,11 @@
-
-    <br />
-
+<% provide(:title, 'Ustawienia adresów kontrahentów:' + @current_user.name) %>
+<br />
     
   <div class="row-fluid">
     <div class="span6 offset3">
 
-                <legend>Adresy</legend>
+      <h1>Ustawienia adresów kontrahentów</h1>
+      <hr />
 
 <% if @locations.any? %>
       <table class="table table-striped">
@@ -38,7 +38,7 @@
     <td>
               <span class="pull-right">
                 <%= link_to 'Edytuj', edit_location_path(location) %> | 
-                <%= link_to 'Usuń', location, confirm: 'Czy napewno usunąć?', method: :delete %>
+                <%= link_to 'Usuń', location, confirm: 'Czy napewno usunąć adres?', method: :delete %>
               </span>
     </td>
   </tr>

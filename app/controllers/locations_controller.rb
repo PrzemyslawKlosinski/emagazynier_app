@@ -1,3 +1,4 @@
+# encoding: utf-8
 class LocationsController < ApplicationController
 
   before_filter :signed_in_user
@@ -94,7 +95,7 @@ class LocationsController < ApplicationController
 
 
         # format.html { redirect_to @location, notice: 'Location was successfully created.' }
-        format.html { redirect_to firms_path, notice: 'Adres pomyslnie utworzony.' }
+        format.html { redirect_to firms_path, notice: 'Adres pomyślnie utworzony.' }
         format.json { render json: @location, status: :created, location: @location }
       else
         format.html { render action: "new" }
@@ -110,7 +111,7 @@ class LocationsController < ApplicationController
 
     respond_to do |format|
       if @location.update_attributes(params[:location])
-        format.html { redirect_to locations_path, notice: 'Adres pomyslnie zaktualizowany.' }
+        format.html { redirect_to locations_path, notice: 'Adres pomyślnie zaktualizowany.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

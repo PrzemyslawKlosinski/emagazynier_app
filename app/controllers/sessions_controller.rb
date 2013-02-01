@@ -1,3 +1,4 @@
+# encoding: utf-8
 class SessionsController < ApplicationController
 
 	def new
@@ -5,7 +6,7 @@ class SessionsController < ApplicationController
 
 	def active
 		if params[:id].nil?
-			flash.now[:error] = 'Bledny link nieaktywny.' 
+			flash.now[:error] = 'Błędny/Nieaktywny link.' 
 			render 'new'
   		else
   			#zdekoduj haslo
@@ -17,7 +18,7 @@ class SessionsController < ApplicationController
 				sign_in user
 				# redirect_to edit_user_path(user, :idc => params[:idc])
 				# redirect_to edit_user_path(current_user, notice: "Prosze ustawic haslo.")
-				redirect_to edit_user_path(current_user), notice: "Prosze ustawic haslo."
+				redirect_to edit_user_path(current_user), notice: "Proszę ustawić hasło."
 			else
 				flash.now[:error] = "Link nieaktywny."
 				render 'new'
@@ -34,7 +35,7 @@ class SessionsController < ApplicationController
 			# redirect_to current_user - zamiast przekierowac do strony users/:id akcji show, odtwarzamy zapamietana sciezke
 			redirect_back_or user
 		else
-			flash.now[:error] = 'Nieudane logowanie. Sprawdz email oraz haslo'
+			flash.now[:error] = 'Nieudane logowanie. Sprawdź email oraz hasło'
 			render 'new'
 		end
 	end

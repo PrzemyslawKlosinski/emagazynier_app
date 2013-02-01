@@ -1,12 +1,13 @@
-<% provide(:title, 'Logowanie') %>
+<% provide(:title, 'Logowanie w serwisie eMagazynier') %>
+<br />
 
 
-    <br />
       
   <div class="row-fluid">
       <div class="span6 offset3">
 
-      <legend>Logowanie</legend>
+      <h1>Logowanie w serwisie eMagazynier</h1>
+      <hr />
         <div class="well sidebar-nav">
           <div class="field">
 
@@ -19,12 +20,12 @@
 			<%= form_for(:session, url: sessions_path) do |f| %>
 			<%= f.label "Email" %>
 			<%= f.text_field :email %>
-			<%= f.label "Haslo" %>
+			<%= f.label "Hasło" %>
 			<%= f.password_field :password %><br /><br />
 			<%= f.submit "Logowanie", class: "btn btn-large btn-primary" %>
 			<% end %>
 
-			<p>Nowy użytkownik? <%= link_to "Zarejestruj konto!", rejestracja_path %></p>
+			<p>Nie masz konta? <%= link_to "Zarejestruj się!", rejestracja_path %></p>
 
             
 

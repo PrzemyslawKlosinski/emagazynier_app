@@ -1,21 +1,21 @@
-
-<% provide(:title, "Raport") %>
+<% provide(:title, 'Dokument magazynowy ' + @document.name) %>
 
   <div class="row-fluid">
-        <div class="span5 offset4">
+        <div class="span6 offset3">
 
-        <legend>Dokument '<%= @document.name %>' data <%= @document.document_date %></legend>
         <!-- < title "Dokument ##{@document.name} data #{@document.document_date}" %> -->
+      <h1>Dokument '<%= @document.name %>' data <%= @document.document_date %></h1>
+      <hr />
 
           <!-- <div class="well sidebar-nav"> -->
           <div class="field center">
 
 
-
+<!-- na szybko &nbsp; -->
 <table id="line_items">
   <tr>
     <th>Produkt</th>
-    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ilość&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ilość&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
     <th class="price">&nbsp;&nbsp;&nbsp;Cena jednostkowa (brutto)&nbsp;&nbsp;&nbsp;</th>
     <th class="price">&nbsp;&nbsp;&nbsp;Cena sumaryczna (brutto)&nbsp;&nbsp;&nbsp;</th>
   </tr>

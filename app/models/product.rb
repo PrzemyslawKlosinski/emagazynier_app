@@ -48,6 +48,8 @@ class Product < ActiveRecord::Base
 
   # validates :user_id, presence: true
   validates :name, presence: true, length: { maximum: 40 }
+  validates :category_id, presence: true
+  validates :unit_id, presence: true
 
   #pozwala wyswietlac produkty w odwrotnej kolejnosci
   default_scope order: 'products.created_at DESC'

@@ -1,16 +1,21 @@
-class DocumentPdf < Prawn::Document
+class DocumentsPdf < Prawn::Document
 
 include UsersHelper
 
-  def initialize(document, view)
+  def initialize(documents, view, view1, view2)
     # super()
     super(top_margin: 70)
 
+  text "Raport z dokumentow magazynowych", size: 16, style: :bold  
+  text "okres od #{view1} do #{view2}", size: 16, style: :bold  
+  move_down 20
 
-    text "Raport z dokumentu magazynowego", size: 16, style: :bold  
+    documents.each do |document| 
 
     @document = document
   	@view = view
+    @view1 = view1
+    @view2 = view2
   	# text "Document #{@document.id}"
     # @logo = logo(document.user)
 
@@ -21,6 +26,8 @@ include UsersHelper
     document_number
     line_items
     total_price
+
+    end
 
 	# thanks_message
   	#  subscription_date
@@ -37,7 +44,6 @@ include UsersHelper
   end
   
   def line_items
-    move_down 20
     table line_item_rows do
       row(0).font_style = :bold
       columns(1..3).align = :right
@@ -60,6 +66,7 @@ include UsersHelper
   def total_price
     move_down 15
     text "Podsumowanie: #{price(@document.brutto_value)}", size: 16, style: :bold
+    move_down 20
   end
 
 

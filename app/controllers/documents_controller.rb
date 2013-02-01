@@ -1,5 +1,4 @@
 # encoding: utf-8
-
 class DocumentsController < ApplicationController
 
 before_filter :signed_in_user
@@ -183,7 +182,7 @@ before_filter :signed_in_user
     end
 
         # format.html { redirect_to @document, notice: 'Document was successfully created.' }
-        format.html { redirect_to documents_path, notice: 'Dokument został pomyślnie utworzony.' }
+        format.html { redirect_to documents_path, notice: 'Dokument pomyślnie utworzony.' }
         format.json { render json: @document, status: :created, location: @document }
       else
         format.html { render action: "new" }
@@ -317,14 +316,15 @@ before_filter :signed_in_user
     # @documents = Document.where(:created_at => @start_date..@end_date)
     @documents = Document.find(:all, :conditions => ["document_date >= ? and document_date <= ?", @start_date.strftime('%Y-%m-%d 00:00:00'), @end_date.strftime('%Y-%m-%d 24:00:00') ])
 
-    render 'new_report'
-    # #dorobic generowanie z automatu dla zakresu dat
-    # pdf = Prawn::Document.new 
-    # #przerobic aby konstruktor otrzymal @documents, nie @document
-    # view = "testowy napis"
-    # pdf = Prawn:DocumentPdf.new(@documents, view)
-    # # niepotrzebne - pdf.text @documents
-    # send_data pdf.render
+    if params[:dates][:print_all] == '1'
+        # pdf = Prawn::Document.new 
+        # view = "testowy napis"
+        pdf = DocumentsPdf.new(@documents, view_context, @start_date, @end_date)
+        send_data pdf.render, filename: 
+        "documents_report_#{Time.now.strftime("%d/%m/%Y")}.pdf", type: "application/pdf", disposition: "inline"
+    else 
+        render 'new_report'
+    end
 
   end
 

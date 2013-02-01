@@ -1,3 +1,4 @@
+# encoding: utf-8
 class FirmsController < ApplicationController
 
   before_filter :signed_in_user #, only: [:index, :edit,:update, :destroy]
@@ -148,7 +149,7 @@ end
           format.html { redirect_to new_location_path() }
         end
 
-        format.html { redirect_to firms_path, notice: 'Firma pomyslnie zaktualizowana.' }
+        format.html { redirect_to firms_path, notice: 'Firma została pomyślnie zaktualizowana.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

@@ -1,10 +1,12 @@
-
-    <br />
+<% provide(:title, 'Ustawienia kontrahentów:' + @current_user.name) %>
+<br />
 
   <div class="row-fluid">
       <div class="span6 offset3">
 
-        <legend>Firmy</legend>
+      <h1>Ustawienia kontrahentów</h1>
+      <hr />
+
         <div class="well sidebar-nav">
           <div class="field center">
 
@@ -47,7 +49,7 @@
     <td>
               <span class="pull-right">
                 <%= link_to 'Edytuj', edit_firm_path(firm) %> | 
-                <%= link_to 'Usuń', firm, confirm: 'Czy napewno usunąć?', method: :delete %>
+                <%= link_to 'Usuń', firm, confirm: 'Czy napewno usunąć firmę?', method: :delete %>
               </span>
     </td>
   </tr>
