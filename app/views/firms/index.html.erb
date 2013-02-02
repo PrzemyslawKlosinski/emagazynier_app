@@ -48,9 +48,10 @@
     <td><%= firm.email %></td>
     <td>
               <span class="pull-right">
-                <%= link_to 'Edytuj', edit_firm_path(firm) %> | 
-                <%= link_to 'Usuń', firm, confirm: 'Czy napewno usunąć firmę?', method: :delete %>
+                <%= link_to '', edit_firm_path(firm), class:"icon-edit" %>
+                <%= link_to '', firm, class:"icon-trash", confirm: 'Czy napewno usunąć firmę?', method: :delete %>
               </span>
+
     </td>
   </tr>
 <% end %>

@@ -76,7 +76,7 @@
  -->
 
 
-<%= f.submit "Szukaj", class: "btn btn-large btn-primary" %>
+<br /><%= f.submit "Szukaj", class: "btn btn-info" %>
 </div>
 </div>
 
@@ -161,7 +161,7 @@
       < link_to 'Edytuj', edit_document_path(document)  %> | 
       -->
       <!-- < link_to 'Usuń', document, method: :delete, data: { confirm: 'Czy napewno usunąć?' } %> -->
-      <%= link_to "wydruk", document_path(document, :format => 'pdf') %>
+      <%= link_to "", document_path(document, :format => 'pdf'), class:"icon-print" %>
     </td>
 </tr>
 <% end %>

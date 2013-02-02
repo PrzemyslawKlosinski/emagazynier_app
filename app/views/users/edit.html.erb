@@ -43,7 +43,9 @@
 				<%= gravatar_for @user %>
 				<a href="http://gravatar.com/emails"><br />zmień logo</a><br /><br /><br />
 
-				<%= f.submit "Zapisz zmiany", class: "btn btn-large btn-primary" %>
+			<div class="pagination pagination-centered">
+				<%= f.submit "Zapisz zmiany", class: "btn btn-info" %>
+			</div>
 				<% end %>
 
 		<!-- </div> -->

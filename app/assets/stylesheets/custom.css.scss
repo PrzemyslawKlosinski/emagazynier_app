@@ -10,10 +10,20 @@ body {
  padding-bottom: 40px;
 }
 
-  a.btn:link { color:#FFFFFF !important; }    /* unvisited link */
-  a.btn:visited {color:#FFFFFF !important; } /* visited link */
-  a.btn:hover {color:#FFFFFF !important; }   /* mouse over link */
-  a.btn:active {color:#FFFFFF !important; }  /* selected link */
+a.btn.btn-primary:link { color:#FFFFFF !important; }    /* unvisited link */
+a.btn.btn-primary:visited {color:#FFFFFF !important; } /* visited link */
+a.btn.btn-primary:hover {color:#FFFFFF !important; }   /* mouse over link */
+a.btn.btn-primary:active {color:#FFFFFF !important; }  /* selected link */
+
+a.btn.btn-info:link { color:#FFFFFF !important; }    /* unvisited link */
+a.btn.btn-info:visited {color:#FFFFFF !important; } /* visited link */
+a.btn.btn-info:hover {color:#FFFFFF !important; }   /* mouse over link */
+a.btn.btn-info:active {color:#FFFFFF !important; }  /* selected link */
+
+a.btn.link { color:#000000  }    /* unvisited link */
+a.btn.btn:visited {color:#000000  } /* visited link */
+a.btn.btn:hover {color:#000000 }   /* mouse over link */
+a.btn.btn:active {color:#000000 }  /* selected link */
 
 // modal
     .modal {
@@ -26,7 +36,10 @@ body {
 
 /* utworz dokument */
   //a.btn-link:link { color:#000000 !important; }    /* unvisited link */
-  #stworz { color:#000000 !important; }    /* unvisited link */
+  //#stworz { color:#000000 !important; }    /* unvisited link */
+
+// .btn-info { :link { color:#FFFFFF !important; } }
+//.btn { :link { color:#FFFFFF !important; } }
 
 .nav-list {
  padding: 9px 0;

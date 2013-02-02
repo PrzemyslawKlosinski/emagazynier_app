@@ -37,8 +37,8 @@
     <td><%= location.phone %></td>
     <td>
               <span class="pull-right">
-                <%= link_to 'Edytuj', edit_location_path(location) %> | 
-                <%= link_to 'Usuń', location, confirm: 'Czy napewno usunąć adres?', method: :delete %>
+                <%= link_to '', edit_location_path(location), class:"icon-edit" %>
+                <%= link_to '', location, class:"icon-trash", confirm: 'Czy napewno usunąć adres?', method: :delete %>
               </span>
     </td>
   </tr>

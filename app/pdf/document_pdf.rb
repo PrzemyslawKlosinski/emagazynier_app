@@ -11,7 +11,7 @@ include UsersHelper
 
     @document = document
   	@view = view
-  	# text "Document #{@document.id}"
+  	text "Document #{@document.id}"
     # @logo = logo(document.user)
 
     # dla metod

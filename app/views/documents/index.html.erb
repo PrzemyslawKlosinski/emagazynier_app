@@ -121,7 +121,8 @@
       <!-- nie mozna edytowac dokumentow magazynowych tylko przez korekte
       < link_to 'Edytuj', edit_document_path(document)  %> | 
       -->
-      <%= link_to 'Usuń', document, method: :delete, data: { confirm: 'Czy napewno usunąć?' } %>
+       
+      <%= link_to '', document, class:"icon-trash", method: :delete, data: { confirm: 'Czy napewno usunąć?' } %>
        <!-- < link_to "wydruk", document_path(document, :format => 'pdf') %> -->
     </td>
 </tr>

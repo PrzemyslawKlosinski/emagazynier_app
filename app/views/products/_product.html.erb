@@ -15,10 +15,10 @@
     <td>
     <% if signed_in? %>
 
-      <%= link_to 'Edycja', edit_product_path(product)  %> |
-      <%= link_to "Stan", :controller=>"products", :action=>"editQuantity", :id => product %> |
+      <%= link_to '', edit_product_path(product), class:"icon-edit"  %>
+      <%= link_to "", products_editQuantity_path(id:product), class:"icon-check" %>
       <!-- < link_to "Cena", :controller => "products", :action => "show", :id => product %> | -->
-      <%= link_to 'Usuń', product, method: :delete, data: { confirm: 'Czy napewno usunąć artykuł?' } %>
+      <%= link_to '', product, class:"icon-trash", method: :delete, data: { confirm: 'Czy napewno usunąć artykuł?' } %>
 
     <% end %>
     </td>
