@@ -72,12 +72,17 @@
 
 
 <% @products.each do |product| %>
+
+<% if product.is_public? %>
+
 	          			  <tr>
   	 <td><%= @licznik=@licznik+1 %> </td>
 
     
      <!-- <span class="content"> -->
-    <td><%= link_to product.name, product %> </td>
+    <td> <%= product.name %>
+    	<!-- < link_to product.name, product %>  -->
+    </td>
  	   <td><%= product.description %></td>
      <!-- </span> -->
 
@@ -112,6 +117,8 @@
 
     </td>
   </tr>
+
+<% end %>
 
 <% end %>
 

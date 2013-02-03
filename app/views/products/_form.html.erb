@@ -65,9 +65,11 @@
     Ostrzeżenie<br />
     <%= f.text_area :warningNote, :rows=>5, :cols=>4 %>
   </div>
-      <div class="span3">
+      <div class="span3"><br/>
         Czy wyświetlać ostrzeżenia? <br />
-         <%= f.check_box :isWarningShow %>
+         <%= f.check_box :isWarningShow %> <br /><br/>
+        Czy publikować w sklepie? <br />
+         <%= f.check_box :is_public %>
       </div>
 </div>
 

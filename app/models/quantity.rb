@@ -1,3 +1,4 @@
+# encoding: utf-8
 # == Schema Information
 #
 # Table name: quantities
@@ -10,6 +11,7 @@
 #  document_id  :integer
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  discount     :integer          default(0)
 #
 
 class Quantity < ActiveRecord::Base

@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 # == Schema Information
 #
 # Table name: locations
@@ -15,7 +17,7 @@
 class Location < ActiveRecord::Base
   belongs_to :firm
 
-  validates :city, presence: true
+  validates :city, presence: { message: "nie może być puste" }
   validates :address, presence: true
 
   attr_accessible :address, :city, :phone, :zip_code

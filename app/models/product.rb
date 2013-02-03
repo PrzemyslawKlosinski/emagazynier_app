@@ -1,3 +1,4 @@
+# encoding: utf-8
 # == Schema Information
 #
 # Table name: products
@@ -32,6 +33,7 @@
 #  unit_id                 :integer
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
+#  is_public               :boolean          default(FALSE)
 #
 
 # !!! UWAGA DAJEMY attr_accessible: category_id
@@ -74,5 +76,5 @@ class Product < ActiveRecord::Base
       end
   end
 
-  attr_accessible :category_id, :unit_id, :actualPriceOnPurchase, :blocked, :color, :defaultDecrease, :defaultIncrease, :defaultVat, :description, :descriptions, :intended, :isWarningShow, :location, :manufacturer, :name, :nameOryginal, :picture, :quantity, :quantityMaximum, :quantityMinimum, :reservedQuantity, :shape, :size, :summaryQuantityPurchase, :summaryQuantitySales, :warningNote
+  attr_accessible :category_id, :unit_id, :actualPriceOnPurchase, :blocked, :color, :defaultDecrease, :defaultIncrease, :defaultVat, :description, :descriptions, :intended, :isWarningShow, :location, :manufacturer, :name, :nameOryginal, :picture, :quantity, :quantityMaximum, :quantityMinimum, :reservedQuantity, :shape, :size, :summaryQuantityPurchase, :summaryQuantitySales, :warningNote, :is_public
 end
