@@ -4,7 +4,7 @@
 
   <% if @document.errors.any? %>
     <div class="alert alert-error">
-          Znaleziono błędów: <%= @location.errors.count %>
+          Znaleziono błędów: <%= @document.errors.count %>
       <ul>
       <% @document.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -25,38 +25,41 @@
 <div class="row-fluid">
     <div class="span3">Tytuł</div>
     <div class="span3"><%= f.input :title, :label => false %></div>
-    <div class="span3">Kwota netto dokumentu</div>
-    <div class="span3"><%= f.input :netto_value, :label => false, :readonly => true  %></div>
+    <div class="span3">
+      <!-- Kwota netto dokumentu -->
+        Kontrahent&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="btn btn-small" id="exmaple" title="Dodaj firmę" href="<%= firms_path %>"><i class="icon-user"></i></a>
+      </div>
+    <div class="span3">
+      <!-- < f.input :netto_value, :label => false, :readonly => true  %> -->
+              <div class="input-prepend">
+            <%= f.association :firm, :collection => @current_user.firms, :prompt => 'Wybierz firmę', :label => false  %> <!-- , :input_html => { :style => "width: 100%" } -->
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
   $('#example').tooltip(options)
 </script>
 
-<div class="row-fluid">
+<!-- <div class="row-fluid">
     <div class="span3">
-        Kontrahent&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a class="btn btn-small" id="exmaple" title="Dodaj firmę" href="<%= firms_path %>"><i class="icon-user"></i></a>
+
     </div>
      
    <div class="controls span3">
-        <div class="input-prepend">
-            <%= f.association :firm, :collection => @current_user.firms, :prompt => 'Wybierz firmę', :label => false  %> <!-- , :input_html => { :style => "width: 100%" } -->
-             
-        </div>
         
     </div>
-
+ -->
     <!-- <div class="span3">
       <a class="btn" href="#"><i class="icon-user"></i></a>
       < f.association :firm, :collection => @current_user.firms, :prompt => 'Wybierz firmę', :label => false, :input_html => { :style => "width: 100px" } %>
     </div> -->
-
     
-    <div class="span3">Kwota brutto dokumentu</div>
-    <div class="span3"><%= f.input :brutto_value, :label => false, :readonly => true  %></div>
+<!--     <div class="span3">Kwota brutto dokumentu</div>
+    <div class="span3">< f.input :brutto_value, :label => false, :readonly => true  %></div>
 </div>
-
+ -->
 
 
 

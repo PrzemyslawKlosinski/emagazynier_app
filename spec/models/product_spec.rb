@@ -22,7 +22,7 @@
 #  defaultIncrease         :decimal(, )      default(0.0)
 #  defaultDecrease         :decimal(, )      default(0.0)
 #  defaultVat              :decimal(, )      default(23.0)
-#  actualPriceOnPurchase   :boolean
+#  actualPriceOnPurchase   :boolean          default(TRUE), not null
 #  manufacturer            :string(255)
 #  color                   :string(255)
 #  intended                :string(255)
@@ -33,6 +33,7 @@
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  is_public               :boolean          default(FALSE)
+#  discount                :integer          default(0)
 #
 
 require 'spec_helper'

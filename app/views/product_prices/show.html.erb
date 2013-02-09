@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Nettopurchaseprice:</b>
+  <%= @product_price.nettoPurchasePrice %>
+</p>
+
+<p>
+  <b>Bruttopurchaseprice:</b>
+  <%= @product_price.bruttoPurchasePrice %>
+</p>
+
+<p>
+  <b>Nettosalesprice:</b>
+  <%= @product_price.nettoSalesPrice %>
+</p>
+
+<p>
+  <b>Bruttosalesprice:</b>
+  <%= @product_price.bruttoSalesPrice %>
+</p>
+
+
+<%= link_to 'Edit', edit_product_price_path(@product_price) %> |
+<%= link_to 'Back', product_prices_path %>

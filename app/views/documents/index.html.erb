@@ -75,7 +75,8 @@
                             <th class="span1">Rodzaj</th>
                             <th class="span2">Tytuł</th>
                             <th class="span2">Firma</th>
-                            <th class="span1">Kwota dokumentu</th>
+                            <th class="span1">Kwota dokumentu netto</th>
+                            <th class="span1">Kwota dokumentu brutto</th>
                             <!-- <th class="span2">Opis</th> -->
                             <th class="span1">Utworzony</th>
                             <th class="span1"></th>
@@ -113,6 +114,7 @@
             <%= document.firm.name %>
         <% end %>
     </td>
+    <td><%= number_to_currency document.netto_value %></td>
     <td><%= number_to_currency document.brutto_value %></td>
     <!-- <td><%= document.description %></td> -->
     <td><%= document.document_date %></td>
@@ -121,6 +123,7 @@
       <!-- nie mozna edytowac dokumentow magazynowych tylko przez korekte
       < link_to 'Edytuj', edit_document_path(document)  %> | 
       -->
+      
        
       <%= link_to '', document, class:"icon-trash", method: :delete, data: { confirm: 'Czy napewno usunąć?' } %>
        <!-- < link_to "wydruk", document_path(document, :format => 'pdf') %> -->

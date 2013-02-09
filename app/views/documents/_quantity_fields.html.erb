@@ -1,31 +1,66 @@
 <script type="text/javascript">
   $('#document_quantities_attributes_new_quantities_netto_price').tooltip(options)
   $('#document_quantities_attributes_new_quantities_brutto_price').tooltip(options)
+  $('#document_quantities_attributes_new_quantities_discount').tooltip(options)
 </script>
 
+<% if @document.is_outcome %>
 
 <div class="nested-fields">
 
     <div class="row-fluid">
-    <div class="span2"><%= f.association :product, :label => 'Produkt' , :collection => @current_user.products, :prompt => 'Wybierz produkt', :input_html => {:maxlength =>10,:style=> 'width: 140px' } %></div>
+    <div class="span2"><%= f.association :product, :label => 'Produkt' , :collection => @current_user.products.where("quantity > ?", 0), :prompt => 'Wybierz produkt', :input_html => {:onchange => "setSales(this)", :maxlength =>10, :style=> 'width: 140px' } %></div>
     
+
     <div class="span2">
+      <!-- nie ustawiamy setUnsold(this), unsold ustawiamy na 0 co oznacza ze outcome -->
       <%= f.input :amount, :label => 'Ilość' , :input_html => {:maxlength =>10,:style=> 'width: 130px' } %>
       </div>
+    <%= f.hidden_field :unsold, :value => -1 %>
+
     <div class="span2">
       <%= f.input :netto_price, :label => 'Cena jedn. netto', :input_html => {:onchange => "onNettoChange(this)", title:"podaj cenę netto w PLN (separator . )", :maxlength =>10 ,:style=> 'width: 130px' }  %>
     </div>
     <div class="span2">
       <%= f.input :brutto_price, :label => 'Cena jedn. brutto', :input_html => {:onchange => "onBruttoChange(this)", title:"podaj cenę brutto w PLN (separator . )", :maxlength =>10,:style=> 'width: 130px' } %>
     </div>
+
+    
     <!-- :readonly => true  -->
         <div class="span2">
-      <%= f.input :discount, :label => 'Marża/Upust', :input_html => {:onchange => "onDiscountChange(this)", :maxlength =>10,:style=> 'width: 130px' } %>
+      <%= f.input :discount, :label => 'Marża/Upust', :input_html => {:onchange => "onDiscountChange(this)", title:"aby ustawić domyślna cenę sprzedaży ponownie wybierz produkt z listy", :maxlength =>10,:style=> 'width: 130px' } %>
       <!-- :collection=> (-100..100).to_a.map{|x| [x,"#{x}"]}, :label => false, -->
-      </div>    
+      </div>  
+  
+    <div class="span2"><br/><%= link_to_remove_association "Usuń", f, confirm: 'Czy napewno usunąć artykuł?', class:"btn"  %>
+    </div>
+    
+</div>
+
+<% else %>
+
+<div class="nested-fields">
+
+    <div class="row-fluid">
+    <div class="span2 offset1"><%= f.association :product, :label => 'Produkt' , :collection => @current_user.products, :prompt => 'Wybierz produkt', :input_html => {:onchange => "setPurchase(this)", :maxlength =>10,:style=> 'width: 140px' } %></div>
     
 
-    <div class="span2"><br/><%= link_to_remove_association "Usuń", f, confirm: 'Czy napewno usunąć artykuł?', class:"btn"  %></div>
+    <div class="span2">
+      <%= f.input :amount, :label => 'Ilość' , :input_html => {:onchange => "setUnsold(this)", :maxlength =>10,:style=> 'width: 130px' } %>
+      </div>
+    <%= f.hidden_field :unsold  %>
+
+    <div class="span2">
+      <%= f.input :netto_price, :label => 'Cena jedn. netto', :input_html => {:onchange => "onNettoChange(this)", title:"podaj cenę netto w PLN (separator . )", :maxlength =>10 ,:style=> 'width: 130px' }  %>
+    </div>
+    <div class="span2">
+      <%= f.input :brutto_price, :label => 'Cena jedn. brutto', :input_html => {:onchange => "onBruttoChange(this)", title:"podaj cenę brutto w PLN (separator . )", :maxlength =>10,:style=> 'width: 130px' } %>
     </div>
 
+ 
+    <div class="span2"><br/><%= link_to_remove_association "Usuń", f, confirm: 'Czy napewno usunąć artykuł?', class:"btn"  %>
+    </div>
+    
+</div>
 
+<% end %>  

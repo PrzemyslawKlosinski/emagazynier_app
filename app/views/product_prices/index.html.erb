@@ -1,0 +1,29 @@
+<h1>Listing product_prices</h1>
+
+<table>
+  <tr>
+    <th>Nettopurchaseprice</th>
+    <th>Bruttopurchaseprice</th>
+    <th>Nettosalesprice</th>
+    <th>Bruttosalesprice</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @product_prices.each do |product_price| %>
+  <tr>
+    <td><%= product_price.nettoPurchasePrice %></td>
+    <td><%= product_price.bruttoPurchasePrice %></td>
+    <td><%= product_price.nettoSalesPrice %></td>
+    <td><%= product_price.bruttoSalesPrice %></td>
+    <td><%= link_to 'Show', product_price %></td>
+    <td><%= link_to 'Edit', edit_product_price_path(product_price) %></td>
+    <td><%= link_to 'Destroy', product_price, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Product price', new_product_price_path %>

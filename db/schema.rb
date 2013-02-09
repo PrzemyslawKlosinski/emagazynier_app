@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130203061939) do
+ActiveRecord::Schema.define(:version => 20130205110233) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -76,6 +76,17 @@ ActiveRecord::Schema.define(:version => 20130203061939) do
 
   add_index "locations", ["firm_id"], :name => "index_locations_on_firm_id"
 
+  create_table "product_prices", :force => true do |t|
+    t.decimal  "nettoPurchasePrice",  :default => 0.0
+    t.decimal  "bruttoPurchasePrice", :default => 0.0
+    t.decimal  "nettoSalesPrice",     :default => 0.0
+    t.decimal  "bruttoSalesPrice",    :default => 0.0
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+    t.boolean  "calculateByPurchase", :default => true, :null => false
+    t.integer  "product_id"
+  end
+
   create_table "products", :force => true do |t|
     t.decimal  "summaryQuantityPurchase", :default => 0.0
     t.decimal  "summaryQuantitySales",    :default => 0.0
@@ -96,7 +107,7 @@ ActiveRecord::Schema.define(:version => 20130203061939) do
     t.decimal  "defaultIncrease",         :default => 0.0
     t.decimal  "defaultDecrease",         :default => 0.0
     t.decimal  "defaultVat",              :default => 23.0
-    t.boolean  "actualPriceOnPurchase"
+    t.boolean  "actualPriceOnPurchase",   :default => true,  :null => false
     t.string   "manufacturer"
     t.string   "color"
     t.string   "intended"
@@ -107,6 +118,7 @@ ActiveRecord::Schema.define(:version => 20130203061939) do
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
     t.boolean  "is_public",               :default => false
+    t.integer  "discount",                :default => 0
   end
 
   add_index "products", ["category_id"], :name => "index_products_on_category_id"
@@ -116,14 +128,15 @@ ActiveRecord::Schema.define(:version => 20130203061939) do
   add_index "products", ["user_id"], :name => "index_products_on_user_id"
 
   create_table "quantities", :force => true do |t|
-    t.decimal  "amount"
-    t.decimal  "netto_price"
-    t.decimal  "brutto_price"
+    t.decimal  "amount",       :default => 0.0, :null => false
+    t.decimal  "netto_price",  :default => 0.0
+    t.decimal  "brutto_price", :default => 0.0
     t.integer  "product_id"
     t.integer  "document_id"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.integer  "discount",     :default => 0
+    t.decimal  "unsold",       :default => 0.0, :null => false
   end
 
   add_index "quantities", ["document_id"], :name => "index_quantities_on_document_id"

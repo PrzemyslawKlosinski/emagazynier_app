@@ -58,8 +58,6 @@ class ProductsController < ApplicationController
     #@product = Product.new
     @product = current_user.products.build if signed_in?
 
-
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @product }
@@ -100,6 +98,13 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
+
+    #tworzymy domysla cene produktu, kategorie sa domyslne, ceny nie
+    # @productPrice = @product.productPrice.build
+    @productPrice = ProductPrice.new(product: @product)
+    @productPrice.save!
+    @product.update_attributes(productPrice: @productPrice)
+
         # format.html { redirect_to @product, notice: 'Product was successfully created.' }
         format.html { redirect_to products_path, notice: 'Pomyślnie utworzono produkt.' }
         format.json { render json: @product, status: :created, location: @product }
@@ -151,6 +156,26 @@ class ProductsController < ApplicationController
   #   @product = Product.find(params[:id])
   #   redirect_to(root_path) unless current_user?(@product.user)
   # end
+
+
+# http://net.tutsplus.com/tutorials/javascript-ajax/using-unobtrusive-javascript-and-ajax-with-rails-3/
+# Rails will respond to JavaScript requests by loading a .js ERB with the same name as the controller action sales.js.erb
+def sales
+
+ @product = Product.find(params[:id])
+ @productPrice = @product.productPrice
+
+     respond_to do |format|  
+          # format.js { render :layout=>false }
+        # format.json { render json: @Item, status: :created, location: @Item 
+        format.json { render :json => @productPrice }
+    end 
+     
 end
 
-    
+
+
+
+
+end
+

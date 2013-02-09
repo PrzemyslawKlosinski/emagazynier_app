@@ -8,17 +8,20 @@
 
      <td><span class="timestamp"><%= time_ago_in_words(product.updated_at) %></span></td>
  	   <td><%= product.quantity %></td>
- 	   <td>
-      <!-- tymczasowo za pole kwota -->
-          <%= number_to_currency product.defaultIncrease %>
-     </td>
+     <td><%= number_to_currency product.productPrice.nettoPurchasePrice %></td>
+     <td><%= number_to_currency product.productPrice.bruttoPurchasePrice %></td>
+ 	   <td><%= number_to_currency product.productPrice.nettoSalesPrice %></td>
+     <td><%= number_to_currency product.productPrice.bruttoSalesPrice %></td>
+
     <td>
     <% if signed_in? %>
 
       <%= link_to '', edit_product_path(product), class:"icon-edit"  %>
-      <%= link_to "", products_editQuantity_path(id:product), class:"icon-check" %>
-      <!-- < link_to "Cena", :controller => "products", :action => "show", :id => product %> | -->
       <%= link_to '', product, class:"icon-trash", method: :delete, data: { confirm: 'Czy napewno usunąć artykuł?' } %>
+      <%= link_to "", products_editQuantity_path(id:product), class:"icon-check" %>
+      <%= link_to "", edit_product_price_path(product.productPrice), class:"icon-shopping-cart" %>
+      <!-- < link_to "Cena", :controller => "products", :action => "show", :id => product %> | -->
+      
 
     <% end %>
     </td>

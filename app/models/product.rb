@@ -23,7 +23,7 @@
 #  defaultIncrease         :decimal(, )      default(0.0)
 #  defaultDecrease         :decimal(, )      default(0.0)
 #  defaultVat              :decimal(, )      default(23.0)
-#  actualPriceOnPurchase   :boolean
+#  actualPriceOnPurchase   :boolean          default(TRUE), not null
 #  manufacturer            :string(255)
 #  color                   :string(255)
 #  intended                :string(255)
@@ -34,6 +34,7 @@
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  is_public               :boolean          default(FALSE)
+#  discount                :integer          default(0)
 #
 
 # !!! UWAGA DAJEMY attr_accessible: category_id
@@ -50,8 +51,9 @@ class Product < ActiveRecord::Base
 
   # validates :user_id, presence: true
   validates :name, presence: true, length: { maximum: 40 }
-  validates :category_id, presence: true
-  validates :unit_id, presence: true
+  # blokowane na czas prepare
+  # validates :category_id, presence: true
+  # validates :unit_id, presence: true
 
   #pozwala wyswietlac produkty w odwrotnej kolejnosci
   default_scope order: 'products.created_at DESC'
@@ -76,5 +78,5 @@ class Product < ActiveRecord::Base
       end
   end
 
-  attr_accessible :category_id, :unit_id, :actualPriceOnPurchase, :blocked, :color, :defaultDecrease, :defaultIncrease, :defaultVat, :description, :descriptions, :intended, :isWarningShow, :location, :manufacturer, :name, :nameOryginal, :picture, :quantity, :quantityMaximum, :quantityMinimum, :reservedQuantity, :shape, :size, :summaryQuantityPurchase, :summaryQuantitySales, :warningNote, :is_public
+  attr_accessible :category_id, :unit_id, :actualPriceOnPurchase, :blocked, :color, :defaultDecrease, :defaultIncrease, :defaultVat, :description, :descriptions, :intended, :isWarningShow, :location, :manufacturer, :name, :nameOryginal, :picture, :quantity, :quantityMaximum, :quantityMinimum, :reservedQuantity, :shape, :size, :summaryQuantityPurchase, :summaryQuantitySales, :warningNote, :is_public, :productPrice, :discount
 end

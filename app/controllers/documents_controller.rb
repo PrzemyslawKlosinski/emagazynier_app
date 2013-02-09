@@ -133,11 +133,7 @@ before_filter :signed_in_user
   def create
     # @document = Document.new(params[:document])
     @document = current_user.documents.build(params[:document]) if signed_in?
-
     @document.document_date = Time.new 
-
-    #for _form
-    # @firms = @current_user.firms
 
 
     #podsumuj kwoote netto i brutto dla dokumentu (suma pozycji)
@@ -162,21 +158,131 @@ before_filter :signed_in_user
 
     #aktualizacja stanu magazynowego (i ostatniej ceny zakupu) artykulu po edycji documenty magazynwoego
     if !params[:document][:quantities_attributes].nil?
+      
     params[:document][:quantities_attributes].each do |k,v|
+      
       @product = Product.find(v[:product_id])
+      
       #jesli przychod - tylko aktualizacja ceny produktu przy zakupie (uwaga dorobic podpowiadanie ceny)
       if @document.is_income 
+        
+        #aktualizuj stan magazynowy
         @product.quantity = @product.quantity + v[:amount].to_f
-        @product.defaultIncrease = v[:brutto_price]
         @product.summaryQuantityPurchase = @product.summaryQuantityPurchase + v[:amount].to_f
+
+        #aktualizuj cene zakupu, jesli ma aktualizowac
+        if @product.actualPriceOnPurchase
+          @product.productPrice.nettoPurchasePrice = v[:netto_price].to_f
+          #policz cene zakupu z vat
+          vat = (@product.defaultVat / 100) + 1
+          @product.productPrice.bruttoPurchasePrice =  vat * v[:netto_price].to_f
+        end
+          
+
+
+
+
+
+          # #aktualizuj cene sprzedazy na podstawie biezacej marzy, jesli ma aktualizowac
+          # if @product.productPrice.calculateByPurchase
+          #     discount = @product.discount
+          #     #cena sprzedazy ze znizka
+          #     netto_with_discount = (((discount/100.00)+1.00)*@product.productPrice.nettoPurchasePrice)
+          #     @product.productPrice.nettoSalesPrice = netto_with_discount
+          #     #policz cene sprzedazy z vat
+          #     vat = (@product.defaultVat / 100) + 1
+          #     @product.productPrice.bruttoSalesPrice = vat * netto_with_discount
+          # end
+
+          #docelowo - powinien prognozowac i dostosowywac cene sprzedazy do ustawionej marzy, a nie ja zmieniac
+          #zaktualizuj faktyczna marze na podstawie nowego zakupu i ceny sprzedazy (i daj komunikat)
+          # @product.discount = countDiscount(@product)  
+
+
+
+
+
+
+          @product.productPrice.save!
+          # @product.defaultIncrease = v[:brutto_price]
+        
       end
+
       #jesli rozchod - nie aktualizuj ceny artykulu po sprzedazy
       if @document.is_outcome
         @product.quantity = @product.quantity - v[:amount].to_f
         # @product.defaultIncrease = @product.defaultIncrease - v[:brutto_price].to_f 
         # abs() remove negative sign
         @product.summaryQuantitySales = @product.summaryQuantitySales + v[:amount].to_f
+
+
+
+
+
+
+        # aktualizuj cene sprzedazy na podstawie sprzedazy, jesli ma aktualizowac
+          if @product.productPrice.calculateByPurchase
+              discount = @product.discount
+              #cena sprzedazy ze znizka
+              netto_with_discount = (((discount/100.00)+1.00) * v[:netto_price].to_f)
+              @product.productPrice.nettoSalesPrice = netto_with_discount
+              #policz cene sprzedazy z vat
+              vat = (@product.defaultVat / 100) + 1
+              @product.productPrice.bruttoSalesPrice = vat * netto_with_discount
+
+
+              @product.productPrice.save!
+
+          end
+          
+
+
+
+
+
+        
+        zdejmij = v[:amount].to_f
+
+        while (zdejmij > 0)
+        #zdejmuj ze stanu
+        #pobierz dokumenty przychodzace dla produktu
+        documents = @product.documents.where(is_income: true).order("created_at ASC")
+      
+        #dla kazdego dokumentu sprobuj wybrac pierwsze wolne quantity, jesli jest przerwij
+        quantity = nil
+        documents.each do |document|
+            quantity = document.quantities.where("product_id = ?", @product.id).where("unsold > ?", 0).order("created_at ASC").first
+            #wybierz quantity ktore ma ten dokument i ten produkt, zdejmij quantity
+            if !quantity.nil?
+              break;
+            end
+        end
+
+        #jesli nie znaleziono zadnego quantity i jest to dokument outcome, to znaczy ze 'wystapil blad': w produkcie jest quantity wieksze niz faktycznie w quantities
+        if !quantity.nil?
+          quantity.unsold = quantity.unsold - zdejmij
+          if quantity.unsold < 0
+            zdejmij = -(quantity.unsold)
+            quantity.unsold = 0
+          else
+            zdejmij = 0
+          end
+        end
+        quantity.save!
+        end
+        
+
+
+
       end
+
+
+      #zaktualizuj faktyczna marze po sprzedazy [zmiana ilosc + ewentualnie zmiana ceny] (i daj komunikat)
+      # @product.discount = countDiscount(@product)
+
+
+
+
       @product.save!
     end
     end
@@ -190,6 +296,44 @@ before_filter :signed_in_user
       end
     end
   end
+
+#metoda do aktualizowania marzy
+def countDiscount(product)
+
+  #wybieramy wszystkie quantities dla produktu (przy przegladanie wybieramy jesli ma unsold - brak optymalizacji)
+  quantities = product.quantities
+ 
+
+  unsold_value = 0
+  quantities_value = 0
+  # pobieramy wszystkie quantity: zakupu produktu i ktore maja ilosc niesprzedana != 0
+  quantities.each do |quantity|
+
+    #jesli quantity jest income i ma unsold
+    if (quantity.unsold != 0 and quantity.document.is_income)
+
+      unsold_value = unsold_value + quantity.unsold
+      #quantity.discount wylicza discount == (cena sprzedazy - cena zakupu/cena_zakupu)*unsold
+
+      #obliczanie znizki dla danego quantity zwiazanego z danym produktem
+      quantity_discount = ((product.productPrice.nettoSalesPrice - quantity.netto_price)/quantity.netto_price) * quantity.unsold
+
+      #sumowanie discount
+      quantities_value = quantities_value + quantity_discount
+
+    end
+
+  end
+
+
+  #jesli nie ma juz produktow to marze bedziemy mieli 0
+
+
+  return ((quantities_value / unsold_value) * 100)
+end
+
+
+
 
   # PUT /documents/1
   # PUT /documents/1.json
