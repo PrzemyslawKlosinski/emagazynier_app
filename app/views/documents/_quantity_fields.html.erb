@@ -17,12 +17,14 @@
       <%= f.input :amount, :label => 'Ilość' , :input_html => {:maxlength =>10,:style=> 'width: 130px' } %>
       </div>
     <%= f.hidden_field :unsold, :value => -1 %>
+    <%= f.hidden_field :netto_sales_price, :value => 0 %>
+    <%= f.hidden_field :brutto_sales_price, :value => 0 %>
 
     <div class="span2">
-      <%= f.input :netto_price, :label => 'Cena jedn. netto', :input_html => {:onchange => "onNettoChange(this)", title:"podaj cenę netto w PLN (separator . )", :maxlength =>10 ,:style=> 'width: 130px' }  %>
+      <%= f.input :netto_price, :label => 'Cena jedn. netto', :input_html => {:onchange => "onSalesNettoChange(this)", title:"podaj cenę netto w PLN (separator . )", :maxlength =>10 ,:style=> 'width: 130px' }  %>
     </div>
     <div class="span2">
-      <%= f.input :brutto_price, :label => 'Cena jedn. brutto', :input_html => {:onchange => "onBruttoChange(this)", title:"podaj cenę brutto w PLN (separator . )", :maxlength =>10,:style=> 'width: 130px' } %>
+      <%= f.input :brutto_price, :label => 'Cena jedn. brutto', :input_html => {:onchange => "onSalesBruttoChange(this)", title:"podaj cenę brutto w PLN (separator . )", :maxlength =>10,:style=> 'width: 130px' } %>
     </div>
 
     

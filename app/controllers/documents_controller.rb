@@ -19,14 +19,16 @@ before_filter :signed_in_user
     @documents = Document.search(params[:search], current_user.id, params[:page])
 
     #jesli wyszukujemy konkretny rodzaj dokumentu - nadpisz zwrocone documents
-    if !params[:income].nil? && !params[:outcome].nil? && !params[:correct].nil?
+    if !params[:income].nil? && !params[:outcome].nil? && !params[:correct].nil? && !params[:local].nil?
       is_income = false
       is_income = true if params[:income] == "true"
       is_outcome = false
       is_outcome = true if params[:outcome] == "true"
       is_correct = false
       is_correct = true if params[:correct] == "true"
-      @documents = Document.search_income(is_income, is_outcome, is_correct, current_user.id, params[:page])
+      is_local = false
+      is_local = true if params[:local] == "true"
+      @documents = Document.search_income(is_income, is_outcome, is_correct, is_local, current_user.id, params[:page])
     end
 
 
@@ -94,18 +96,33 @@ before_filter :signed_in_user
       @document.is_correct = params[:is_correct]
       @document.is_income = params[:is_income]
       @document.is_outcome = params[:is_outcome]
+      @document.is_local = params[:is_local]
       if @document.is_income
-        @document.name = "PZ/" + (Document.maximum("id").to_i + 1).to_s
+        @document.name = (current_user.documents.where(is_income: true).where(is_local: false).where(is_correct: false).maximum('name').to_i + 1).to_s
+        @document.prefix = 'PZ/'
+        if @document.is_local
+          @document.name = (current_user.documents.where(is_income: true).where(is_local: true).where(is_correct: false).maximum('name').to_i + 1).to_s
+          @document.prefix = 'PW/'
+        end
         if @document.is_correct
-          @document.name = "PZk/" + (Document.maximum("id").to_i + 1).to_s
+          @document.name = (current_user.documents.where(is_income: true).where(is_local: false).where(is_correct: true).maximum('name').to_i + 1).to_s
+          @document.prefix = 'PZk/'
         end
       end
       if @document.is_outcome
-        @document.name = "WZ/" + (Document.maximum("id").to_i + 1).to_s
+        @document.name = (current_user.documents.where(is_income: false).where(is_local: false).where(is_correct: true).maximum('name').to_i + 1).to_s
+        @document.prefix = 'WZ/'
+        if @document.is_local
+          @document.name = (current_user.documents.where(is_income: false).where(is_local: true).where(is_correct: false).maximum('name').to_i + 1).to_s
+          @document.prefix = 'RW/'
+        end
         if @document.is_correct
-          @document.name = "WZk/" + (Document.maximum("id").to_i + 1).to_s
+          @document.name = (current_user.documents.where(is_income: false).where(is_local: false).where(is_correct: true).maximum('name').to_i + 1).to_s
+          @document.prefix = 'WZk/'
         end
       end
+
+      @document.title = @document.prefix+@document.name
 
     respond_to do |format|
       format.html # new.html.erb
@@ -176,6 +193,17 @@ before_filter :signed_in_user
           #policz cene zakupu z vat
           vat = (@product.defaultVat / 100) + 1
           @product.productPrice.bruttoPurchasePrice =  vat * v[:netto_price].to_f
+
+
+                   @product.productPrice.save!
+          # @product.defaultIncrease = v[:brutto_price]
+ 
+
+       #zaktualizuj faktyczna marze po sprzedazy [zmiana ilosc + ewentualnie zmiana ceny] (i daj komunikat)
+       # @product.discount = countDiscount(@product)
+
+
+
         end
           
 
@@ -203,8 +231,6 @@ before_filter :signed_in_user
 
 
 
-          @product.productPrice.save!
-          # @product.defaultIncrease = v[:brutto_price]
         
       end
 
@@ -221,19 +247,25 @@ before_filter :signed_in_user
 
 
         # aktualizuj cene sprzedazy na podstawie sprzedazy, jesli ma aktualizowac
-          if @product.productPrice.calculateByPurchase
-              discount = @product.discount
-              #cena sprzedazy ze znizka
-              netto_with_discount = (((discount/100.00)+1.00) * v[:netto_price].to_f)
-              @product.productPrice.nettoSalesPrice = netto_with_discount
-              #policz cene sprzedazy z vat
-              vat = (@product.defaultVat / 100) + 1
-              @product.productPrice.bruttoSalesPrice = vat * netto_with_discount
+
+        if @product.productPrice.calculateByPurchase
+          @product.productPrice.nettoSalesPrice = v[:netto_price].to_f
+          #policz cene zakupu z vat
+          vat = (@product.defaultVat / 100) + 1
+          @product.productPrice.bruttoSalesPrice =  vat * v[:netto_price].to_f
 
 
               @product.productPrice.save!
 
-          end
+     #zaktualizuj faktyczna marze po sprzedazy [zmiana ilosc + ewentualnie zmiana ceny] (i daj komunikat)
+      # @product.discount = countDiscount(@product)
+
+ 
+
+        end
+
+
+
           
 
 
@@ -267,18 +299,18 @@ before_filter :signed_in_user
           else
             zdejmij = 0
           end
-        end
-        quantity.save!
+          quantity.save!
         end
         
+        end
+        
+
 
 
 
       end
 
 
-      #zaktualizuj faktyczna marze po sprzedazy [zmiana ilosc + ewentualnie zmiana ceny] (i daj komunikat)
-      # @product.discount = countDiscount(@product)
 
 
 

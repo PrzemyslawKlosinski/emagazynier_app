@@ -50,9 +50,9 @@
 	          			<tr>
 	          				<th class="span1">Pozycja</th>
 	          				<th class="span2">Nazwa artykułu</th>
-	          				<th class="span2">Opis</th>
+	          				<th class="span3">Opis</th>
 	          				<th class="span1">Aktualizacja</th>
-	          				<th class="span1">Ilość</th>
+	          				<!-- <th class="span1">Ilość</th> -->
 	          				<th class="span1">Cena</th>
 	          				<th class="span1"></th>
 	          			</tr>
@@ -73,7 +73,7 @@
 
 <% @products.each do |product| %>
 
-<% if product.is_public? %>
+<% if product.is_public? and product.quantity > 0 %>
 
 	          			  <tr>
   	 <td><%= @licznik=@licznik+1 %> </td>
@@ -87,9 +87,9 @@
      <!-- </span> -->
 
      <td><span class="timestamp"><%= time_ago_in_words(product.updated_at) %></span></td>
- 	   <td><%= product.quantity %></td>
+ 	   <!-- <td>< product.quantity %></td> -->
  	   <td>
-          <%= product.defaultIncrease %>
+          <%= number_to_currency product.productPrice.bruttoSalesPrice %>
      </td>
     <td>
      

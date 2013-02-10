@@ -19,8 +19,6 @@
 #  user_id                 :integer
 #  category_id             :integer
 #  productPrice_id         :integer
-#  defaultIncrease         :decimal(, )      default(0.0)
-#  defaultDecrease         :decimal(, )      default(0.0)
 #  defaultVat              :decimal(, )      default(23.0)
 #  actualPriceOnPurchase   :boolean          default(TRUE), not null
 #  manufacturer            :string(255)

@@ -1,5 +1,4 @@
 # encoding: utf-8
-
 # == Schema Information
 #
 # Table name: documents
@@ -25,6 +24,8 @@
 #  firm_id             :integer
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
+#  is_local            :boolean
+#  prefix              :string(255)
 #
 
 class Document < ActiveRecord::Base
@@ -91,9 +92,9 @@ class Document < ActiveRecord::Base
 
 
   #indywidualna metoda dla paginate
-  def self.search_income(is_income, is_outcome, is_correct, search_user, page)
+  def self.search_income(is_income, is_outcome, is_correct, is_local, search_user, page)
   paginate :per_page => 30, :page => page,
-           :conditions => ["is_income = ? and is_outcome = ? and is_correct = ? and user_id = ?", is_income, is_outcome, is_correct, search_user],
+           :conditions => ["is_income = ? and is_outcome = ? and is_correct = ? and is_local = ? and user_id = ?", is_income, is_outcome, is_correct, is_local, search_user],
            :order => 'name'
   end
 
@@ -136,6 +137,6 @@ class Document < ActiveRecord::Base
 
   # Adding the join model attributes to the mass assignment white-list
   #add :quantities_attributes - attr_accessible property contains the properties of the Recipe model itself that can be modified, with the addition of a new property :quantities_attributes.
-  attr_accessible :quantities_attributes, :firm_id, :document_correct_id, :blocked, :brutto_netto, :brutto_value, :description, :document_date, :is_correct, :is_income, :is_outcome, :name, :netto_value, :receipt, :receipt_date, :status, :title
+  attr_accessible :quantities_attributes, :firm_id, :document_correct_id, :blocked, :brutto_netto, :brutto_value, :description, :document_date, :is_correct, :is_income, :is_outcome, :name, :netto_value, :receipt, :receipt_date, :status, :title, :prefix, :is_local
 
 end

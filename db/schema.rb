@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130205110233) do
+ActiveRecord::Schema.define(:version => 20130210013928) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(:version => 20130205110233) do
     t.integer  "firm_id"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+    t.boolean  "is_local"
+    t.string   "prefix"
   end
 
   add_index "documents", ["document_correct_id"], :name => "index_documents_on_document_correct_id"
@@ -104,8 +106,6 @@ ActiveRecord::Schema.define(:version => 20130205110233) do
     t.integer  "user_id"
     t.integer  "category_id"
     t.integer  "productPrice_id"
-    t.decimal  "defaultIncrease",         :default => 0.0
-    t.decimal  "defaultDecrease",         :default => 0.0
     t.decimal  "defaultVat",              :default => 23.0
     t.boolean  "actualPriceOnPurchase",   :default => true,  :null => false
     t.string   "manufacturer"
@@ -128,15 +128,17 @@ ActiveRecord::Schema.define(:version => 20130205110233) do
   add_index "products", ["user_id"], :name => "index_products_on_user_id"
 
   create_table "quantities", :force => true do |t|
-    t.decimal  "amount",       :default => 0.0, :null => false
-    t.decimal  "netto_price",  :default => 0.0
-    t.decimal  "brutto_price", :default => 0.0
+    t.decimal  "amount",             :default => 0.0, :null => false
+    t.decimal  "netto_price",        :default => 0.0
+    t.decimal  "brutto_price",       :default => 0.0
     t.integer  "product_id"
     t.integer  "document_id"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-    t.integer  "discount",     :default => 0
-    t.decimal  "unsold",       :default => 0.0, :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.integer  "discount",           :default => 0
+    t.decimal  "unsold",             :default => 0.0, :null => false
+    t.decimal  "netto_sales_price",  :default => 0.0
+    t.decimal  "brutto_sales_price", :default => 0.0
   end
 
   add_index "quantities", ["document_id"], :name => "index_quantities_on_document_id"

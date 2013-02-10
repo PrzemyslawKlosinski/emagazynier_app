@@ -47,14 +47,23 @@ function onDiscountChange(discount){
 	// if(discount != 0){
 			discount_value = discount.value;
 			id_discount = discount.id;
+
+
+			//policz netto z hidden
+			var id_netto_sales = id_discount.replace(/(discount)/ig, 'netto_sales_price');
+			var netto_sales = document.getElementById(id_netto_sales);
+			var netto_sales_discount = (((discount_value/100.00)+1.00)*netto_sales.value).toFixed(2);
+
+			//zapisz netto z marza
 			id_netto = id_discount.replace(/(discount)/ig, 'netto_price');
-			var netto_value=document.getElementById(id_netto);
-			var netto_discount = (((discount_value/100.00)+1.00)*netto_value.value).toFixed(2);
+			var netto = document.getElementById(id_netto);
+			netto.value = netto_sales_discount;
 
-			// nadpisujemy domyslna cene sprzedazy
-			netto_value.value = netto_discount;
 
-			var brutto=(netto_discount * 1.23);
+			//dorobic pobieranie vatu (przeniesc z product -> product_price)
+			// var vat = document.getElementById('defaultVat');
+			// var vat_value = (vat.value/100)+1;
+			var brutto=(netto_sales_discount * 1.23);
 				if(isNaN(brutto)){
 				brutto = 0.00;
 			}
@@ -77,9 +86,33 @@ function onNettoChange(netto_value){
 	var brutto_value=document.getElementById(id_brutto);
 	brutto_value.value=(brutto).toFixed(2); //zaokraglenie w gore
 
-	id_discount = id_netto.replace(/(netto_price)/ig, 'discount');
+	// id_discount = id_netto.replace(/(netto_price)/ig, 'discount');
+	// var discount_value=document.getElementById(id_discount);
+	// discount_value.value = 0;
+
+
+}
+
+function onSalesNettoChange(netto_value){
+	if(isNaN(netto_value.value)){
+		netto_value.value = 0.00;
+	}
+
+	var brutto=(netto_value.value * 1.23);
+
+	id_netto = netto_value.id;
+	id_brutto = id_netto.replace(/(netto)/ig, 'brutto');
+	var brutto_value=document.getElementById(id_brutto);
+	brutto_value.value=(brutto).toFixed(2); //zaokraglenie w gore
+
+	//pod netto_sales_price - zapisujemy nettp_purchase_price
+	var id_netto_purchase = id_brutto.replace(/(brutto_price)/ig, 'netto_sales_price');
+	var nettoPurchase = document.getElementById(id_netto_purchase);
+	var marza = (((netto_value.value - nettoPurchase.value) / nettoPurchase.value)*100).toFixed(2);
+
+	id_discount = id_brutto.replace(/(brutto_price)/ig, 'discount');
 	var discount_value=document.getElementById(id_discount);
-	discount_value.value = 0;
+	discount_value.value = marza;
 
 
 }
@@ -97,9 +130,36 @@ function onBruttoChange(brutto_value){
 	var netto_value=document.getElementById(id_netto);
 	netto_value.value=netto.toFixed(2); //zaokraglenie w gore
 
+	// id_discount = id_brutto.replace(/(brutto_price)/ig, 'discount');
+	// var discount_value=document.getElementById(id_discount);
+	// discount_value.value = 0;
+}
+
+
+//wyliczenie brutto na formularzu
+function onSalesBruttoChange(brutto_value){
+	if(isNaN(brutto_value.value)){
+		brutto_value.value = 0.00;
+	}
+
+	var netto=(brutto_value.value / 1.23);
+
+	id_brutto = brutto_value.id;
+	id_netto = id_brutto.replace(/(brutto)/ig, 'netto');
+	var netto_value=document.getElementById(id_netto);
+	netto_value.value=netto.toFixed(2); //zaokraglenie w gore
+
+
+	//pod netto_sales_price - zapisujemy nettp_purchase_price
+	var id_netto_purchase = id_brutto.replace(/(brutto_price)/ig, 'netto_sales_price');
+	var nettoPurchase = document.getElementById(id_netto_purchase);
+	var marza = (((netto_value.value - nettoPurchase.value) / nettoPurchase.value)*100).toFixed(2);
+
+	// alert(marza);
+
 	id_discount = id_brutto.replace(/(brutto_price)/ig, 'discount');
 	var discount_value=document.getElementById(id_discount);
-	discount_value.value = 0;
+	discount_value.value = marza;
 }
 
 // function myFunction() {
@@ -349,10 +409,20 @@ function setSales(select) {
              success: function(result){
                   	var id_product = select.id;
 
+                  	// ustaw hidden netto
+					id_netto_sales = id_product.replace(/(product_id)/ig, 'netto_sales_price');
+					var netto_sales = document.getElementById(id_netto_sales);
+					netto_sales.value = result.nettoPurchasePrice;
+
                   	// ustaw netto
 					id_netto = id_product.replace(/(product_id)/ig, 'netto_price');
 					var netto = document.getElementById(id_netto);
 					netto.value = result.nettoSalesPrice;
+
+					// ustaw hidden brutto
+					id_brutto_sales = id_netto.replace(/(netto_price)/ig, 'brutto_sales_price');
+					var brutto_sales = document.getElementById(id_brutto_sales);
+					brutto_sales.value = result.bruttoPurchasePrice;
 
 					// ustaw brutto
 					id_brutto = id_netto.replace(/(netto_price)/ig, 'brutto_price');
@@ -364,6 +434,14 @@ function setSales(select) {
 					var discount = document.getElementById(id_discount);
 					var marza = (((result.nettoSalesPrice - result.nettoPurchasePrice) / result.nettoPurchasePrice)*100).toFixed(2);
 					discount.value = marza;
+
+					// jesli marz -100, czyli cena 0 to ustaw marze na 0
+					// if (discount.value = -100) {
+					// 	discount.value = 0;
+					// 	netto.value = result.nettoPurchasePrice;
+					// 	brutto.value = result.bruttoPurchasePrice;
+					// }
+
 
              }
 

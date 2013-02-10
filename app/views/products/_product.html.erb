@@ -1,4 +1,14 @@
+  
+<% if product.isWarningShow %>
+
+<% if product.quantity <= product.quantityMinimum %>
+  <tr class="error">
+<% end %>
+
+<% else %>  
   <tr>
+<% end %>
+
   	 <td><%= @licznik=@licznik+1 %> </td>
     
      <!-- <span class="content"> -->

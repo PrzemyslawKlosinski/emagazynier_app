@@ -2,6 +2,7 @@ EmagazynierApp::Application.routes.draw do
 
   resources :product_prices
 
+
   #get brutto for quantity - ajax response
   match 'products/price', to: 'products#sales', :via => :post
 

@@ -65,12 +65,12 @@
     <input onChange="update()" id="product_reservedQuantity" name="product[reservedQuantity]" type="number" min="0" step="1" readonly="true" value ="<%= @product.reservedQuantity %>"/>
   </div>
     <div class="span2 offset1">Stan maksymalny</div>
-    <div class="span3"><%= f.text_field :quantityMaximum %></div>
+    <div class="span3"><%= f.text_field :quantityMaximum, readonly: true %></div>
  </div>
 
   <span class="pull-right">
      <!-- < link_to 'Powrót', current_user, class:"btn btn-info" %> -->
-     <%= link_to 'Powrót', products_path, class:"btn btn-info" %>
+     <%= link_to 'Powrót', products_path, class:"btn" %>
     <%= f.submit "Zapisz", class:"btn btn-info" %>
   </span>
 

@@ -22,26 +22,28 @@
     </a>
     <ul class="dropdown-menu">
         <!-- #ustawienie rodzaju dokumentu -->
-        <li><%= link_to "Przychód", new_document_path(is_income: true, is_outcome: false, is_correct: false) %></li>
-        <li><%= link_to "Rozchód", new_document_path(is_income: false, is_outcome: true, is_correct: false) %></li>
-        <li><%= link_to "Przychód korekta", new_document_path(is_income: true, is_outcome: false, is_correct: true) %></li>
-        <li><%= link_to "Rozchód korekta", new_document_path(is_income: false, is_outcome: true, is_correct: true) %></li>
+        <li><%= link_to "Przychód zewnętrzny", new_document_path(is_income: true, is_outcome: false, is_correct: false, is_local: false) %></li>
+        <li><%= link_to "Przychód wewnętrzny", new_document_path(is_income: true, is_outcome: false, is_correct: false, is_local: true) %></li>
+        <li><%= link_to "Rozchód zewnętrzny", new_document_path(is_income: false, is_outcome: true, is_correct: false, is_local: false) %></li>
+        <li><%= link_to "Rozchód wewnętrzny", new_document_path(is_income: false, is_outcome: true, is_correct: false, is_local: true) %></li>
+        <!-- <li>< link_to "Przychód korekta", new_document_path(is_income: true, is_outcome: false, is_correct: true) %></li> -->
+        <!-- <li>< link_to "Rozchód korekta", new_document_path(is_income: false, is_outcome: true, is_correct: true) %></li> -->
     </ul>
     </div>
                 <li class="divider"></li>
 
                 <ul class="nav nav-list">
                     <li class="nav-header">Przychód</li>
-                    <li><%= link_to 'PZ zewnętrzny', documents_path(:income => true, :outcome => false, :correct => false) %></li>
-                    <li><%= link_to 'PW wewnętrzny', documents_path(:income => true, :outcome => false, :correct => false) %></li>
-                    <li><%= link_to 'PZk korekta', documents_path(:income => true, :outcome => false, :correct => true) %></li>
+                    <li><%= link_to 'PZ zewnętrzny', documents_path(:income => true, :outcome => false, :correct => false, :local => false) %></li>
+                    <li><%= link_to 'PW wewnętrzny', documents_path(:income => true, :outcome => false, :correct => false, :local => true) %></li>
+                    <li><%= link_to 'PZk korekta', documents_path(:income => true, :outcome => false, :correct => true, :local => false) %></li>
                 </ul>
 
                <ul class="nav nav-list">
                     <li class="nav-header">Rozchód</li>
-                    <li><%= link_to 'WZ zewnętrzny', documents_path(:income => false, :outcome => true, :correct => false) %></li>
-                    <li><%= link_to 'RW wewnętrzny', documents_path(:income => false, :outcome => true, :correct => false) %></li>
-                    <li><%= link_to 'WZk korekta', documents_path(:income => false, :outcome => true, :correct => true) %></li>
+                    <li><%= link_to 'WZ zewnętrzny', documents_path(:income => false, :outcome => true, :correct => false, :local => false) %></li>
+                    <li><%= link_to 'RW wewnętrzny', documents_path(:income => false, :outcome => true, :correct => false, :local => true) %></li>
+                    <li><%= link_to 'WZk korekta', documents_path(:income => false, :outcome => true, :correct => true, :local => false) %></li>
                 </ul>
 
 
