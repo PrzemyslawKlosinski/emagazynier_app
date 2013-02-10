@@ -62,7 +62,8 @@ class Product < ActiveRecord::Base
   after_initialize :default_values
   private
   def default_values
-    self.number ||= (Product.where(user_id = self.user_id).maximum("number") + 1).to_s
+    self.number ||= (Product.maximum(:number, :conditions => ['user_id = ?', self.user_id]) + 1).to_s
+    # (Product.where(user_id = self.user_id).maximum("number") + 1).to_s
     self.name  ||= "ART/#{self.number}" 
     self.nameOryginal ||= "ART/#{self.number}" 
   end
