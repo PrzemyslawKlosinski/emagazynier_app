@@ -33,8 +33,8 @@ module SessionsHelper
 
 	def signed_in?
 		#symulacja uzytkownik zalogowany
-		# @current_user = User.find_by_name("EMAGAZYNIER2") lub
-		# self.current_user = User.find_by_name("EMAGAZYNIER2") (wykorzysta metoda a nie utworzy lokalna zmienna)
+		# @current_user = User.find_by_name("eMAG2") lub
+		# self.current_user = User.find_by_name("eMAG2") (wykorzysta metoda a nie utworzy lokalna zmienna)
 		!current_user.nil?	#metoda ktora zwraca @current_user a nastepnie jest pytanie czy jest nil?
 	end
 

@@ -13,20 +13,20 @@ describe "StaticPages" do
 
 
   #moje testy z Capybara
-  let(:base_title) { "EMagazynier" }
+  let(:base_title) { "eMagazyn" }
 
   describe "Home page" do
     before { visit root_path }
 
-  	it "should have the content 'EMagazynier'" do
-  		page.should have_content('EMagazynier')
+  	it "should have the content 'eMagazyn'" do
+  		page.should have_content('eMagazyn')
   	end
 
-    it "strona powinna zwierac tytul 'EMagazynier'" do
+    it "strona powinna zwierac tytul 'eMagazyn'" do
       page.should have_selector('title', text: caly_tytul(''))
     end
 
-    it "strona NIE powinna zwierac tytul 'EMagazynier | Home'" do
+    it "strona NIE powinna zwierac tytul 'eMagazyn | Home'" do
       page.should_not have_selector('title', :text => "#{base_title} | Home" )
     end
   end

@@ -2,7 +2,7 @@
 
 class NotificationsMailer < ActionMailer::Base
 
-  	default from: 'eMagazynier_App'
+  	default from: 'eMagazyn_App'
   # default :from => "noreply@youdomain.dev"
   # default :to => "you@youremail.dev"
 

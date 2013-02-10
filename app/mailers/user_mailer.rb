@@ -1,14 +1,14 @@
 class UserMailer < ActionMailer::Base
-  default from: 'eMagazynier_App'
+  default from: 'eMagazyn_App'
 
 
   def welcome_email(user)
     # widocznosc zmiennej user w welcome_email.erb.html
 	@user = user
 	enc = Base64.encode64(@user.password_digest)
-	@url  = "https://emagazynier.herokuapp.com/aktywacja/#{enc}"
+	@url  = "http://www.emagazyn.biz/aktywacja/#{enc}"
     email_with_name = "#{@user.name} <#{@user.email}>"
-    mail(:to => email_with_name, :subject => "Witaj w super serwisie eMagazynier")
+    mail(:to => email_with_name, :subject => "Witaj w serwisie eMagazyn")
   end
 
 

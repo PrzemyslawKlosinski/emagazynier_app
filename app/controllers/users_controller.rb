@@ -58,7 +58,7 @@ class UsersController < ApplicationController
     if(@user.save)
   	  
       #jesli sie udalo zapisz cookies, przejdz do strony show / domyslanie pokaz komunikat o wyslanym mailu
-      flash[:success] = 'Witaj, pomyślnie zarejestrowałeś się w aplikacji eMagazynier! Odbierz wiadomość email i dokończ rejestrację.'
+      flash[:success] = 'Witaj, pomyślnie zarejestrowałeś się w aplikacji eMagazyn! Odbierz wiadomość email i dokończ rejestrację.'
       
       #zaloguj ciasteczko
       # sign_in @user
