@@ -84,7 +84,7 @@ class User < ActiveRecord::Base
 
   #metoda pomocnicza generujaca kolejna nazwe
   def genName()
-  	baseName = "EMAGAZYNIER"
+  	baseName = "eMAG"
   	user = User.find(:last)
   	if(user.nil?)
   		return "#{baseName}1"

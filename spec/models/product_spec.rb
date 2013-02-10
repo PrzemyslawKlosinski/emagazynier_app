@@ -32,6 +32,8 @@
 #  updated_at              :datetime         not null
 #  is_public               :boolean          default(FALSE)
 #  discount                :integer          default(0)
+#  prefix                  :string(255)
+#  number                  :integer
 #
 
 require 'spec_helper'

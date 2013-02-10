@@ -3,7 +3,7 @@ module ApplicationHelper
 
 	#metoda pomocnicza do wformatowania napisu
 	def caly_tytul(title)
-		poczatek_tytulu = "eMagazynier"
+		poczatek_tytulu = "eMagazyn"
 		if(title.empty?)
 			return poczatek_tytulu
 		else
