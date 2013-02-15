@@ -17,6 +17,8 @@ gem 'simple_form'
 gem 'prawn'
 # add jquery-ui
 gem 'jquery-ui-rails'
+# upload files
+gem 'carrierwave'
 
 group :development do
  gem 'annotate',		'2.5.0'

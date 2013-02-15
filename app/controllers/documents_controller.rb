@@ -75,6 +75,41 @@ before_filter :signed_in_user
     end
   end
 
+
+  # Upload document files
+  def uploadform
+    @document_name = params[:name]
+  end
+
+  def uploadsave
+    
+    # @documents = Document.search(params[:search], current_user.id, params[:page])
+
+    test_file = params[:excel_file]
+    puts test_file
+    @name = test_file.original_filename
+    file = DocumentsUploader.new
+
+
+    #przekopiowac z formularza
+    # @document = current_user.documents.build(:nparams[:name]) if signed_in?
+    @document = current_user.documents.build if signed_in?
+    @document.name = (current_user.documents.where(is_income: true).where(is_local: false).where(is_correct: false).maximum('name').to_i + 1).to_s
+    @document.prefix = 'PZ/'
+    @document.title = @document.prefix+@document.name
+    # @documents = 
+
+
+    #obsluzyc wyjatek CarrierWave::IntegrityError
+    if file.store!(test_file)
+      render action: 'new'
+    else
+      render action: 'uploadform'
+    end    
+
+  end
+
+
   # GET /documents/new
   # GET /documents/new.json
   def new
@@ -82,6 +117,7 @@ before_filter :signed_in_user
     # dla formularza new
     # @document = Document.new
     @document = current_user.documents.build if signed_in?
+
 
     # dla tabeli index
     # @documents = Document.find(:all, :conditions => ["user_id = ?", current_user.id])

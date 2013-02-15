@@ -6,6 +6,10 @@ EmagazynierApp::Application.routes.draw do
   #get brutto for quantity - ajax response
   match 'products/price', to: 'products#sales', :via => :post
 
+  #upload file in quantities
+  match 'documents/upload/(:name)', to: 'documents#uploadform'
+  match 'documents/save', to: 'documents#uploadsave'
+
   # sklep
   match 'sklepy', to: 'shops#index'
   match 'sklepy/(:name)', to: 'shops#firmemail'

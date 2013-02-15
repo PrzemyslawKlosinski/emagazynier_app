@@ -125,6 +125,12 @@ pl:
   errors: &errors
     format: ! '%{attribute} %{message}'
     messages:
+
+      carrierwave_processing_error: nie można zmienic rozmiaru
+      carrierwave_integrity_error: to nie jest xls
+      carrierwave_download_error: nie udalo sie wyslac pliku
+      extension_white_list_error: nieobsługiwany format pliku
+
       accepted: musi zostać zaakceptowane
       blank: nie może być puste
       confirmation: nie zgadza się z potwierdzeniem
