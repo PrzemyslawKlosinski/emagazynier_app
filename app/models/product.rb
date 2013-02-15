@@ -56,7 +56,8 @@ class Product < ActiveRecord::Base
   # validates :unit_id, presence: true
 
   #pozwala wyswietlac produkty w odwrotnej kolejnosci
-  default_scope order: 'products.created_at DESC'
+  # default_scope order: 'products.created_at DESC'
+  default_scope order: 'products.created_at ASC'
 
   #po wywolaniu konstruktora inicjuje zmienna
   after_initialize :default_values

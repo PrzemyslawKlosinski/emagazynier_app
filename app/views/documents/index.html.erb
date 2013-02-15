@@ -122,9 +122,11 @@
     <td><%= document.document_date %></td>
     <td>
         <!-- :controller=>"documents", :action=>"editQuantity", :id => document -->
-      <!-- nie mozna edytowac dokumentow magazynowych tylko przez korekte
-      < link_to 'Edytuj', edit_document_path(document)  %> | 
+      <!-- 
+      nie mozna edytowac dokumentow magazynowych tylko przez korekte
       -->
+      <%== link_to 'Edytuj', edit_document_path(document)  %> | 
+      
       
        
       <%= link_to '', document, class:"icon-trash", method: :delete, data: { confirm: 'Czy napewno usunąć?' } %>
