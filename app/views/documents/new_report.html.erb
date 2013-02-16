@@ -55,10 +55,28 @@
         <input name='end_date' type="text" value='<%= @end_date %>' data-date-format="yyyy-mm-dd" id="datepicker2" >
 </div>
 <script type="text/javascript">
-  $(document).ready(function(){ $("#datepicker1").datepicker()});
+  // $(document).ready(function(){ $("#datepicker1").datepicker()});
+  $(document).ready(function(){ $("#datepicker1").datepicker(
+    {
+      dateFormat: 'yy-mm-dd',
+      // timeFormat: 'hh:mm'
+
+    })});
+
+    // $(document).ready(function(){ $("#datepicker1").datetimepicker(
+    // {
+    //   dateFormat: 'yy-mm-dd',
+    //   timeFormat: 'hh:mm'
+
+    // })});
+  
 </script>
 <script type="text/javascript">
-  $(document).ready(function(){ $("#datepicker2").datepicker()});
+  $(document).ready(function(){ $("#datepicker2").datepicker(
+  {
+      dateFormat: 'yy-mm-dd',
+      // timeFormat: 'hh:mm'
+    })});
 </script>
 </div>
 

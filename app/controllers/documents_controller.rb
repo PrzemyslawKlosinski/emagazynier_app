@@ -78,34 +78,123 @@ before_filter :signed_in_user
 
   # Upload document files
   def uploadform
-    @document_name = params[:name]
+    # @document = Document.new
+      @is_correct = params[:is_correct]
+      @is_income = params[:is_income]
+      @is_outcome = params[:is_outcome]
+      @is_local = params[:is_local]
+      @firm_id = params[:firm_id]
   end
 
   def uploadsave
     
-    # @documents = Document.search(params[:search], current_user.id, params[:page])
-
     test_file = params[:excel_file]
-    puts test_file
     @name = test_file.original_filename
     file = DocumentsUploader.new
 
 
-    #przekopiowac z formularza
-    # @document = current_user.documents.build(:nparams[:name]) if signed_in?
-    @document = current_user.documents.build if signed_in?
-    @document.name = (current_user.documents.where(is_income: true).where(is_local: false).where(is_correct: false).maximum('name').to_i + 1).to_s
-    @document.prefix = 'PZ/'
-    @document.title = @document.prefix+@document.name
-    # @documents = 
+    #utworzyc formularz na podstawie danych podstawowych
+    # @document = current_user.documents.build(:params[:name]) if signed_in?
+    @document = current_user.documents.build(prefix: params[:prefix], firm_id: params[:firm_id]) if signed_in?
+
+      #ustawienie rodzaju dokumentu
+      @document.is_correct = params[:is_correct]
+      @document.is_income = params[:is_income]
+      @document.is_outcome = params[:is_outcome]
+      @document.is_local = params[:is_local]
+      if @document.is_income
+        @document.name = (current_user.documents.where(is_income: true).where(is_local: false).where(is_correct: false).maximum('name').to_i + 1).to_s
+        @document.prefix = 'PZ/'
+        if @document.is_local
+          @document.name = (current_user.documents.where(is_income: true).where(is_local: true).where(is_correct: false).maximum('name').to_i + 1).to_s
+          @document.prefix = 'PW/'
+        end
+        if @document.is_correct
+          @document.name = (current_user.documents.where(is_income: true).where(is_local: false).where(is_correct: true).maximum('name').to_i + 1).to_s
+          @document.prefix = 'PZk/'
+        end
+      end
+      if @document.is_outcome
+        @document.name = (current_user.documents.where(is_income: false).where(is_local: false).where(is_correct: true).maximum('name').to_i + 1).to_s
+        @document.prefix = 'WZ/'
+        if @document.is_local
+          @document.name = (current_user.documents.where(is_income: false).where(is_local: true).where(is_correct: false).maximum('name').to_i + 1).to_s
+          @document.prefix = 'RW/'
+        end
+        if @document.is_correct
+          @document.name = (current_user.documents.where(is_income: false).where(is_local: false).where(is_correct: true).maximum('name').to_i + 1).to_s
+          @document.prefix = 'WZk/'
+        end
+      end
+      @document.title = @document.prefix+@document.name
+
 
 
     #obsluzyc wyjatek CarrierWave::IntegrityError
+    #jesli plik udalo sie pobrac, wczutaj z niego dane
     if file.store!(test_file)
-      render action: 'new'
+
+    #utworzyc quantities
+    xls_document = Spreadsheet.open "#{file.store_path}"
+    sheet1 = xls_document.worksheet 0
+    # @quantities = []
+    @errors = Hash.new
+    @counter = 0
+    
+    sheet1.each 1 do |row|
+      @counter+=1
+      
+      #wyszukanie / utworzenie produktu
+      @product = Product.find_by_name(row[3])
+      if @product.nil?
+        # nettoPurchasePriceVat = row[5] * 1.23 #poprawiec, aby nie wyliczal na stale
+        productPrice = ProductPrice.create(nettoPurchasePrice: row[5])
+        # productPrice.save!
+
+        @product = current_user.products.create(name: row[3], productPrice_id: productPrice.id)
+        # @product.save!
+      end
+          
+
+      q = @document.quantities.build
+      q.product_id = @product.id
+      vat = row[5] * ((@product.defaultVat / 100) + 1)
+      q.brutto_price = vat
+      # q.first_name = row[0]
+      # q.last_name = row[1]
+      # q.age = row[2]
+      q.amount = row[4]
+      q.unsold = row[4]
+      
+      q.netto_price = row[5].to_f
+      
+      # q.brutto_price =  vat.to_f
+      # logger.info "brutto #{q.brutto_price} netto #{q.netto_price}"
+      
+
+      # if q.valid?
+        # logger.debug "czy poprawny #{q.valid?}"
+        # @q.save!
+        # @quantities << q
+      # else
+        # @errors["#{@counter+1}"] = q.errors
+      # end
+    end
+
+    #usuwamy plik
+    file.remove!
+
+
+    flash.now[:notice] = 'Pozycje został pomyślnie załadowane.'
+    # render 'edit_document'
+    render action: 'new'
+
+
     else
-      render action: 'uploadform'
-    end    
+      flash.now[:error] = 'Pliku nie udało się załadować.'
+      redirect new_document_path(is_income: true, is_outcome: false, is_correct: false, is_local: false)
+    end  
+
 
   end
 
@@ -113,6 +202,8 @@ before_filter :signed_in_user
   # GET /documents/new
   # GET /documents/new.json
   def new
+
+    @firm_id = params[:firm_id]
 
     # dla formularza new
     # @document = Document.new
@@ -157,7 +248,6 @@ before_filter :signed_in_user
           @document.prefix = 'WZk/'
         end
       end
-
       @document.title = @document.prefix+@document.name
 
     respond_to do |format|

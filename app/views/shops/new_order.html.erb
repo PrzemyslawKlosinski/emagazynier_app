@@ -8,15 +8,146 @@
 <legend><%= @product.name %></legend>
 <div class="row-fluid"> 
   <div class="span4 offset1">Imię Nazwisko / Nazwa firmy<%= form.text_field :name %></div>
-    <div class="span4 offset1">Adres email<%= form.text_field :email %></div>
+    <div class="span4 offset1">Adres email <br/> <%= form.text_field :email %></div>
 </div>
 
 <div class="row-fluid"> 
   <div class="span4 offset1">
-      Ilość <%= form.text_field :subject %>
-    </div>
+      Ilość <br/> <%= form.text_field :subject %>
+  </div>
+
+<div class="span4 offset1">
+        <!-- value='<%= @end_date %>' -->
+        Data realizacji <br/>  
+        <input type="text" id="datepicker3" />
+        <!-- <input name='end_date' type="text" data-date-format="yyyy-mm-dd" id="datepicker1" > -->
 </div>
 
+
+<!-- 
+store date in database
+https://github.com/elevation/event_calendar/wiki/Quickstart-from-scratch
+https://github.com/elevation/event_calendar
+http://stackoverflow.com/questions/7229229/how-to-add-popup-pannel-in-showing-events-in-rails-event-calendar-plugin
+http://stackoverflow.com/questions/4925627/about-event-calendar-showing-only-events-for-current-user-and-not-all-events-pre
+
+
+http://stackoverflow.com/questions/10035772/rails3-jquery-ui-datepicker-month-and-day-are-reversed-on-save
+ -->
+<script type="text/javascript">
+  // $(document).ready(function(){ $("#datepicker1").datepicker()});
+  // $(document).ready(function(){ 
+
+
+// http://trentrichardson.com/examples/timepicker/
+// http://api.jqueryui.com/datepicker/#option-beforeShowDay
+
+$( "#datepicker3" ).datetimepicker({
+    beforeShowDay: $.datepicker.noWeekends,
+
+
+
+    showMinute: false,
+    
+    minDate: new Date(),
+    hourMin: 8,
+    hourMax: 18,
+    hourGrid: 2,
+
+    stepHour: 2,
+    stepMinute: 60,
+
+    firstDay: 1,
+    closeText: 'Wybierz',
+    currentText: "Teraz",
+    timeOnlyTitle: 'Czas',
+    timeText: 'Czas',
+    hourText: 'Godzina',
+    minuteText: 'Minuta',
+    secondText: 'Sekunda',
+
+});
+
+jQuery(function($){
+  $.datepicker.regional['pl'] = {
+    closeText: 'Zamknij',
+    prevText: '&#x3c;Poprzedni',
+    nextText: 'NastÄ™pny&#x3e;',
+    currentText: 'DziÅ›',
+    monthNames: ['StyczeÅ„','Luty','Marzec','KwiecieÅ„','Maj','Czerwiec',
+    'Lipiec','SierpieÅ„','WrzesieÅ„','PaÅºdziernik','Listopad','GrudzieÅ„'],
+    monthNamesShort: ['Sty','Lu','Mar','Kw','Maj','Cze',
+    'Lip','Sie','Wrz','Pa','Lis','Gru'],
+    dayNames: ['Niedziela','Poniedzialek','Wtorek','Åšroda','Czwartek','PiÄ…tek','Sobota'],
+    dayNamesShort: ['Nie','Pn','Wt','Åšr','Czw','Pt','So'],
+    dayNamesMin: ['N','Pn','Wt','Śr','Cz','Pt','So'],
+    weekHeader: 'Tydz',
+    dateFormat: 'yy-mm-dd',
+    firstDay: 1,
+    isRTL: false,
+    showMonthAfterYear: false,
+    yearSuffix: ''};
+
+
+  $.datepicker.setDefaults($.datepicker.regional['pl']);
+
+});
+
+$('#datepicker3').datepicker({
+    onSelect: function() {
+        this.focus();
+    }
+});
+
+
+//     $("#datepicker3").datepicker(
+//     {
+      
+// // changeMonth: true
+//  // beforeShowDay: $.datepicker.
+// firstDay: 1
+//       // beforeShowDay: $.datetimepicker.noWeekends 
+      
+      
+// //       beforeShowDay: $.datepicker.noWeekendsOrHolidays
+      
+// //        natDays = [
+// //   [1, 26, 'au'], [2, 6, 'nz'], [3, 17, 'ie'],
+// //   [4, 27, 'za'], [5, 25, 'ar'], [6, 6, 'se'],
+// //   [7, 4, 'us'], [8, 17, 'id'], [9, 7, 'br'],
+// //   [10, 1, 'cn'], [11, 22, 'lb'], [12, 12, 'ke']
+// // ];
+
+// // function nationalDays(date) {
+// //     for (i = 0; i < natDays.length; i++) {
+// //       if (date.getMonth() == natDays[i][0] - 1
+// //           && date.getDate() == natDays[i][1]) {
+// //         return [false, natDays[i][2] + '_day'];
+// //       }
+// //     }
+// //   return [true, ''];
+// // }
+
+//      // function noWeekendsOrHolidays(date) {
+//      //    var noWeekend = $.datepicker.noWeekends(date);
+//      //    if (noWeekend[0]) {
+//      //      return nationalDays(date);
+//      //    } else {
+//      //      return noWeekend;
+//      //    }
+//      //  }
+
+//       // dateFormat: 'yy-mm-dd',
+//       // timeFormat: 'hh:mm'
+
+//     }).noWeekends;
+
+
+// });
+
+</script>
+
+</div>
 <div class="row-fluid">
     <div class="span4 offset1">Treść<br/> <%= form.text_area :body, :rows=>2, :cols=>100 %></div>
     <div class="span4 offset1"><br/>
@@ -42,7 +173,8 @@
   <div class="row-fluid">
 <div class="span10 offset1">
   <fieldset class="actions pull-right">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Powrót</button>
+    <!-- <button class="btn" data-dismiss="modal" aria-hidden="true">Powrót</button> -->
+    <%= link_to 'Powrót', firmshop_path(name: current_user.id), class:"btn" %>
     <%= form.submit "Zamów", class: "btn btn-info" %>
   </fieldset>
 </div>

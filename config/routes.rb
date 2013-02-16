@@ -7,14 +7,14 @@ EmagazynierApp::Application.routes.draw do
   match 'products/price', to: 'products#sales', :via => :post
 
   #upload file in quantities
-  match 'documents/upload/(:name)', to: 'documents#uploadform'
+  match 'documents/upload/(:is_income)/(:is_outcome)/(:is_correct)/(:is_local)/(:firm_id)', to: 'documents#uploadform'
   match 'documents/save', to: 'documents#uploadsave'
 
   # sklep
   match 'sklepy', to: 'shops#index'
   match 'sklepy/(:name)', to: 'shops#firmemail'
-  match 'sklepy/firma/(:name)', to: 'shops#firm'
-  match 'sklepy/produkt/(:name)' => 'shops#new_order', :via => :get
+  match 'sklepy/firma/(:name)', to: 'shops#firm', :as => :firmshop
+  match 'sklepy/produkt/(:name)' => 'shops#new_order', :via => :get, :as => :buyproduct
   match 'sklepy/produkt/(:name)' => 'shops#create_order', :via => :post
 
   #raporty

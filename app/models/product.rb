@@ -88,5 +88,5 @@ class Product < ActiveRecord::Base
       end
   end
 
-  attr_accessible :category_id, :unit_id, :actualPriceOnPurchase, :blocked, :color, :defaultDecrease, :defaultIncrease, :defaultVat, :description, :descriptions, :intended, :isWarningShow, :location, :manufacturer, :name, :nameOryginal, :picture, :quantity, :quantityMaximum, :quantityMinimum, :reservedQuantity, :shape, :size, :summaryQuantityPurchase, :summaryQuantitySales, :warningNote, :is_public, :productPrice, :discount, :number, :prefix
+  attr_accessible :category_id, :unit_id, :actualPriceOnPurchase, :blocked, :color, :defaultDecrease, :defaultIncrease, :defaultVat, :description, :descriptions, :intended, :isWarningShow, :location, :manufacturer, :name, :nameOryginal, :picture, :quantity, :quantityMaximum, :quantityMinimum, :reservedQuantity, :shape, :size, :summaryQuantityPurchase, :summaryQuantitySales, :warningNote, :is_public, :productPrice, :discount, :number, :prefix, :productPrice_id
 end

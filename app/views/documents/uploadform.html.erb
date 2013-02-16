@@ -1,12 +1,43 @@
 <p id="notice"><%= notice %></p>
 
-<%=form_tag('/documents/save', :multipart => true) %>
-	<p>
+<%=form_tag('/documents/save', :method => "post", :multipart => true) %>
+
+
+  <div class="row-fluid">
+        <div class="span10 offset1">
+
+
+   	  <div class="row-fluid">
+      <div class="span6 offset3">
 		<%= file_field_tag 'excel_file' %>
-	</p>
-	<p>
-		<%= hidden_field_tag 'name', @document_name %>
-		<%= submit_tag "Wczytaj dane" %>
-	</p>
+		<%= hidden_field_tag 'is_income', @is_income %>
+		<%= hidden_field_tag 'is_outcome', @is_outcome %>
+		<%= hidden_field_tag 'is_correct', @is_correct %>
+		<%= hidden_field_tag 'is_local', @is_local %>
+		<%= hidden_field_tag 'firm_id', @firm_id %>
+
+	</div>
+	</div>
+	
+
+<br/>
+
+	<div class="row-fluid"> 
+  <div class="span4">
+
+  	<%= link_to "Powrót", new_document_path(is_income: @is_income, is_outcome: @is_outcome, is_correct: @is_correct, is_local: @is_local, firm_id: @firm_id), class:'btn' %>
+  	  <!-- <button class="btn" data-dismiss="modal" aria-hidden="true">Powrót</button> -->
+  </div>
+
+<div class="span4 offset4">
+    <%= submit_tag "Wczytaj dane", class: "btn btn-info" %>
+</div>
+</div>
+
+
+</div>
+</div>
+
+
 </form>
  

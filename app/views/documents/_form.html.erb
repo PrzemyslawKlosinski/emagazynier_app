@@ -33,7 +33,7 @@
     <div class="span3">
       <!-- < f.input :netto_value, :label => false, :readonly => true  %> -->
               <div class="input-prepend">
-            <%= f.association :firm, :collection => @current_user.firms, :prompt => 'Wybierz firmę', :label => false  %> <!-- , :input_html => { :style => "width: 100%" } -->
+            <%= f.association :firm, :collection => @current_user.firms, :prompt => 'Wybierz firmę', :selected => @firm_id, :label => false %> <!-- , :input_html => { :style => "width: 100%" } -->
         </div>
     </div>
 </div>
@@ -104,9 +104,7 @@
 
 
 
-<div class="row">
-
-
+<!-- <div class="row"> -->
 
       <!-- The nested form partial - _quantity_fields.html.erb -->
       <!-- < f.simple_fields_for :quantities do |quantity| %> -->
@@ -117,23 +115,19 @@
     , 'data-association-insertion-node' => "#document-products ol", 'data-association-insertion-method' => "append" 
     :wrap_object => Proc.new {|quantity| quantity.build_product; quantity }
     Basically, without it you can’t add new products, just a Quantity amount associated with no product. -->
-</div>
+<!-- </div> -->
+
+
+            <%= f.hidden_field :is_income  %>
+            <%= f.hidden_field :is_outcome  %>
+            <%= f.hidden_field :is_correct  %>
+            <%= f.hidden_field :is_local  %>
+            <%= f.hidden_field :prefix  %>
 
 
 
 
-  <div class="row-fluid">
-  <div class="span3 offset1">
-    <hr/>
-      <%= link_to_add_association 'Dodaj produkt', f, :quantities, class:"btn btn-info" %>
-      <!-- < link_to 'Import z pliku', documents_upload_path , class:"btn btn-info" %>       -->
 
-
-
-
- <!-- import z pliku - Button to trigger modal -->
-<a href="/documents/upload/<%= @document.name %>" data-target="#myModal" data-toggle="modal" class="btn btn-info">Import z pliku</a>
- 
 <!-- Modal -->
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
@@ -151,8 +145,43 @@
 
 
 
-    </div>
-    <div class="span3 offset3">
+
+
+
+
+
+
+
+<div class="row">
+
+
+
+  <div class="span2 offset1">
+    <hr/>
+      <%= link_to_add_association 'Dodaj produkt', f, :quantities, class:"btn btn-primary" %>
+      <!-- < link_to 'Import z pliku', documents_upload_path , class:"btn btn-info" %>       -->
+</div>
+
+
+  <div class="span2 offset1">
+  <hr/>
+    <%= link_to "Powrót", documents_path, class:'btn' %>
+  </div>
+
+
+ <!-- import z pliku - Button to trigger modal -->
+<div class="span2 offset1" id="text_to_be_changed">
+  <hr/>
+<a href="/documents/upload/<%= @document.is_income %>/<%= @document.is_outcome %>/<%= @document.is_correct %>/<%= @document.is_local %>" data-target="#myModal" data-toggle="modal" class="btn btn-info">Import z pliku</a>
+</div>
+
+ 
+
+
+
+
+
+    <div class="span1 offset1">
       <hr/>
         <%= f.submit "Zapisz", class:"btn btn-info" %>      
     </div>
@@ -160,10 +189,9 @@
 </div>
 
 
-            <%= f.hidden_field :is_income  %>
-            <%= f.hidden_field :is_outcome  %>
-            <%= f.hidden_field :is_correct  %>
-            <%= f.hidden_field :is_local  %>
+
+
+
 
 
 
@@ -185,3 +213,16 @@
         <button class="ui-spinner-up" type="button" onclick="myFunction()">▲</button>
          <button class="ui-spinner-down" type="button" onclick="myFunction()">▼</button>
  -->
+
+
+<!-- jquery -->
+<script>
+$(document).ready(function(){
+    $('#document_firm_id').change(function() {
+        $('#text_to_be_changed').html(
+          '<hr/><a href="/documents/upload/'+ <%= @document.is_income %>+'/'+ <%= @document.is_outcome %>+'/'+ <%= @document.is_correct %>+'/'+ <%= @document.is_local %>+'/'+ $(this).val() + '" data-target="#myModal" data-toggle="modal" class="btn btn-info">Import z pliku</a>'
+          
+          );
+    });
+});
+</script>

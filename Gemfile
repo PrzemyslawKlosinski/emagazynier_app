@@ -19,6 +19,8 @@ gem 'prawn'
 gem 'jquery-ui-rails'
 # upload files
 gem 'carrierwave'
+# obsluga xls
+gem "spreadsheet"
 
 group :development do
  gem 'annotate',		'2.5.0'

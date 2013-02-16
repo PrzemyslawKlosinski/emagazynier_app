@@ -6,6 +6,8 @@
 
 <% if @document.is_outcome %>
 
+
+
 <div class="nested-fields">
 
     <div class="row-fluid">
@@ -38,31 +40,34 @@
     </div>
     
 </div>
+</div>
 
 <% else %>
 
 <div class="nested-fields">
+
 
     <div class="row-fluid">
     <div class="span2 offset1"><%= f.association :product, :label => 'Produkt' , :collection => @current_user.products, :prompt => 'Wybierz produkt', :input_html => {:onchange => "setPurchase(this)", :maxlength =>10,:style=> 'width: 140px' } %></div>
     
 
     <div class="span2">
-      <%= f.input :amount, :label => 'Ilość' , :input_html => {:onchange => "setUnsold(this)", :maxlength =>10,:style=> 'width: 130px' } %>
+      <%= f.input :amount, :label => 'Ilość' , :input_html => {:onchange => "setUnsold(this)", :maxlength =>10,:style=> 'width: 130px'} %>
       </div>
     <%= f.hidden_field :unsold  %>
 
     <div class="span2">
-      <%= f.input :netto_price, :label => 'Cena jedn. netto', :input_html => {:onchange => "onNettoChange(this)", title:"podaj cenę netto w PLN (separator . )", :maxlength =>10 ,:style=> 'width: 130px' }  %>
+      <%= f.input :netto_price, :label => 'Cena jedn. netto', :input_html => {:onchange => "onNettoChange(this)", title:"podaj cenę netto w PLN (separator . )", :maxlength =>10 ,:style=> 'width: 130px', :value => (number_with_precision(f.object.netto_price, :precision => 2) || 0) }  %>
     </div>
     <div class="span2">
-      <%= f.input :brutto_price, :label => 'Cena jedn. brutto', :input_html => {:onchange => "onBruttoChange(this)", title:"podaj cenę brutto w PLN (separator . )", :maxlength =>10,:style=> 'width: 130px' } %>
+      <%= f.input :brutto_price, :label => 'Cena jedn. brutto', :input_html => {:onchange => "onBruttoChange(this)", title:"podaj cenę brutto w PLN (separator . )", :maxlength =>10,:style=> 'width: 130px', :value => (number_with_precision(f.object.brutto_price, :precision => 2) || 0) } %>
     </div>
 
  
     <div class="span2"><br/><%= link_to_remove_association "Usuń", f, confirm: 'Czy napewno usunąć artykuł?', class:"btn"  %>
     </div>
     
+</div>
 </div>
 
 <% end %>  

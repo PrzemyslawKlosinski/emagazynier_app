@@ -13,14 +13,10 @@
 
 //= require jquery
 //= require jquery_ujs
-
 //= require jquery.ui.all
 
 // This will allow all of Cocoon’s jQuery magic to do its thing.
 //= require cocoon
-
-// for DataPicker
-//= require bootstrap-datepicker
 
 //= require_tree .
 

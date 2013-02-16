@@ -155,6 +155,7 @@ GEM
       activesupport (>= 3.0)
       railties (>= 3.0)
       rspec (~> 2.9.0)
+    ruby-ole (1.2.11.6)
     ruby-rc4 (0.1.5)
     rubyzip (0.9.9)
     sass (3.2.5)
@@ -170,6 +171,8 @@ GEM
     simple_form (2.0.4)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
+    spreadsheet (0.7.9)
+      ruby-ole (>= 1.0)
     sprockets (2.1.3)
       hike (~> 1.2)
       rack (~> 1.0)
@@ -215,6 +218,7 @@ DEPENDENCIES
   rspec-rails (= 2.9.0)
   sass-rails (= 3.2.4)
   simple_form
+  spreadsheet
   sqlite3 (= 1.3.5)
   uglifier (= 1.2.3)
   will_paginate (= 3.0.4)
