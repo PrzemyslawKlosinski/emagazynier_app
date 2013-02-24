@@ -19,7 +19,7 @@
     </div>
 
 
-    <div class="span2"><%= f.association :product, :label => false , :collection => @current_user.products.where("quantity > ? and isEvent = ?", 0, false), :include_blank => "Wybierz produkt", :input_html => {:onchange => "setSales(this)", :maxlength =>10, :style=> 'width: 100px' } %></div>
+    <div class="span2"><%= f.association :product, :label => false , :collection => @current_user.products.where("quantity > ? and \"isEvent\" = ?", 0, false), :include_blank => "Wybierz produkt", :input_html => {:onchange => "setSales(this)", :maxlength =>10, :style=> 'width: 100px' } %></div>
     
 
     <div class="span1">
@@ -64,7 +64,7 @@
 
 
 
-    <div class="span2"><%= f.association :product, :label => false , :collection => @current_user.products.where("isEvent = ?", false), :include_blank => false, :include_blank => "Wybierz produkt", :input_html => {:onchange => "setPurchase(this)", :maxlength =>10,:style=> 'width: 100px' } %></div>
+    <div class="span2"><%= f.association :product, :label => false , :collection => @current_user.products.where("\"isEvent\" = ?", false), :include_blank => false, :include_blank => "Wybierz produkt", :input_html => {:onchange => "setPurchase(this)", :maxlength =>10,:style=> 'width: 100px' } %></div>
     
 
     <div class="span1">
