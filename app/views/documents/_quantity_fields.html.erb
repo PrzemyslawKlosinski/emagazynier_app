@@ -8,35 +8,43 @@
 
 
 
+
 <div class="nested-fields">
 
+
     <div class="row-fluid">
-    <div class="span2"><%= f.association :product, :label => 'Produkt' , :collection => @current_user.products.where("quantity > ?", 0), :prompt => 'Wybierz produkt', :input_html => {:onchange => "setSales(this)", :maxlength =>10, :style=> 'width: 140px' } %></div>
+
+    <div class="span2">     
+   <%= select_tag "category", options_from_collection_for_select(current_user.categories, "id", "name"), :style=> 'width:100px', :prompt => false, :onchange => "setCategory(this)" %>
+    </div>
+
+
+    <div class="span2"><%= f.association :product, :label => false , :collection => @current_user.products.where("quantity > ? and isEvent = ?", 0, false), :include_blank => "Wybierz produkt", :input_html => {:onchange => "setSales(this)", :maxlength =>10, :style=> 'width: 100px' } %></div>
     
 
-    <div class="span2">
+    <div class="span1">
       <!-- nie ustawiamy setUnsold(this), unsold ustawiamy na 0 co oznacza ze outcome -->
-      <%= f.input :amount, :label => 'Ilość' , :input_html => {:maxlength =>10,:style=> 'width: 130px' } %>
+      <%= f.input :amount, :label =>  false , :input_html => {:maxlength =>10,:style=> 'width: 60px', readOnly: 'true' } %>
       </div>
     <%= f.hidden_field :unsold, :value => -1 %>
     <%= f.hidden_field :netto_sales_price, :value => 0 %>
     <%= f.hidden_field :brutto_sales_price, :value => 0 %>
 
     <div class="span2">
-      <%= f.input :netto_price, :label => 'Cena jedn. netto', :input_html => {:onchange => "onSalesNettoChange(this)", title:"podaj cenę netto w PLN (separator . )", :maxlength =>10 ,:style=> 'width: 130px' }  %>
+      <%= f.input :netto_price, :label => false, :input_html => {:onchange => "onSalesNettoChange(this)", title:"podaj cenę netto w PLN (separator . )", :maxlength =>10 ,:style=> 'width: 80px', readOnly: 'true' }  %>
     </div>
     <div class="span2">
-      <%= f.input :brutto_price, :label => 'Cena jedn. brutto', :input_html => {:onchange => "onSalesBruttoChange(this)", title:"podaj cenę brutto w PLN (separator . )", :maxlength =>10,:style=> 'width: 130px' } %>
+      <%= f.input :brutto_price, :label => false, :input_html => {:onchange => "onSalesBruttoChange(this)", title:"podaj cenę brutto w PLN (separator . )", :maxlength =>10,:style=> 'width: 80px', readOnly: 'true' } %>
     </div>
 
     
     <!-- :readonly => true  -->
         <div class="span2">
-      <%= f.input :discount, :label => 'Marża/Upust', :input_html => {:onchange => "onDiscountChange(this)", title:"aby ustawić domyślna cenę sprzedaży ponownie wybierz produkt z listy", :maxlength =>10,:style=> 'width: 130px' } %>
+      <%= f.input :discount, :label => false, :input_html => {:onchange => "onOutcomeDiscountChange(this)", title:"aby ustawić domyślna cenę sprzedaży ponownie wybierz produkt z listy", :maxlength =>10,:style=> 'width: 60px', readOnly: 'true' } %>
       <!-- :collection=> (-100..100).to_a.map{|x| [x,"#{x}"]}, :label => false, -->
       </div>  
   
-    <div class="span2"><br/><%= link_to_remove_association "Usuń", f, confirm: 'Czy napewno usunąć artykuł?', class:"btn"  %>
+    <div class="span1"><%= link_to_remove_association "Usuń", f, confirm: 'Czy napewno usunąć artykuł?', class:"btn"  %>
     </div>
     
 </div>
@@ -48,23 +56,37 @@
 
 
     <div class="row-fluid">
-    <div class="span2 offset1"><%= f.association :product, :label => 'Produkt' , :collection => @current_user.products, :prompt => 'Wybierz produkt', :input_html => {:onchange => "setPurchase(this)", :maxlength =>10,:style=> 'width: 140px' } %></div>
+
+
+    <div class="span2">     
+   <%= select_tag "category", options_from_collection_for_select(current_user.categories, "id", "name"), :style=> 'width:100px', :prompt => false, :onchange => "setCategory(this)" %>
+    </div>
+
+
+
+    <div class="span2"><%= f.association :product, :label => false , :collection => @current_user.products.where("isEvent = ?", false), :include_blank => false, :include_blank => "Wybierz produkt", :input_html => {:onchange => "setPurchase(this)", :maxlength =>10,:style=> 'width: 100px' } %></div>
     
 
-    <div class="span2">
-      <%= f.input :amount, :label => 'Ilość' , :input_html => {:onchange => "setUnsold(this)", :maxlength =>10,:style=> 'width: 130px'} %>
+    <div class="span1">
+      <%= f.input :amount, :label => false , :input_html => {:onchange => "setUnsold(this)", :maxlength =>10,:style=> 'width: 60px', readOnly: 'true' } %>
       </div>
     <%= f.hidden_field :unsold  %>
+    <%= f.hidden_field :netto_sales_price, :value => 0 %>
 
     <div class="span2">
-      <%= f.input :netto_price, :label => 'Cena jedn. netto', :input_html => {:onchange => "onNettoChange(this)", title:"podaj cenę netto w PLN (separator . )", :maxlength =>10 ,:style=> 'width: 130px', :value => (number_with_precision(f.object.netto_price, :precision => 2) || 0) }  %>
+      <%= f.input :netto_price, :label => false, :input_html => {:onchange => "onNettoChange(this)", title:"podaj cenę netto w PLN (separator . )", :maxlength =>10 ,:style=> 'width: 80px', :value => (number_with_precision(f.object.netto_price, :precision => 2) || 0), readOnly: 'true' }  %>
     </div>
     <div class="span2">
-      <%= f.input :brutto_price, :label => 'Cena jedn. brutto', :input_html => {:onchange => "onBruttoChange(this)", title:"podaj cenę brutto w PLN (separator . )", :maxlength =>10,:style=> 'width: 130px', :value => (number_with_precision(f.object.brutto_price, :precision => 2) || 0) } %>
+      <%= f.input :brutto_price, :label => false, :input_html => {:onchange => "onBruttoChange(this)", title:"podaj cenę brutto w PLN (separator . )", :maxlength =>10,:style=> 'width: 80px', :value => (number_with_precision(f.object.brutto_price, :precision => 2) || 0), readOnly: 'true' } %>
     </div>
+
+    <div class="span1">
+      <%= f.input :discount, :label => false, :input_html => {:onchange => "onIncomeDiscountChange(this)", title:"aby ustawić domyślna cenę sprzedaży ponownie wybierz produkt z listy", :maxlength =>10,:style=> 'width: 60px', readOnly: 'true' } %>
+      <!-- :collection=> (-100..100).to_a.map{|x| [x,"#{x}"]}, :label => false, -->
+      </div>  
 
  
-    <div class="span2"><br/><%= link_to_remove_association "Usuń", f, confirm: 'Czy napewno usunąć artykuł?', class:"btn"  %>
+    <div class="span2"><%= link_to_remove_association "Usuń", f, confirm: 'Czy napewno usunąć artykuł?', class:"btn"  %>
     </div>
     
 </div>

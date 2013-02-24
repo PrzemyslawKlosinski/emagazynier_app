@@ -134,40 +134,101 @@ before_filter :signed_in_user
     #jesli plik udalo sie pobrac, wczutaj z niego dane
     if file.store!(test_file)
 
-    #utworzyc quantities
+
+
+    #jesli aso vw
+  if params[:type] == 'aso vw'
+     name_col = 5
+     netto_col = 8
+     amount_col = 6
+  end
+    
+    #jesli intercars
+  if params[:type] == 'intercars'
+     name_col = 3
+     netto_col = 5
+     amount_col = 4
+   end
+
+
+
+       #utworzyc quantities
+    # Spreadsheet.client_encoding = 'UTF-16LE'
     xls_document = Spreadsheet.open "#{file.store_path}"
     sheet1 = xls_document.worksheet 0
     # @quantities = []
     @errors = Hash.new
     @counter = 0
-    
+
     sheet1.each 1 do |row|
       @counter+=1
-      
+
+
+
+          #dodajemy do nazwy nr_artykulu
+          if params[:type] == 'aso vw'
+            # art_name = "#{row[name_col]} #{row[4]}"
+            art_name = row[name_col]
+
+          else
+             #zmiana codowania na utf-8
+             name_in_windows_1252 = row[name_col]  
+             name_in_utf_8 = name_in_windows_1252.encode('UTF-8')
+             # art_name = "#{name_in_utf_8} #{row[1]}"
+             art_name = name_in_utf_8
+          end      
+          art_name = art_name.upcase
+
       #wyszukanie / utworzenie produktu
-      @product = Product.find_by_name(row[3])
+      @product = Product.find_by_name(art_name)
       if @product.nil?
         # nettoPurchasePriceVat = row[5] * 1.23 #poprawiec, aby nie wyliczal na stale
-        productPrice = ProductPrice.create(nettoPurchasePrice: row[5])
-        # productPrice.save!
 
-        @product = current_user.products.create(name: row[3], productPrice_id: productPrice.id)
+
+        #uwaga - vw podaje zniżkę i brutto, obliczymy netto po zniżce
+          if params[:type] == 'aso vw'
+              znika_vat = ((23 + row[9]) / 100) + 1
+              bez_brutto_col = row[netto_col] / znika_vat
+              productPrice = ProductPrice.create(nettoPurchasePrice: bez_brutto_col)
+          else
+             productPrice = ProductPrice.create(nettoPurchasePrice: row[netto_col])
+            # productPrice.save!
+          end
+
+          if params[:type] == 'aso vw'
+            @product = current_user.products.create(name: art_name, intended: row[4], productPrice_id: productPrice.id)          
+          else
+            @product = current_user.products.create(name: art_name, intended: row[1], productPrice_id: productPrice.id)
+          end
+
+        
         # @product.save!
       end
-          
-
+         
       q = @document.quantities.build
       q.product_id = @product.id
-      vat = row[5] * ((@product.defaultVat / 100) + 1)
+
+      #uwaga aso vw podaje brutto i podaje upust
+      if params[:type] == 'aso vw'
+        bez_brutto_col = row[netto_col] / 1.23
+        q.netto_price = bez_brutto_col
+        q.discount = row[9] * -1
+      else
+        q.netto_price = row[netto_col].to_f
+      end
+
+      vat = q.netto_price * ((@product.defaultVat / 100) + 1)
       q.brutto_price = vat
+
+
       # q.first_name = row[0]
       # q.last_name = row[1]
       # q.age = row[2]
-      q.amount = row[4]
-      q.unsold = row[4]
+      q.amount = row[amount_col]
+      q.unsold = row[amount_col]
       
-      q.netto_price = row[5].to_f
-      
+
+     
       # q.brutto_price =  vat.to_f
       # logger.info "brutto #{q.brutto_price} netto #{q.netto_price}"
       
@@ -180,6 +241,7 @@ before_filter :signed_in_user
         # @errors["#{@counter+1}"] = q.errors
       # end
     end
+
 
     #usuwamy plik
     file.remove!
@@ -610,6 +672,7 @@ end
 
     # @start_date = DateTime.now.strftime('%Y-%m-%d')
     # @end_date = DateTime.now.strftime('%Y-%m-%d')
+
     @start_date = Date::strptime(params[:start_date], "%Y-%m-%d")
     @end_date = Date::strptime(params[:end_date], "%Y-%m-%d")
 

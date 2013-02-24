@@ -1,0 +1,19 @@
+
+<% @worker.products.each do |product| %>
+
+  <tr>
+
+  	 <td><%= @licznik=@licznik+1 %> </td>
+    <td><%= link_to product.name, product %> </td>
+ 	   <td><%= product.description %></td>
+    <td>
+    <% if signed_in? %>
+      
+      <%= link_to '', del_product_to_worker_path(id: @worker.id, product_id: product.id), class:"icon-trash", method: :delete, data: { confirm: 'Czy napewno usunąć usługę?' } %>
+      
+    <% end %>
+    </td>
+  </tr>
+
+  <% end %>
+

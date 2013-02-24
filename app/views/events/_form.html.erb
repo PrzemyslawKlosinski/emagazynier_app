@@ -1,0 +1,221 @@
+<%= simple_form_for(@event) do |f| %>
+  
+  <%= f.error_notification %>
+
+
+
+<!-- 
+#  end_at      :datetime
+#  all_day     :boolean          default(FALSE)
+#  description :text
+ -->
+
+<%= f.hidden_field :product_id, :value => @product.id %>
+<%= f.hidden_field :name, :value => @product.name %>
+
+
+  <div class="form-inputs">
+
+<legend>Sklep: <%= @product.user.name %></legend>
+
+<div class="row">
+	<div class="span5 offset1">
+		<strong>Nazwa towaru / usługi<br/></strong>
+		<!-- 
+		< text_field_tag :product_name  to w html input value: @product.name, readonly: true  %><br/> 
+		-->
+		<%= @product.name %><br/><br/>
+  		<strong>Cena<br/></strong>
+		<!-- 
+		< f.text_field :product_price, value: @product.productPrice.bruttoSalesPrice, readonly: true  
+		%> 
+		-->
+		<%= @product.productPrice.bruttoSalesPrice %>
+    </div>
+  	<div class="span5">
+  		<strong>Opis</br></strong>
+  		<!-- 
+  		< f.text_area :product_description, :cols => 200, :rows => 3, value: @product.description, readonly: true %> 
+  		-->
+  		<%= @product.description %>
+    </div>
+</div>
+
+      <!-- Zdjęcie: <%= @product.picture %><br /> -->
+      <!-- <strong>Kategoria:</strong> <%= @product.category %><br /> -->
+
+
+
+<legend>Zamówienie</legend>
+  <div class="row">
+    <div class="span5 offset1">
+      Imię Nazwisko / Nazwa firmy<br/>
+    	<%= f.input :customer, :label => false %>
+    </div>
+    <div class="span5">
+      Adres email<br/>
+    	<%= f.input :email, :label => false %>
+    </div>
+  </div>
+
+  <div class="row">
+
+
+
+  	<% if @product.isEvent %>
+        
+	<div class="span5 offset1">
+    Pracownik<br/>
+		<%= f.association :worker, :label => false, :collection => @product.workers.where("user_id = ?", current_user), :prompt => false %>
+    </div> 
+
+	<!-- wynik ponizszego, name="event[realization]" value="#{@product.realization}" -->
+    <!-- < f.hidden_field :realization, :value => @product.realization %> -->
+    <!-- wynik ponizszego, name="product[realization]" value="#{@product.realization}" -->
+    <%= hidden_field(:product, :realization) %>
+
+
+    <div class="span5">
+    	<!-- <= f.input :start_at, :label => 'Data realizacji' %> -->
+		Data realizacji<br/>
+		<!-- <input type="text" id="datepicker3" name="event[start_at]" /> -->
+    
+    <% if !@start_at.nil? %>
+    <%= f.input :start_at, :label => false, as: :string, input_html: { id: 'datepicker3', value: @start_at.strftime("%Y-%m-%d %H:%M") } %>
+    <% else %>
+    <%= f.input :start_at, :label => false, as: :string, input_html: { id: 'datepicker3' } %>
+    <% end %>
+
+		<script type="text/javascript">
+			$( "#datepicker3" ).datetimepicker({
+    beforeShowDay: $.datepicker.noWeekends,
+
+    timeFormat: 'HH:mm',
+    dateFormat: 'yy-mm-dd',
+
+    showMinute: false,
+    
+    minDate: +1,
+    hourMin: 8,
+    hourMax: 18,
+    hourGrid: 1,
+    // minuteGrid: 30,
+
+    stepHour: 1,
+    // stepMinute: 60,
+
+    firstDay: 1,
+    closeText: 'Wybierz',
+    currentText: "Teraz",
+    timeOnlyTitle: 'Czas',
+    timeText: 'Czas',
+    hourText: 'Godzina',
+    minuteText: 'Minuta',
+    secondText: 'Sekunda',
+
+});
+
+jQuery(function($) {
+  $.datepicker.regional['pl'] = {
+    closeText: 'Zamknij',
+    prevText: '&#x3c;Poprzedni',
+    nextText: 'Następny&#x3e;',
+    currentText: 'Dziś',
+    monthNames: ['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec',
+    'Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'],
+    monthNamesShort: ['Sty','Lu','Mar','Kw','Maj','Cze',
+    'Lip','Sie','Wrz','Pa','Lis','Gru'],
+    dayNames: ['Niedziela','Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota'],
+    dayNamesShort: ['Nie','Pn','Wt','Åšr','Czw','Pt','So'],
+    dayNamesMin: ['N','Pn','Wt','Śr','Cz','Pt','So'],
+    weekHeader: 'Tydz',
+
+    timeFormat: 'HH:mm',
+    dateFormat: 'yy-mm-dd',
+
+    firstDay: 1,
+    isRTL: false,
+    showMonthAfterYear: false,
+    yearSuffix: ''};
+
+
+  $.datepicker.setDefaults($.datepicker.regional['pl']);
+
+});
+
+$('#datepicker3').datepicker({
+    onSelect: function() {
+        this.focus();
+    }
+});
+
+		</script>
+    </div>
+
+<% else %>
+
+    <div class="span5 offset1">
+    	<%= f.input :amount, :label => 'Ilość', value: @amount %>
+    </div>
+
+    <div class="span5">
+    </div>
+
+<% end %>
+
+
+
+
+  </div>
+
+ 
+  <div class="row">
+  <div class="span5 offset1">
+      Treść<br/>
+    	<%= f.input :description, :as => :text, :label => false, :input_html => { :cols => 200, :rows => 3, title: @product.warningNote }, value: @description %>
+    </div>
+
+
+<script type="text/javascript">
+  $('#event_description').tooltip(options)
+</script>
+
+
+  <div class="span5">
+    <% if !@start_at_prop.nil? %>
+    <strong>najbliższy wolny termin: </strong><br/>
+    <% if @prop_date.nil? %>
+    - przykro nam pracownik <%= @event.worker.name %>,<br/> w wybranym dniu nie ma wolnego terminu
+    <% else %>
+    <%= @prop_date %><br/>
+    <% end %>
+    <!-- < @end_at_prop %> -->
+    <% end %>
+  </div>
+
+</div>
+
+
+<div class="row-fluid">
+
+  <div class="span3 offset2">
+      <%= link_to 'Powrót', firmshop_path(name: @product.user_id), class:"btn" %>
+    </div>
+
+    <div class="span3 offset1">
+     <div class="pull-right">
+            <%= f.submit 'Zapisz', class:"btn btn-info" %>
+     </div>      
+    </div>
+
+</div>
+
+  
+
+
+  </div>
+
+
+
+<% end %>
+

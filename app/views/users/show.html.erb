@@ -5,12 +5,12 @@
 	<section>
 		<h1>
 			<%= gravatar_for @user %>
-			<h1>Witaj w sklepie firmy <%= @user.name %></h1>
+			<h1>Witaj w magazynie firmy <%= @user.name %></h1>
 			
 			<% if @user.products.any? %>
-				<h4>posiadamy artykułów <%= @user.products.count %>, zapraszamy do zakupów</h4>
+				<h4>posiadasz artykułów <%= @user.products.count %></h4>
 			<% else %>
-				<h4>nie posiadamy jeszcze artykułów, zapraszamy wkrótce</h4>
+				<h4>nie posiadasz jeszcze artykułów</h4>
 			<% end %>
 			
 		</h1>

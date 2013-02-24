@@ -1,5 +1,13 @@
 EmagazynierApp::Application.routes.draw do
 
+  match '/calendar(/:year(/:month))/(:id)' => 'calendar#index', :as => :calendar, :constraints => {:year => /\d{4}/, :month => /\d{1,2}/}
+
+  resources :events
+
+  match 'workers/(:id)/(:product_id)', to: 'workers#add_product', :as => :add_product_to_worker, :via => :post
+  match 'workers/(:id)/(:product_id)', to: 'workers#del_product', :as => :del_product_to_worker, :via => :delete
+  resources :workers
+
   resources :product_prices
 
 
@@ -14,7 +22,8 @@ EmagazynierApp::Application.routes.draw do
   match 'sklepy', to: 'shops#index'
   match 'sklepy/(:name)', to: 'shops#firmemail'
   match 'sklepy/firma/(:name)', to: 'shops#firm', :as => :firmshop
-  match 'sklepy/produkt/(:name)' => 'shops#new_order', :via => :get, :as => :buyproduct
+  # match 'sklepy/produkt/(:name)' => 'shops#new_order', :via => :get, :as => :buyproduct
+  match 'sklepy/produkt/(:name)' => 'events#new', :via => :get, :as => :buyproduct
   match 'sklepy/produkt/(:name)' => 'shops#create_order', :via => :post
 
   #raporty

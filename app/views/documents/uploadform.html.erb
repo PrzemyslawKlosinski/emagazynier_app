@@ -8,17 +8,18 @@
 
 
    	  <div class="row-fluid">
-      <div class="span6 offset3">
-		<%= file_field_tag 'excel_file' %>
+      <div class="span9 offset1">
+      	<span>
+      	<%= select_tag "type", "<option>intercars</option><option>aso vw</option>".html_safe, :style => "width:170px" %>
+		<%= file_field_tag 'excel_file', :size => 17 %>
+		</span>
+	</div>
+	</div>
 		<%= hidden_field_tag 'is_income', @is_income %>
 		<%= hidden_field_tag 'is_outcome', @is_outcome %>
 		<%= hidden_field_tag 'is_correct', @is_correct %>
 		<%= hidden_field_tag 'is_local', @is_local %>
 		<%= hidden_field_tag 'firm_id', @firm_id %>
-
-	</div>
-	</div>
-	
 
 <br/>
 

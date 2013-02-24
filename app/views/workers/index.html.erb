@@ -1,10 +1,10 @@
-<% provide(:title, 'Ustawienia jednostek:' + @current_user.name) %>
+<% provide(:title, 'Ustawienia pracowników:' + current_user.name) %>
 <br />
 
   <div class="row-fluid">
       <div class="span6 offset3">
 
-      <h1>Ustawienia jednostek</h1>
+      <h1>Ustawienia pracowników</h1>
       <hr />
 
         <div class="well sidebar-nav">
@@ -25,29 +25,27 @@
 
         <thead>
           <tr>
-            <th>Nazwa</th>
-            <th>Nazwa krótka</th>
+            <th>Imię Nazwisko</th>
+            <th>Telefon</th>
             <th></th>
           </tr>
         </thead>
 
         <tbody>
-          <% @units.each do |unit| %>
+          <% @workers.each do |worker| %>
           <tr>
             <td>
-               <!-- < link_to unit.name, :controller => "units", :action => "show", :id => unit %>  -->
-               <%= unit.name %>
-              <!-- <%= link_to unit %> -->
+              <!-- < link_to worker.name, :controller => "workers", :action => "show", :id => worker %>  -->
+              <%= worker.name %>
             </td> 
             <td>
-            <%= unit.shortName %>
+            <%= worker.phone %>
             </td> 
             <td>
               <span class="pull-right">
-                <% if !unit.isDefault %>
-                <%= link_to 'Edytuj', edit_unit_path(unit) %> | 
-                <%= link_to 'Usuń', unit, confirm: 'Czy napewno usunąć jednostkę?', method: :delete %>
-                <% end %>
+                <%= link_to 'Edytuj', edit_worker_path(worker) %> | 
+                <%= link_to 'Usługi', worker %> | 
+                <%= link_to 'Usuń', worker, confirm: 'Czy napewno usunąć pracownika?', method: :delete %>
               </span>
             </td>
           </tr>

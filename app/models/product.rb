@@ -35,6 +35,8 @@
 #  discount                :integer          default(0)
 #  prefix                  :string(255)
 #  number                  :integer
+#  realization             :integer          default(0)
+#  isEvent                 :boolean          default(FALSE)
 #
 
 # !!! UWAGA DAJEMY attr_accessible: category_id
@@ -48,6 +50,10 @@ class Product < ActiveRecord::Base
   #for documents
   has_many :quantities
   has_many :documents, through: :quantities
+
+  #for events
+  has_and_belongs_to_many :workers
+  has_many :events
 
   # validates :user_id, presence: true
   validates :name, presence: true, length: { maximum: 40 }
@@ -88,5 +94,5 @@ class Product < ActiveRecord::Base
       end
   end
 
-  attr_accessible :category_id, :unit_id, :actualPriceOnPurchase, :blocked, :color, :defaultDecrease, :defaultIncrease, :defaultVat, :description, :descriptions, :intended, :isWarningShow, :location, :manufacturer, :name, :nameOryginal, :picture, :quantity, :quantityMaximum, :quantityMinimum, :reservedQuantity, :shape, :size, :summaryQuantityPurchase, :summaryQuantitySales, :warningNote, :is_public, :productPrice, :discount, :number, :prefix, :productPrice_id
+  attr_accessible :category_id, :unit_id, :actualPriceOnPurchase, :blocked, :color, :defaultDecrease, :defaultIncrease, :defaultVat, :description, :descriptions, :intended, :isWarningShow, :location, :manufacturer, :name, :nameOryginal, :picture, :quantity, :quantityMaximum, :quantityMinimum, :reservedQuantity, :shape, :size, :summaryQuantityPurchase, :summaryQuantitySales, :warningNote, :is_public, :productPrice, :discount, :number, :prefix, :productPrice_id, :realization, :isEvent
 end

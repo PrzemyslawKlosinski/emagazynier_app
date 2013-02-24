@@ -1,0 +1,65 @@
+<% provide(:title, 'Lista zleceń: ' + current_user.name) %>
+<br />
+
+  <div class="row-fluid">
+        <div class="span10 offset1">
+
+      <h1>Lista zleceń</h1>
+      <hr />
+
+
+
+              <% if @events.any? %>
+      <table class="table table-striped">
+
+                    <thead>
+                        <tr>
+                            <th class="span1">Pozycja</th>
+                            <th class="span2">Data rozpoczęcia</th>
+                            <th class="span2">Data zakończenia</th>
+                            <th class="span1">Pracownik</th>
+                            <th class="span1">Zamawiający</th>
+                            <th class="span1">Email</th>
+                            <th class="span2">Nazwa usługi</th>
+                            <th class="span3">Opis</th>
+                        </tr>
+                    </thead>
+
+                        <tbody>
+                        <% if params[:page].nil? %>
+                            <% @licznik = 0 %>
+                        <% else %>
+                            <% @licznik = (params[:page].to_i * 30) - 30 %>
+                        <% end %>
+
+
+<% @events.each do |event| %>
+  <tr>
+    <td><%= @licznik=@licznik+1 %></td>
+    <td><%= event.start_at %></td>
+    <td><%=event.end_at%></td>
+    <td><%=event.worker.name%></td>
+    <td><%=event.customer%></td>
+    <td><%=event.email%></td>
+    <td><%= link_to event.name, event %></td>
+    <td><%=event.description%></td>
+    <td>
+
+    <% if signed_in? %>
+
+      <%= link_to '', edit_event_path(event), class:"icon-edit"  %>
+      <%= link_to '', event, class:"icon-trash", method: :delete, data: { confirm: 'Czy napewno usunąć zlecenie?' } %>
+      
+    <% end %>
+  <td/>
+
+  </tr>
+<% end %>
+
+                    </tbody>
+        </table>
+
+<% end %>
+
+</div>
+</div>

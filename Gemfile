@@ -21,6 +21,10 @@ gem 'jquery-ui-rails'
 gem 'carrierwave'
 # obsluga xls
 gem "spreadsheet"
+# event calendar
+gem 'event-calendar', :require => 'event_calendar'
+
+
 
 group :development do
  gem 'annotate',		'2.5.0'

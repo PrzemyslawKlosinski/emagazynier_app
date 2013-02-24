@@ -14,9 +14,9 @@
 
 
 <div class="row-fluid">
-    <div class="span3">Nazwa artykułu</div>
+    <div class="span3">Nazwa artykułu / usługi</div>
     <div class="span3"><%= @product.name %></div>
-    <div class="span3">Kategoria artykułu</div>
+    <div class="span3">Kategoria artykułu / usługi</div>
     <div class="span3">
     <% if !@product.category.nil? %>
     <%= @product.category.name %>
@@ -39,13 +39,13 @@
     <div class="span3"><strong>Producent</strong></div>
     <div class="span3"><strong>Kolor</strong></div>
     <div class="span3"><strong>Przeznaczenie</strong></div>
-    <div class="span3"><strong>Położenie</strong></div>
+    <div class="span3"><strong>Czas realizacji</strong></div>
 </div>
 <div class="row-fluid">
     <div class="span3"><%= @product.manufacturer %></div>
     <div class="span3"><%= @product.color %></div>
     <div class="span3"><%= @product.intended %></div>
-    <div class="span3"><%= @product.location %></div>
+    <div class="span3"><%= @product.realization %></div>
 </div>
 
 
@@ -54,15 +54,24 @@
   <div class="span3">
     Rozmiar<br/><%= @product.size %>
     Kształt<br/><%= @product.shape %>
+    Położenie<br/><%= @product.location %>
   </div>
   <div class="span3"> <!-- :rows=>5, :cols=>4 -->
     Opis <br /><%= @product.description %></div>
     <div class="span3">
-    Ostrzeżenie<br /><%= @product.warningNote %>
+    Treść ostrzeżenia<br /><%= @product.warningNote %>
   </div>
-      <div class="span3">
-        Czy wyświetlać ostrzeżenia? <br /><%= @product.isWarningShow %>
+
+        <div class="span3">
+        usługa z kalendarzem <br /><%= @product.isEvent %>
       </div>
+      <div class="span3">
+        ostrzeżenia o niskim stanie <br /><%= @product.isWarningShow %>
+      </div>
+      <div class="span3">
+        artykuł w sklepie internetowym <br /><%= @product.is_public %>
+      </div>
+
 </div>
 
 </div>

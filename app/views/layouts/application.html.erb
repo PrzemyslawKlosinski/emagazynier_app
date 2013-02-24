@@ -7,7 +7,6 @@
   <title><%= caly_tytul(yield(:title)) %></title>
   <%= stylesheet_link_tag    "application", media: "all" %>
   <%= javascript_include_tag "application" %>
-
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <%= csrf_meta_tags %>
 
@@ -24,7 +23,7 @@
 			<!-- Be sure to leave the brand out there if you want it shown -->
 			<!-- id: "logo", - not use -->
 			<% if signed_in? %>
-				<%= link_to "eMagazyn", '', id: "logo", class: "brand" %>
+				<%= link_to "eMagazyn", current_user, id: "logo", class: "brand" %>
 			<% else %>
 				<%= link_to "eMagazyn", root_path, id: "logo", class: "brand" %>
 			<% end %>
@@ -38,15 +37,19 @@
             <ul class="nav">
               <li><%= link_to "Dokumenty", documents_path %></li>
               <li><%= link_to "Artykuły", products_path %></li>
+              <li><%= link_to "Zlecenia", events_path %></li>
+              <li><%= link_to "Kalendarze", calendar_path %></li>
+              <li><%= link_to "Raporty", raporty_path %></li>
 				<li id="fat-menu" class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						Słowniki<b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu">
-						<li><%= link_to "Kategorie", categories_path %></li>
-						<li><%= link_to "Jednostki", units_path %></li>
-						<li><%= link_to "Firmy", firms_path %></li>
-						<li><%= link_to "Adresy", locations_path %></li>
+						<li><%= link_to "Pracownicy", workers_path %></li>
+						<li><%= link_to "Kontrahenci", firms_path %></li>
+						<li><%= link_to "Adresy kontrahentów", locations_path %></li>
+						<li><%= link_to "Kategorie artykułów", categories_path %></li>
+						<li><%= link_to "Jednostki artykułów", units_path %></li>
 					</ul>
 				</li>
 
@@ -64,6 +67,12 @@
 
 				 <% if params[:controller] == 'documents' %>
   					<%= form_tag documents_path, :method => 'get' do %>
+    					<%= text_field_tag :search, params[:search], class: "search-query" %>
+					<% end %>
+				<% end %>
+
+				<% if params[:controller] == 'events' %>
+  					<%= form_tag events_path, :method => 'get' do %>
     					<%= text_field_tag :search, params[:search], class: "search-query" %>
 					<% end %>
 				<% end %>
@@ -89,8 +98,7 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li><%= link_to "Ustawienia", edit_user_path(current_user) %></li>
-						<li><%= link_to "Twój sklep", current_user %></li>
-						<li><%= link_to "Raporty", raporty_path %></li>
+						<!-- <li>< link_to "Twój magazyn", current_user %></li> -->
 						<% if current_user.admin %>
 						<li class="divider"></li>
                   		<li class="nav-header">Administrator</li>

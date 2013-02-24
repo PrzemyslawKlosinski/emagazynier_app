@@ -1,6 +1,6 @@
 # encoding: utf-8
 # == Schema Information
-#
+
 # Table name: documents
 #
 #  id                  :integer          not null, primary key

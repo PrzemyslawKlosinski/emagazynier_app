@@ -1,0 +1,43 @@
+<% provide(:title, 'Kalendarz usług') %>
+<br />
+      
+      <div class="row">
+      <div class="span10 offset1">
+
+<h1>&nbsp;&nbsp;&nbsp;&nbsp;Kalendarz usług pracownika </h1>
+<hr />
+
+      
+
+        <div class="well sidebar-nav">
+          <div class="field center">
+        
+
+
+    
+<%= form_tag calendar_path, :method => 'get' do %>
+
+<div class="row">
+	<div class="span4 offset3">
+	<%= select_tag "id", options_from_collection_for_select(current_user.workers, "id", "name", @default_worker), :prompt => "wszyscy pracownicy"  %>
+
+	</div>
+	<div class="span2">
+	<button type="submit" class="btn btn-info">Pokaż</button>
+	</div>
+<% end %>
+
+</div>
+</div>
+</div>
+
+
+
+
+
+
+<%= raw(event_calendar) %>
+
+</div>
+</div>
+

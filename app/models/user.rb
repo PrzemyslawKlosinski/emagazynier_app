@@ -27,11 +27,16 @@ class User < ActiveRecord::Base
   belongs_to :location
 
   #usunie jego produkty gdy usuniemy uzytkownika
-  has_many :products, dependent: :destroy
   has_many :categories, dependent: :destroy
   has_many :units, dependent: :destroy
   has_many :firms, dependent: :destroy
   has_many :documents, dependent: :destroy
+
+  #for events
+  has_many :products, dependent: :destroy
+  has_many :events, :through => :products
+  
+  has_many :workers, dependent: :destroy
 
   has_many :locations, :through => :firms
 

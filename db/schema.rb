@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130210041731) do
+ActiveRecord::Schema.define(:version => 20130217054531) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -52,6 +52,21 @@ ActiveRecord::Schema.define(:version => 20130210041731) do
   add_index "documents", ["firm_id"], :name => "index_documents_on_firm_id"
   add_index "documents", ["last_correct_id"], :name => "index_documents_on_last_correct_id"
   add_index "documents", ["user_id"], :name => "index_documents_on_user_id"
+
+  create_table "events", :force => true do |t|
+    t.string   "name"
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.boolean  "all_day",     :default => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.integer  "worker_id"
+    t.integer  "product_id"
+    t.string   "customer"
+    t.string   "email"
+    t.text     "description"
+    t.decimal  "amount",      :default => 0.0
+  end
 
   create_table "firms", :force => true do |t|
     t.string   "name"
@@ -121,6 +136,8 @@ ActiveRecord::Schema.define(:version => 20130210041731) do
     t.integer  "discount",                :default => 0
     t.string   "prefix"
     t.integer  "number"
+    t.integer  "realization",             :default => 0
+    t.boolean  "isEvent",                 :default => false
   end
 
   add_index "products", ["category_id"], :name => "index_products_on_category_id"
@@ -190,5 +207,23 @@ ActiveRecord::Schema.define(:version => 20130210041731) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["location_id"], :name => "index_users_on_location_id"
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
+
+  create_table "workers", :force => true do |t|
+    t.string   "name"
+    t.string   "phone"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "workers", ["user_id"], :name => "index_workers_on_user_id"
+
+  create_table "workers_products", :id => false, :force => true do |t|
+    t.integer "worker_id"
+    t.integer "product_id"
+  end
+
+  add_index "workers_products", ["product_id", "worker_id"], :name => "index_workers_products_on_product_id_and_worker_id"
+  add_index "workers_products", ["worker_id", "product_id"], :name => "index_workers_products_on_worker_id_and_product_id"
 
 end

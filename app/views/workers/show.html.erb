@@ -1,0 +1,102 @@
+<% provide(:title, 'Ustawienia usług pracownika: ' + @worker.name) %>
+<br />
+
+	<p id="notice"><%= notice %></p>
+
+  <div class="row-fluid">
+      <div class="span6 offset3">
+
+      <h1>Ustawienia usług pracownika</h1>
+      <hr />
+
+        <div class="well sidebar-nav">
+          <div class="field center">
+
+
+  <div class="row">
+    <div class="span5 offset1">
+      <strong>Imię Nazwisko</strong><br/>
+      <%= @worker.name %>
+      
+    </div>
+  <div class="span5">
+    <strong>Telefon</strong><br/> <%= @worker.phone %>
+    
+    </div>
+  </div>
+
+
+<br/>
+
+
+<%= form_tag add_product_to_worker_path, :method => 'post' do %>
+
+  <div class="row">
+    <div class="span5 offset1">
+		<%= select_tag "product_id", options_from_collection_for_select(current_user.products.where("isEvent = ?", true), "id", "name"), :prompt => false %>
+    </div>
+  <div class="span5">
+		<button type="submit" class="btn btn-info">Dodaj</button>
+   </div>
+  </div>
+
+  	 <%= hidden_field_tag 'id', @worker.id  %>
+
+<% end %>
+
+
+
+<div class="row-fluid">
+	<div class="pull-right">
+	      <%= link_to 'Powrót', workers_path, class:"btn" %>
+    </div>
+</div>
+
+
+
+
+</div>
+</div>
+
+
+
+
+
+      <table class="table table-striped">
+
+        <thead>
+          <tr>
+            <th>Pozycja</th>
+            <th>Usługa</th>
+            <th>Opis</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+
+
+
+
+
+
+<!-- < link_to 'Edit', edit_worker_path(@worker) %> | -->
+
+
+
+
+<% if !@worker.products.blank? %>
+
+<% @licznik = 0 %>
+<!-- < render @worker.products %> -->
+<%= render 'product_fields' %>
+
+<% end %>
+
+</tbody>
+</table>
+
+</div>
+</div>

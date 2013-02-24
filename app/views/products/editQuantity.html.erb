@@ -64,8 +64,14 @@
     <!-- < f.text_field :reservedQuantity, :onchange => "update()" %> -->
     <input onChange="update()" id="product_reservedQuantity" name="product[reservedQuantity]" type="number" min="0" step="1" readonly="true" value ="<%= @product.reservedQuantity %>"/>
   </div>
-    <div class="span2 offset1">Stan maksymalny</div>
-    <div class="span3"><%= f.text_field :quantityMaximum, readonly: true %></div>
+
+
+ <div class="span2 offset1">
+  <!-- Stan maksymalny -->
+</div>
+    <div class="span3">
+      <!-- < f.text_field :quantityMaximum, readonly: true %> -->
+    </div>
  </div>
 
   <span class="pull-right">

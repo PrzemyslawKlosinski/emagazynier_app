@@ -13,7 +13,8 @@
     
      <!-- <span class="content"> -->
     <td><%= link_to product.name, product %> </td>
- 	   <td><%= product.description %></td>
+ 	   <!-- <td><%= product.description %></td> -->
+     <td><%= product.intended %></td>
      <!-- </span> -->
 
      <td><span class="timestamp"><%= time_ago_in_words(product.updated_at) %></span></td>

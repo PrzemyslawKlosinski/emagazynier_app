@@ -34,6 +34,8 @@
 #  discount                :integer          default(0)
 #  prefix                  :string(255)
 #  number                  :integer
+#  realization             :integer          default(0)
+#  isEvent                 :boolean          default(FALSE)
 #
 
 require 'spec_helper'

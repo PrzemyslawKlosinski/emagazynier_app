@@ -8,7 +8,7 @@
 			<h1>Witaj w sklepie <%= @user.name %></h1>
 			
 			<% if @user.products.any? %>
-				<h4>posiadamy artykułów <%= @user.products.count %>, zapraszamy do zakupów</h4>
+				<h4>posiadamy artykułów <%= @user.products.where("quantity > ? and is_public = ?", 0, true).count %>, zapraszamy do zakupów</h4>
 			<% else %>
 				<h4>nie posiadamy jeszcze artykułów, zapraszamy wkrótce</h4>
 			<% end %>
@@ -50,7 +50,7 @@
 	          			<tr>
 	          				<th class="span1">Pozycja</th>
 	          				<th class="span2">Nazwa artykułu</th>
-	          				<th class="span3">Opis</th>
+	          				<th class="span3">Przeznaczenie</th>
 	          				<th class="span1">Aktualizacja</th>
 	          				<!-- <th class="span1">Ilość</th> -->
 	          				<th class="span1">Cena</th>
@@ -83,7 +83,8 @@
     <td> <%= product.name %>
     	<!-- < link_to product.name, product %>  -->
     </td>
- 	   <td><%= product.description %></td>
+ 	   <!-- <td><%= product.description %></td> -->
+ 	   <td><%= product.intended %></td> 
      <!-- </span> -->
 
      <td><span class="timestamp"><%= time_ago_in_words(product.updated_at) %></span></td>

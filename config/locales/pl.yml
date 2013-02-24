@@ -57,6 +57,7 @@ pl:
     - :day
     - :month
     - :year
+    
   datetime:
     distance_in_words:
       about_x_hours:
@@ -124,7 +125,10 @@ pl:
       year: Rok
   errors: &errors
     format: ! '%{attribute} %{message}'
+
+
     messages:
+
 
       carrierwave_processing_error: nie można zmienic rozmiaru
       carrierwave_integrity_error: to nie jest xls
