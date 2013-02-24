@@ -73,7 +73,7 @@
 
 <% @products.each do |product| %>
 
-<% if product.is_public? and product.quantity > 0 %>
+<% if product.is_public? and ((product.quantity > 0 and product.isEvent = false) || product.isEvent = true) %>
 
 	          			  <tr>
   	 <td><%= @licznik=@licznik+1 %> </td>
