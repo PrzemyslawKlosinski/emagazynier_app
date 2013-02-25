@@ -38,7 +38,12 @@
     <td><%= @licznik=@licznik+1 %></td>
     <td><%= event.start_at %></td>
     <td><%=event.end_at%></td>
-    <td><%=event.worker.name%></td>
+    <td>
+      <% if !event.worker.nil? %>
+        <%=event.worker.name%>
+      <% end %>
+
+    </td>
     <td><%=event.customer%></td>
     <td><%=event.email%></td>
     <td><%= link_to event.name, event %></td>

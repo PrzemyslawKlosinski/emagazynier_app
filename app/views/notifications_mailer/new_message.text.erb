@@ -1,8 +1,14 @@
-Witaj <%= @message.name %>, 
-
+Witaj <%= @message.customer %>, 
 zamówiłeś w firmie <%= @product.user.name %>
-Produkt: <%= @product.name %>
-Ilość: <%= @message.subject %>
-Twoja wiadomość to: <%= @message.body %>
 
-Dziękujemy za zakupy. Zapraszamy do naszego magazynu po towar.
+
+Produkt: <%= @product.name %>
+Twoja wiadomość to: <%= @message.description %>
+
+<%= @buydate %>
+<%= @product_event %>
+
+<%= @warning %>
+
+<%= @thankyou %>
+

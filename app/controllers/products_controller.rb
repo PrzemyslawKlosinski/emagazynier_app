@@ -131,7 +131,8 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.update_attributes(params[:product])
-        format.html { redirect_to @product, notice: 'Produkt pomyślnie zaktualizowano.' }
+        # format.html { redirect_to @product, notice: 'Produkt pomyślnie zaktualizowano.' }
+        format.html { redirect_to products_path, notice: 'Pomyślnie zaktualizowano produkt.' }
         format.json { head :no_content }
       else
         format.html { render action: "index" }

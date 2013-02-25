@@ -52,29 +52,41 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-    @product = Product.find(params[:event][:product_id])
     @event = Event.new(params[:event])
-    
-    if !@event.start_at.nil?
+    @product = Product.find(params[:event][:product_id])
 
-    # YYYY-MM-DD HH:MM:SS
-    @start_at = DateTime::strptime(params[:event][:start_at], "%Y-%m-%d %H:%M")
-    @event.start_at = @start_at
 
-    #dodajemy godziny
-    @end_at =  params[:product][:realization].to_i.hours.since @start_at
-    @event.end_at = @end_at
+    if !@product.isEvent
+      # params[:event][:start_at] = DateTime.now
+      @event.start_at = DateTime.now
+    end    
 
+    if @product.isEvent and !@event.start_at.nil?
+      # YYYY-MM-DD HH:MM:SS
+      @start_at = DateTime::strptime(params[:event][:start_at], "%Y-%m-%d %H:%M")
+      @event.start_at = @start_at
+
+      #dodajemy godziny
+      @end_at =  @product.realization.to_i.hours.since @start_at
+      @event.end_at = @end_at
     end
-    
+
+
+  
 
     respond_to do |format|
       if @event.save
-        format.html { redirect_to @event, notice: 'Zaplanowano termin realizacji usługi. Zapraszamy na wizytę.' }
+
+        NotificationsMailer.new_message(@event, @product).deliver
+        @event.email = @product.user.email
+        NotificationsMailer.new_message(@event, @product).deliver
+        
+        format.html { redirect_to @event, notice: 'Potwierdzenie zamówienia zostało wysłane na podany adres.' }
         format.json { render json: @event, status: :created, location: @event }
       else
 
-        #jesli blad typu start_at, zaproponuj inne terminy w tym dniu lub wyswietl brak terminu
+      
+      #jesli blad typu start_at, zaproponuj inne terminy w tym dniu lub wyswietl brak terminu
       if(@event.errors.include?(:start_at) and !@event.start_at.nil?)
         $i = 0
         $num = 10
@@ -95,6 +107,8 @@ class EventsController < ApplicationController
         end
       end
 
+
+        # flash.now.alert = "Proszę wypełnić wszystkie pola."
         format.html { render action: "new" }
         format.json { render json: @event.errors, status: :unprocessable_entity }
       end

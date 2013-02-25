@@ -15,7 +15,7 @@
     <div class="row-fluid">
 
     <div class="span2">     
-   <%= select_tag "category", options_from_collection_for_select(current_user.categories, "id", "name"), :style=> 'width:100px', :prompt => false, :onchange => "setCategory(this)" %>
+   <%= select_tag "category", options_from_collection_for_select(current_user.categories, "id", "name"), :style=> 'width:100px', :prompt => false, :onchange => "setCategory(this)", readOnly: 'true' %>
     </div>
 
 
@@ -59,7 +59,7 @@
 
 
     <div class="span2">     
-   <%= select_tag "category", options_from_collection_for_select(current_user.categories, "id", "name"), :style=> 'width:100px', :prompt => false, :onchange => "setCategory(this)" %>
+   <%= select_tag "category", options_from_collection_for_select(current_user.categories, "id", "name"), :style=> 'width:100px', :prompt => false, :onchange => "setCategory(this)", readOnly: 'true' %>
     </div>
 
 

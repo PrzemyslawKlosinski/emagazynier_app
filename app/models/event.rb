@@ -35,6 +35,7 @@ class Event < ActiveRecord::Base
   # validates :amount, presence: true
 
   validate :date_is_occupied
+  validate :higher_then_amount
 
 # "created_at" BETWEEN '2010-09-29' AND '2010-11-30
   def date_is_occupied 
@@ -42,6 +43,13 @@ class Event < ActiveRecord::Base
     if !events.empty?
       errors.add(:start_at, "Ten termin jest już zajęty.")
     end
+  end
+
+  #check is lower then 20 amount
+  def higher_then_amount
+      if self.amount > 20
+        errors.add(:amount, "Zakup jednorazowy ograniczono do 20.") 
+      end
   end
 
   #indywidualna metoda search dla paginate

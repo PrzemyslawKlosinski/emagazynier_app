@@ -189,17 +189,21 @@ before_filter :signed_in_user
           if params[:type] == 'aso vw'
               znika_vat = ((23 + row[9]) / 100) + 1
               bez_brutto_col = row[netto_col] / znika_vat
-              productPrice = ProductPrice.create(nettoPurchasePrice: bez_brutto_col)
+              @productPrice = ProductPrice.create(nettoPurchasePrice: bez_brutto_col)
           else
-             productPrice = ProductPrice.create(nettoPurchasePrice: row[netto_col])
-            # productPrice.save!
+              @productPrice = ProductPrice.create(nettoPurchasePrice: row[netto_col])
+
           end
 
           if params[:type] == 'aso vw'
-            @product = current_user.products.create(name: art_name, intended: row[4], productPrice_id: productPrice.id)          
+            @product = current_user.products.create(name: art_name, intended: row[4], productPrice_id: @productPrice.id)
           else
-            @product = current_user.products.create(name: art_name, intended: row[1], productPrice_id: productPrice.id)
+            @product = current_user.products.create(name: art_name, intended: row[1], productPrice_id: @productPrice.id)
           end
+
+
+            @productPrice.product = @product
+            @productPrice.save!
 
         
         # @product.save!

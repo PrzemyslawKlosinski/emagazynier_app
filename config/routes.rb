@@ -4,8 +4,8 @@ EmagazynierApp::Application.routes.draw do
 
   resources :events
 
-  match 'workers/(:id)/(:product_id)', to: 'workers#add_product', :as => :add_product_to_worker, :via => :post
-  match 'workers/(:id)/(:product_id)', to: 'workers#del_product', :as => :del_product_to_worker, :via => :delete
+  match 'workersprod/(:id)/(:product_id)', to: 'workers#add_product', :as => :add_product_to_worker, :via => :post
+  match 'workersprod/(:id)/(:product_id)', to: 'workers#del_product', :as => :del_product_to_worker, :via => :delete
   resources :workers
 
   resources :product_prices

@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<!-- <p id="notice"><%= notice %></p> -->
 
 
   <div class="row-fluid">
@@ -9,8 +9,6 @@
 
         <div class="well sidebar-nav">
           <div class="field center">
-
-
 
 
 <legend>Sklep: <%= @event.product.user.name %></legend>
@@ -28,6 +26,14 @@
 		%> 
 		-->
 		<%= @event.product.productPrice.bruttoSalesPrice %>
+
+
+    <% if !@event.product.isEvent %>
+      <strong><br/><br/>Ilość<br/></strong>
+      <%= @event.amount %>
+    <% end %>
+
+
     </div>
   	<div class="span5">
   		<strong>Opis</br></strong>
@@ -64,6 +70,8 @@
     </div>
     </div>
 
+
+<% if @event.product.isEvent %>
 <legend>Dane wykonawcy</legend>
 
 <div class="row">
@@ -96,13 +104,14 @@
   </div>
 </div>
 
-
+<% end %>
 
 
 
 <div class="row-fluid">
 	<div class="pull-right">
-	      <%= link_to 'Powrót', events_path, class:"btn" %>
+        <%= link_to 'Powrót', firmshop_path(name: @event.product.user_id), class:"btn" %>
+	       <!-- <= link_to 'Powrót', events_path, class:"btn" %> -->
     </div>
 </div>
 
