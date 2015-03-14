@@ -1,3 +1,6 @@
+require 'smtp_tls'
+require 'actionmailer_gmail'
+
 ActionMailer::Base.smtp_settings = {
     :address => "smtp.gmail.com",
     :port => 587,
